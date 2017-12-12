@@ -1,0 +1,267 @@
+package com.yywf.activity;
+
+import android.content.Context;
+import android.content.pm.LabeledIntent;
+import android.os.Bundle;
+import android.text.method.NumberKeyListener;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.loopj.android.http.RequestParams;
+import com.tool.utils.utils.StringUtils;
+import com.tool.utils.utils.ToastUtils;
+import com.tool.utils.utils.ValidateUtil;
+import com.tool.utils.view.MyCountDownTimer;
+import com.tool.utils.view.Split4EditTextWatcher;
+import com.yywf.R;
+import com.yywf.config.ConfigXy;
+import com.yywf.config.ConstApp;
+import com.yywf.http.HttpUtil;
+import com.yywf.util.MyActivityManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+
+public class ActivitySmrz extends BaseActivity implements OnClickListener {
+
+    private final String TAG = "ActivitySmrz";
+    private EditText et_user_name;
+    private EditText et_user_id;
+    private EditText et_card_no;
+    private EditText et_phone;
+    private EditText et_code;
+    private TextView tv_getcode;
+
+    private TextView tv_user_name;
+    private TextView tv_user_id;
+    private EditText tv_card_no;
+    private TextView tv_phone;
+
+    private LinearLayout ll_smrz;
+    private LinearLayout ll_smrz_success;
+
+    private String validCode;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mContext = this;
+        setContentView(R.layout.activity_smrz);
+        MyActivityManager.getInstance().addActivity(this);
+        initTitle("实名认证");
+        if (findViewById(R.id.backBtn) != null) {
+            findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
+        }
+        initView();
+    }
+
+
+    private void initView() {
+        et_user_name = editText(R.id.et_user_name);
+        et_user_id = editText(R.id.et_user_id);
+        et_user_id.setKeyListener(new NumberKeyListener() {
+            @Override
+            public int getInputType() {
+                return android.text.InputType.TYPE_CLASS_PHONE;
+            }
+
+            @Override
+            protected char[] getAcceptedChars() {
+                char[] numberChars = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'X' };
+                return numberChars;
+            }
+        });
+        et_card_no = editText(R.id.et_card_no);
+        et_card_no.addTextChangedListener(new Split4EditTextWatcher(et_card_no));
+        et_phone = editText(R.id.et_phone);
+        et_code = editText(R.id.et_code);
+        tv_getcode = textView(R.id.tv_getcode);
+        tv_getcode.setOnClickListener(this);
+
+        tv_user_name = textView(R.id.tv_user_name);
+        tv_user_id = textView(R.id.tv_user_id);
+        tv_card_no = editText(R.id.tv_card_no);
+        tv_card_no.addTextChangedListener(new Split4EditTextWatcher(tv_card_no));
+        tv_phone = textView(R.id.tv_phone);
+
+        ll_smrz = linearLayout(R.id.ll_smrz);
+        ll_smrz_success = linearLayout(R.id.ll_smrz_success);
+
+        button(R.id.btn_commit).setOnClickListener(this);
+
+
+
+
+
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_commit://提交
+                try {
+                    doCommit();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.tv_getcode://获取验证码
+                // 获取验证码
+                String phone = et_phone.getText().toString();
+                if (StringUtils.isCellPhone(phone)) {
+                    et_code.requestFocus();
+                    getValidCode(phone);// 从服务器获取验证码
+                    et_code.setTextColor(mContext.getResources().getColor(R.color.gray));
+                } else {
+                    et_phone.requestFocus();
+                    et_phone.setError("输入手机号格式不正确！");
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    /**
+     * 从服务器获取验证码
+     *
+     * @param phone
+     */
+    private void getValidCode(final String phone) {
+        MyCountDownTimer countDowntimer = new MyCountDownTimer(ConstApp.VOLID_CODE_SECONDS, 1000, tv_getcode,
+                getResources().getDrawable(R.drawable.reg_suc_bar1), getResources().getDrawable(R.drawable.reg_suc_bar2));
+        countDowntimer.start();
+
+        RequestParams params = new RequestParams();
+        params.add("tele", phone);
+        showProgress("正在发送");
+        HttpUtil.get(ConfigXy.XY_SMSVALDATE, params, new HttpUtil.RequestListener() {
+
+            @Override
+            public void success(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    validCode = object.getString("result");
+                    Log.i("注册码：", validCode);
+                    disShowProgress();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void failed(Throwable error) {
+                disShowProgress();
+                showE404();
+            }
+
+        });
+    }
+
+    /**
+     * 提交
+     */
+    private void doCommit() throws ParseException {
+
+
+        if (StringUtils.isBlank(et_user_name.getText().toString().trim())) {
+            ToastUtils.showShort(this, "姓名不能为空");
+            et_user_name.requestFocus();
+            return;
+        }
+
+        if (StringUtils.isBlank(et_user_id.getText().toString().trim())) {
+            ToastUtils.showShort(this, "身份证号不能为空");
+            et_user_id.requestFocus();
+            return;
+        }
+
+        if (!ValidateUtil.IDCardValidate(et_user_id.getText().toString().trim())) {
+            ToastUtils.showShort(this, "身份证号格式不正确");
+            et_user_id.requestFocus();
+            return;
+        }
+
+        if (StringUtils.isBlank(et_card_no.getText().toString().trim())) {
+            ToastUtils.showShort(this, "银行卡号不能为空");
+            et_card_no.requestFocus();
+            return;
+        }
+
+        if (!StringUtils.checkBankCard(et_card_no.getText().toString().trim())) {
+            ToastUtils.showShort(this, "请输入正确银行卡号");
+            et_card_no.requestFocus();
+            return;
+        }
+
+        if (StringUtils.isBlank(et_phone.getText().toString().trim())) {
+            ToastUtils.showShort(this, "手机号不能为空");
+            et_phone.requestFocus();
+            return;
+        }
+
+        if (!StringUtils.isCellPhone(et_phone.getText().toString().trim())) {
+            ToastUtils.showShort(this, "手机号码格式不正确");
+            et_phone.requestFocus();
+            return;
+        }
+
+        if (StringUtils.isBlank(et_code.getText().toString().trim())) {
+            ToastUtils.showShort(this, "验证码不能为空");
+            et_code.requestFocus();
+            return;
+        }
+
+
+
+
+        showProgress("加载中...");
+        RequestParams params = new RequestParams();
+//		params.add("account", username);
+//		params.add("password", password);
+        HttpUtil.get(ConfigXy.XY_SMRZ, params, requestListener);
+
+    }
+
+    private HttpUtil.RequestListener requestListener = new HttpUtil.RequestListener() {
+
+        @Override
+        public void success(String response) {
+            disShowProgress();
+            try {
+                JSONObject obj = new JSONObject(response);
+
+
+            } catch (Exception e) {
+                Log.e(TAG, "doCommit() Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        public void failed(Throwable error) {
+            disShowProgress();
+            showE404();
+        }
+    };
+
+
+}

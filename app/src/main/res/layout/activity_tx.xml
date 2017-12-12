@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f5f5f5"
+    android:orientation="vertical" >
+
+    <include layout="@layout/layout_header_with_transparent" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="#f5f5f5" />
+
+    <LinearLayout
+        android:id="@+id/rl_avatar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_list_bg"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingTop="25dp"
+        android:paddingBottom="25dp">
+
+
+
+        <TextView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/kuaijieshouk_icon_rmb"/>
+
+        <com.tool.utils.view.MoneyEditText
+            android:id="@+id/et_amt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:inputType="number"
+            android:padding="10dp"
+            android:maxLength="12"
+            android:hint="请输入提现金额"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size_normal"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#f5f5f5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:orientation="horizontal"
+        android:background="@drawable/setting_list_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:textColor="#999999"
+            android:textSize="14sp"
+            android:ems="5"
+            android:text="账号余额"/>
+
+        <TextView
+            android:id="@+id/tv_tx_balance_amt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:textColor="#999999"
+            android:textSize="14sp"
+            android:text="0.00"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="#999999"
+            android:layout_marginLeft="4dp"
+            android:textSize="14sp"
+            android:text="元"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/all_tx"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical|right"
+            android:text="全部提现"
+            android:textColor="@color/text_font"
+            android:textSize="@dimen/text_size_normal"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/login_bar"
+        android:padding="@dimen/padding_normal"
+        android:gravity="center"
+        android:text="完成"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_title" />
+
+
+</LinearLayout>

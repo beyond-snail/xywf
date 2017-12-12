@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "G:\\work_space\\android\\Yywf\\pulltorefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\xlistview_header1.xml",
+        "source": "G:\\work_space\\android\\Yywf\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\layout\\xlistview_header1.xml"
+    },
+    {
+        "merged": "G:\\work_space\\android\\Yywf\\pulltorefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_horizontal.xml",
+        "source": "G:\\work_space\\android\\Yywf\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_horizontal.xml"
+    },
+    {
+        "merged": "G:\\work_space\\android\\Yywf\\pulltorefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\xlistview_footer1.xml",
+        "source": "G:\\work_space\\android\\Yywf\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\layout\\xlistview_footer1.xml"
+    },
+    {
+        "merged": "G:\\work_space\\android\\Yywf\\pulltorefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\need_this_for_maven.xml",
+        "source": "G:\\work_space\\android\\Yywf\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\layout\\need_this_for_maven.xml"
+    },
+    {
+        "merged": "G:\\work_space\\android\\Yywf\\pulltorefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_vertical.xml",
+        "source": "G:\\work_space\\android\\Yywf\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_vertical.xml"
+    }
+]

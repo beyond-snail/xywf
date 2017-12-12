@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_header"
+    android:layout_width="fill_parent"
+    android:layout_height="50dp"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_width="60.0dip"
+        android:layout_height="fill_parent"
+        android:layout_centerVertical="true"
+        android:background="@drawable/header_to_back_bg"
+        android:drawableLeft="@drawable/vav_icon_back"
+        android:visibility="invisible"
+        android:padding="15dp" />
+
+    <TextView
+        android:id="@+id/tv_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/header_to_back_bg"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text=""
+        android:textColor="@android:color/white"
+        android:visibility="gone"
+        android:textSize="16sp" />
+    <Button
+        android:id="@+id/img_right"
+        android:layout_width="60.0dip"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:background="@drawable/header_to_back_bg"
+        android:drawableRight="@drawable/kuaijieshouk_icon_tip"
+        android:padding="15dp"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"/>
+    <Button
+        android:id="@+id/img_right_add"
+        android:layout_width="60.0dip"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:background="@drawable/header_to_back_bg"
+        android:drawableRight="@drawable/nav_icon_plus"
+        android:padding="15dp"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"/>
+
+</RelativeLayout>

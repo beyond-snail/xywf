@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "G:\\work_space\\android\\Yywf\\pulltorefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\indicator_bg_bottom.xml",
+        "source": "G:\\work_space\\android\\Yywf\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\drawable\\indicator_bg_bottom.xml"
+    },
+    {
+        "merged": "G:\\work_space\\android\\Yywf\\pulltorefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\bga_refresh_loding.xml",
+        "source": "G:\\work_space\\android\\Yywf\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\drawable\\bga_refresh_loding.xml"
+    },
+    {
+        "merged": "G:\\work_space\\android\\Yywf\\pulltorefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\indicator_bg_top.xml",
+        "source": "G:\\work_space\\android\\Yywf\\pulltorefresh\\build\\intermediates\\bundles\\debug\\res\\drawable\\indicator_bg_top.xml"
+    }
+]
