@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/common_radius_rect_white"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/dip_xlarge" >
+     >
 
     <RelativeLayout
         android:id="@+id/rl_title"

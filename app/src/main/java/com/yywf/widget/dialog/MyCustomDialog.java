@@ -50,6 +50,7 @@ public class MyCustomDialog extends Dialog {
 		private boolean iscancel_back = true;// 回车键能否取消
 		private boolean iscancel_out = false;// 点击对话框外部能否取消
 		private boolean isHtml = false;// message是否为html格式显示
+		private boolean isDisBottomButton = false;
 
 		// 列表
 		private OnClickListener itemClickListener;
@@ -96,6 +97,12 @@ public class MyCustomDialog extends Dialog {
 			this.iscancel_out = iscancel;
 			return this;
 		}
+
+		public Builder setDisBottomButton(boolean isDisBottomButton) {
+			this.isDisBottomButton = isDisBottomButton;
+			return this;
+		}
+
 
 		/**
 		 * Set the Dialog title from resource
@@ -204,6 +211,10 @@ public class MyCustomDialog extends Dialog {
 			dialog.setContentView(R.layout.custom_dialog);
 			// set the dialog title 设置标题即信息内容
 			((TextView) dialog.findViewById(R.id.tv_title)).setText(title);
+
+			if (isDisBottomButton){
+				dialog.findViewById(R.id.ll_bottom).setVisibility(View.GONE);
+			}
 
 			// 设置自定义布局
 			if (contentView != null) {

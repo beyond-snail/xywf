@@ -201,11 +201,13 @@ public class ActivityLogin extends BaseActivity implements OnClickListener, OnCh
 			startActivity(new Intent(mContext, ActivityHome.class));
 			break;
 		case R.id.btn_register:
-			startActivity(new Intent(mContext, ActivityRegister.class));
+//			startActivity(new Intent(mContext, ActivityRegister.class));
 //			startActivity(new Intent(mContext, ActivityTest.class));
+			showRegisterSuccess();
 			break;
 		case R.id.btn_findPassword:// 密码找回
-			showRegisterSuccess();
+//			showRegisterSuccess();
+			showChoiceCredit();
 //			startActivity(new Intent(mContext, ActivityForgotPwd.class));
 			break;
 //		case R.id.iv_qq:// 第三方qq登录
@@ -481,6 +483,20 @@ public class ActivityLogin extends BaseActivity implements OnClickListener, OnCh
 		dialog.show();
 	}
 
+
+	public void showChoiceCredit(){
+		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inflater.inflate(R.layout.dialog_credit_choice, null);
+		final MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(mContext,
+				R.style.MyDialogStyleBottom);
+//		customBuilder.setCancelable(false);
+		customBuilder.setCanceledOnTouchOutside(false);
+		customBuilder.setLine(0);// 分割横线所处位置 在自定义布局上下或隐藏 0隐藏 1线在上方
+		customBuilder.setContentView(view);
+		customBuilder.setDisBottomButton(true);
+		MyCustomDialog dialog = customBuilder.create();
+		dialog.show();
+	}
 
 
 }
