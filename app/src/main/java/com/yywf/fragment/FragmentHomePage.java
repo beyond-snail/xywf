@@ -30,6 +30,8 @@ import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MyGridView;
 import com.tool.utils.view.MyListView;
 import com.yywf.R;
+import com.yywf.activity.ActivityCredit;
+import com.yywf.activity.ActivityKjsk;
 import com.yywf.activity.ActivityMine;
 import com.yywf.activity.ActivitySaoMaShouKuan;
 import com.yywf.adapter.BankListAdapter;
@@ -112,13 +114,13 @@ public class FragmentHomePage extends AbstractFragment implements
                 int index = EnumConsts.MenuType.getCodeByName(list.get(position).getName());
                 switch (index){
                     case 1: //快捷收钱
-
+                        startActivity(new Intent(mContext, ActivityKjsk.class));
                         break;
                     case 2: //智能还款
 
                         break;
                     case 3: //还信用卡
-
+                        startActivity(new Intent(mContext, ActivityCredit.class));
                         break;
                     case 4: //一键提额
 

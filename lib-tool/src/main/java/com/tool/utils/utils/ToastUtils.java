@@ -107,7 +107,7 @@ public class ToastUtils {
     		View view = li.inflate(R.layout.activity_toast, null);
     		TextView tv = (TextView) view.findViewById(R.id.id_toast_tv);
     		tv.setText(message);
-    		tv.setTextSize(20);
+    		tv.setTextSize(14f);
     		Toast toast = new Toast(context);
     		toast.setView(view);
     		toast.setDuration(Toast.LENGTH_SHORT);

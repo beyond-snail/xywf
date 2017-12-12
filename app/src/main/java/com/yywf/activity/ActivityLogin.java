@@ -1,5 +1,6 @@
 package com.yywf.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,14 +42,15 @@ import com.yywf.model.LoginHistoryVO;
 import com.yywf.util.MyActivityManager;
 import com.yywf.widget.dialog.MyCustomDialog;
 
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import me.weyye.hipermission.HiPermission;
 import me.weyye.hipermission.PermissionCallback;
+import me.weyye.hipermission.PermissionItem;
 
 public class ActivityLogin extends BaseActivity implements OnClickListener, OnCheckedChangeListener {
 
@@ -57,6 +59,7 @@ public class ActivityLogin extends BaseActivity implements OnClickListener, OnCh
 	private AutoCompleteTextView atv_userName;
 	private EditText et_password;
 	private String username, password;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -115,7 +118,11 @@ public class ActivityLogin extends BaseActivity implements OnClickListener, OnCh
 
 
 	private void checkPermission() {
+		List<PermissionItem> permissionItems = new ArrayList<PermissionItem>();
+		permissionItems.add(new PermissionItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, "存储", R.drawable.permission_ic_storage));
+		permissionItems.add(new PermissionItem(Manifest.permission.ACCESS_FINE_LOCATION, "定位", R.drawable.permission_ic_location));
 		HiPermission.create(mContext)
+				.permissions(permissionItems)
 				.checkMutiPermission(new PermissionCallback() {
 					@Override
 					public void onClose() {

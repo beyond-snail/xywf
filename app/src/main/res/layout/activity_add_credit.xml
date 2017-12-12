@@ -287,6 +287,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:drawableLeft="@drawable/home_icon_safty"
+            android:drawablePadding="5dp"
             android:text="账户安全由安心财产保险承保"
             android:textSize="13sp"
             android:textColor="@color/gray"/>
