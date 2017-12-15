@@ -34,8 +34,10 @@ import com.yywf.activity.ActivityAddZhangDan;
 import com.yywf.activity.ActivityBanKTiE;
 import com.yywf.activity.ActivityBanKa;
 import com.yywf.activity.ActivityCredit;
+import com.yywf.activity.ActivityDaiBanShiXiang;
 import com.yywf.activity.ActivityKjsk;
 import com.yywf.activity.ActivityMine;
+import com.yywf.activity.ActivityMyZhangDan;
 import com.yywf.activity.ActivitySaoMaShouKuan;
 import com.yywf.activity.ActivitySmartCredit;
 import com.yywf.adapter.BankListAdapter;
@@ -130,13 +132,13 @@ public class FragmentHomePage extends AbstractFragment implements
                         startActivity(new Intent(mContext, ActivityBanKTiE.class));
                         break;
                     case 5: //待办事项
-
+                        startActivity(new Intent(mContext, ActivityDaiBanShiXiang.class));
                         break;
                     case 6: //一键办卡
                         startActivity(new Intent(mContext, ActivityBanKa.class));
                         break;
                     case 7: //我的账单
-
+                        startActivity(new Intent(mContext, ActivityMyZhangDan.class));
                         break;
                     case 8: //购买等级
                         startActivity(new Intent(mContext, ActivitySaoMaShouKuan.class));

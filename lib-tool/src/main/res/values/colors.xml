@@ -182,6 +182,7 @@
     <color name="gray_normal">#666667</color>
     <color name="grey_100">#F5F5F5</color>
     <color name="grey_400">#BDBDBD</color>
+    <color name="grey_999">#999999</color>
     <color name="gray_normal1">#D6D6D6</color>
     <color name="black_normal">#333333</color>
     <color name="error_item_color">#F6EBE6</color>

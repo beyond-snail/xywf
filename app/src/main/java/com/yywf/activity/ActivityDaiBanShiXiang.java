@@ -28,9 +28,11 @@ import com.tool.utils.utils.ToastUtils;
 import com.tool.utils.view.MoneyEditText;
 import com.tool.utils.view.MyListView;
 import com.yywf.R;
+import com.yywf.adapter.AdapterMessageNoticeNew;
 import com.yywf.adapter.AdapterPlanList;
 import com.yywf.config.ConfigXy;
 import com.yywf.http.HttpUtil;
+import com.yywf.model.Message;
 import com.yywf.model.PlanList;
 import com.yywf.util.MyActivityManager;
 import com.yywf.widget.dialog.MyCustomDialog;
@@ -51,8 +53,8 @@ public class ActivityDaiBanShiXiang extends BaseActivity {
 
 
 	private PullToRefreshScrollView mPullRefreshScrollView;
-	private List<PlanList> list = new ArrayList<PlanList>();
-	private AdapterPlanList adapter;
+	private List<Message> messageList = new ArrayList<Message>();// 信息通知
+	private AdapterMessageNoticeNew adapter;
 	private MyListView myListView;
 	private int page = 1;
 
@@ -76,19 +78,26 @@ public class ActivityDaiBanShiXiang extends BaseActivity {
 
 	private void initView() {
 
-		for (int i = 0; i < 12; i++){
-			PlanList planList = new PlanList();
-			planList.setAmt(500);
-			planList.setFeeAmt(21);
-			planList.setTime1("2017-12-15 13:59:00");
-			planList.setTime2("2017-12-15 13:59:00");
-			list.add(planList);
+		for (int i = 0; i < 3; i++){
+			Message message = new Message();
+			message.setHasRead(true);
+			message.setMemo("fdsjlfjsfjjkjfksdjfksjflsdjfkdsjfl");
+			message.setGmtCreate("2017-12-15 18:03:12");
+			messageList.add(message);
+		}
+
+		for (int i = 0; i < 3; i++){
+			Message message = new Message();
+			message.setHasRead(false);
+			message.setMemo("fdsjlfjsfjjkjfksdjfksjflsdjfkdsjfl");
+			message.setGmtCreate("2017-12-15 18:03:12");
+			messageList.add(message);
 		}
 
 
 
 		myListView = findViewById(R.id.listview);
-		adapter = new AdapterPlanList(mContext, list);
+		adapter = new AdapterMessageNoticeNew(mContext, messageList);
 		myListView.setAdapter(adapter);
 		myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -129,7 +138,7 @@ public class ActivityDaiBanShiXiang extends BaseActivity {
 						DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
 				refreshView.getLoadingLayoutProxy(false, true).setLastUpdatedLabel("更新于：" + label);
 
-				if (list.size() == 0) {
+				if (messageList.size() == 0) {
 					handler.postDelayed(new Runnable() {
 
 						@Override
@@ -158,7 +167,7 @@ public class ActivityDaiBanShiXiang extends BaseActivity {
 	private void reloadData() {
 		Log.d(TAG, "reloadData()");
 		page = 1;
-		list.clear();
+		messageList.clear();
 		loadData(true);
 	}
 
@@ -201,11 +210,11 @@ public class ActivityDaiBanShiXiang extends BaseActivity {
 
 						Gson gson = new Gson();
 						// json数据转换成List
-						List<PlanList> datas = gson.fromJson(str, new TypeToken<List<PlanList>>() {
+						List<Message> datas = gson.fromJson(str, new TypeToken<List<Message>>() {
 						}.getType());
-						list.addAll(datas);
+						messageList.addAll(datas);
 						adapter.notifyDataSetChanged();
-						if (list.size() > 0) {
+						if (messageList.size() > 0) {
 							linearLayout(R.id.id_no_data).setVisibility(View.GONE);
 							 mPullRefreshScrollView.setVisibility(View.VISIBLE);
 						} else {
@@ -240,7 +249,7 @@ public class ActivityDaiBanShiXiang extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		reloadData();
+//		reloadData();
 	}
 
 	@Override
