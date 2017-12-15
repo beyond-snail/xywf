@@ -59,10 +59,10 @@ public class ActivityMyZhangDan extends BaseActivity implements View.OnClickList
 	public void onClick(View view) {
 		switch (view.getId()){
 			case R.id.ll_sale:
-				startActivity(new Intent(mContext, ActivitySecuritySetting.class));
+				startActivity(new Intent(mContext, ActivitySaleZdDetails .class));
 				break;
 			case R.id.ll_credit:
-				startActivity(new Intent(mContext, ActivityAboutUs.class));
+				startActivity(new Intent(mContext, ActivityCreditZdDetails.class));
 				break;
 
 		}

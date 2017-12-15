@@ -2,11 +2,6 @@ package com.yywf.config;
 
 import com.yywf.R;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 
 public class EnumConsts {
 
@@ -71,10 +66,10 @@ public class EnumConsts {
 
 
 	public enum MineMenuType {
-		MENU_1(1, R.drawable.kuaijieshouqian,"我的钱包"),
-		MENU_2(2, R.drawable.zhinenghuankuan,"我的团队"),
-		MENU_3(3, R.drawable.huanxinyongka,"推广二维码"),
-		MENU_4(4, R.drawable.yijiantie,"抵用券"),
+		MENU_1(1, R.drawable.mywallet,"我的钱包"),
+		MENU_2(2, R.drawable.mygroup,"我的团队"),
+		MENU_3(3, R.drawable.myqrcode,"推广二维码"),
+		MENU_4(4, R.drawable.myvouchar,"抵用券"),
 
 		;
 

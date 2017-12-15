@@ -75,6 +75,7 @@ public class FragmentMine extends AbstractFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initView();
+        initMenu();
     }
 
 
