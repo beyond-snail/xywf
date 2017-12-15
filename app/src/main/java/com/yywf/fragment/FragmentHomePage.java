@@ -30,10 +30,12 @@ import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MyGridView;
 import com.tool.utils.view.MyListView;
 import com.yywf.R;
+import com.yywf.activity.ActivityAddZhangDan;
 import com.yywf.activity.ActivityCredit;
 import com.yywf.activity.ActivityKjsk;
 import com.yywf.activity.ActivityMine;
 import com.yywf.activity.ActivitySaoMaShouKuan;
+import com.yywf.activity.ActivitySmartCredit;
 import com.yywf.adapter.BankListAdapter;
 import com.yywf.adapter.MyMenuAdapter;
 import com.yywf.config.EnumConsts;
@@ -117,7 +119,7 @@ public class FragmentHomePage extends AbstractFragment implements
                         startActivity(new Intent(mContext, ActivityKjsk.class));
                         break;
                     case 2: //智能还款
-
+                        startActivity(new Intent(mContext, ActivitySmartCredit.class));
                         break;
                     case 3: //还信用卡
                         startActivity(new Intent(mContext, ActivityCredit.class));
@@ -134,7 +136,7 @@ public class FragmentHomePage extends AbstractFragment implements
                     case 7: //我的账单
 
                         break;
-                    case 8: //扫码收钱
+                    case 8: //购买等级
                         startActivity(new Intent(mContext, ActivitySaoMaShouKuan.class));
                         break;
                 }
@@ -160,6 +162,10 @@ public class FragmentHomePage extends AbstractFragment implements
         }
         ADCommonView adCommonView = new ADCommonView(mContext, infos, false);
         ll_advertis.addView(adCommonView);
+
+
+        //添加账单
+        textView(R.id.id_add_zd).setOnClickListener(this);
     }
 
 
@@ -181,13 +187,17 @@ public class FragmentHomePage extends AbstractFragment implements
 
 
         lv = (MyListView)fragment.findViewById(R.id.show_bankPay);
-        bankAdapter = new BankListAdapter((Activity)mContext, bankList);
+        bankAdapter = new BankListAdapter((Activity)mContext, bankList, 1);
         lv.setAdapter(bankAdapter);
     }
 
     @Override
     public void onClick(View view) {
-
+        switch (view.getId()){
+            case R.id.id_add_zd:
+                startActivity(new Intent(mContext, ActivityAddZhangDan.class));
+                break;
+        }
     }
 
     @Override

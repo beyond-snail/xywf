@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f5f5f5"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_header_with_transparent" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+
+        android:background="#f5f5f5" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_list_bg"
+        android:orientation="horizontal"
+        android:paddingBottom="25dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="25dp">
+
+
+        <TextView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="20dp"
+            android:text="还款金额"
+            android:textColor="#333333"
+            android:textSize="18sp" />
+
+        <com.tool.utils.view.MoneyEditText
+            android:id="@+id/et_amt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:gravity="right"
+            android:hint="请输入还款金额"
+            android:inputType="number"
+            android:maxLength="12"
+            android:padding="10dp"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size_normal" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#f5f5f5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_list_bg"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:text="执行本次计划所需手续费"
+            android:textColor="#999999"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_tx_balance_amt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:text="0.00"
+            android:textColor="#999999"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:gravity="center_vertical"
+            android:text="元"
+            android:textColor="#999999"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_do_model"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/setting_list_bg"
+        android:paddingBottom="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:ems="4"
+            android:gravity="center_vertical"
+            android:text="还款模式"
+            android:textColor="#333333"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/iv_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/bank_icon_next" />
+
+        <TextView
+            android:id="@+id/tv_do_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/iv_go"
+            android:text=""
+            android:textColor="@color/text_font"
+            android:textSize="@dimen/text_size_small" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#f5f5f5" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_list_bg"
+        android:padding="20dp">
+
+        <Button
+            android:id="@+id/btn_commit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/login_bar"
+            android:gravity="center"
+            android:padding="@dimen/padding_normal"
+            android:text="--"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_title" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:background="#f5f5f5" />
+
+
+    <ScrollView
+
+        android:id="@+id/pull_refresh_scrollview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:listSelector="#00000000"
+        android:scrollbars="none"
+        android:fadeScrollbars="false"
+        android:fillViewport="true"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/ll_credit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/setting_list_bg"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/setting_list_bg"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:ems="4"
+                    android:gravity="center_vertical"
+                    android:text="计划列表"
+                    android:textColor="#333333"
+                    android:textSize="16sp" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#f5f5f5" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="15dp"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/id_tv_total_amt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:ems="5"
+                        android:gravity="center_vertical"
+                        android:text="还款总金额:"
+                        android:textColor="#333333"
+                        android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/id_tv_total_amt"
+                        android:gravity="center_vertical"
+                        android:text="5000"
+                        android:textColor="#333333"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_centerVertical="true"
+                        android:text="共10笔"
+                        android:textColor="#999999"
+                        android:textSize="13sp"/>
+
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/id_tv_total_fee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:ems="3"
+                        android:gravity="center_vertical"
+                        android:text="手续费:"
+                        android:textColor="#999999"
+                        android:textSize="13sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/id_tv_total_fee"
+                        android:gravity="center_vertical"
+                        android:text="5000"
+                        android:textColor="#999999"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/id_tv_sigle_amt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_centerVertical="true"
+                        android:text="执行计划需要542.5"
+                        android:textColor="@color/header_bg_color"
+                        android:textSize="13sp" />
+                </RelativeLayout>
+
+            </LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#f5f5f5" />
+
+
+            <com.tool.utils.view.MyListView
+                android:id="@+id/listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="#f5f5f5"
+                android:dividerHeight="1dp"
+                android:listSelector="@drawable/setting_list_bg" />
+
+
+
+            <LinearLayout
+                android:id="@+id/id_no_data"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="暂无还款计划"
+                    android:textColor="#999999"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="请填写计划并预览计划"
+                    android:textColor="#999999"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

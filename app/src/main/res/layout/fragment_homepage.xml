@@ -12,7 +12,8 @@
     <com.tool.utils.view.MyScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/white"
         android:fillViewport="true"
         android:scrollbars="none">
@@ -108,16 +109,16 @@
                 android:visibility="visible"></com.tool.utils.view.MyListView>
 
             <TextView
+                android:id="@+id/id_add_zd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:layout_gravity="center"
                 android:padding="10dp"
                 android:gravity="center"
                 android:text="+添加账单"
                 android:textSize="20sp"
                 android:textColor="#1b82d2"/>
-
-
         </LinearLayout>
     </com.tool.utils.view.MyScrollView>
 

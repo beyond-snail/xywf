@@ -12,19 +12,19 @@
         android:layout_gravity="center"
         android:layout_height="wrap_content" >
 
+
+
         <RadioButton
             android:id="@+id/button1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-
             android:button="@null"
-            android:checked="true"
             android:drawableRight="@drawable/radio_button_style"
             android:padding="10dp"
-            android:text="自动还款"
-            android:textSize="18sp"
-            android:textColor="#333333"/>
+            android:text="手动还款"
+            android:textColor="#333333"
+            android:textSize="18sp"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -35,11 +35,12 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:button="@null"
+
             android:drawableRight="@drawable/radio_button_style"
             android:padding="10dp"
-            android:text="手动还款"
-            android:textColor="#333333"
-            android:textSize="18sp"/>
+            android:text="自动还款"
+            android:textSize="18sp"
+            android:textColor="#333333"/>
 
     </RadioGroup>
 

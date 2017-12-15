@@ -1,23 +1,28 @@
 package com.yywf.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.NumberKeyListener;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.ToastUtils;
 import com.tool.utils.utils.ValidateUtil;
+import com.tool.utils.view.MyCountDownTimer;
 import com.tool.utils.view.Split4EditTextWatcher;
 import com.yywf.R;
 import com.yywf.config.ConfigXy;
+import com.yywf.config.ConstApp;
 import com.yywf.http.HttpUtil;
 import com.yywf.util.MyActivityManager;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
@@ -28,11 +33,19 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
     private EditText et_user_name;
     private EditText et_user_id;
     private EditText et_card_no;
-    private EditText et_phone;
+    private EditText et_iccu;
     private EditText et_bill_day;
     private EditText et_repayment_day;
 
+    private EditText et_cvv2;
+    private EditText et_date;
 
+    private EditText et_phone;
+    private EditText et_code;
+    private TextView tv_getcode;
+
+
+    private String validCode;
 
 
     @Override
@@ -66,14 +79,25 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
         });
         et_card_no = editText(R.id.et_card_no);
         et_card_no.addTextChangedListener(new Split4EditTextWatcher(et_card_no));
-        et_phone = editText(R.id.et_phone);
+        et_iccu = editText(R.id.et_iccu);
         et_bill_day = editText(R.id.et_bill_day);
         et_repayment_day = editText(R.id.et_repayment_day);
 
 
+        et_phone = editText(R.id.et_phone);
+        et_code = editText(R.id.et_code);
+        tv_getcode = textView(R.id.tv_getcode);
+        tv_getcode.setOnClickListener(this);
+
+        et_cvv2 = editText(R.id.et_cvv2);
+        et_date = editText(R.id.et_date);
+
+
+
+
 
         button(R.id.btn_commit).setOnClickListener(this);
-
+        linearLayout(R.id.ll_xy_dk).setOnClickListener(this);
 
 
 
@@ -102,10 +126,62 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
                     e.printStackTrace();
                 }
                 break;
+            case R.id.ll_xy_dk://代扣协议
+                startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 2));
+                break;
 
+            case R.id.tv_getcode://获取验证码
+                // 获取验证码
+                String phone = et_phone.getText().toString();
+                if (StringUtils.isCellPhone(phone)) {
+                    et_code.requestFocus();
+                    getValidCode(phone);// 从服务器获取验证码
+                    et_code.setTextColor(mContext.getResources().getColor(R.color.gray));
+                } else {
+                    et_phone.requestFocus();
+                    et_phone.setError("输入手机号格式不正确！");
+                }
+                break;
             default:
                 break;
         }
+    }
+
+
+    /**
+     * 从服务器获取验证码
+     *
+     * @param phone
+     */
+    private void getValidCode(final String phone) {
+        MyCountDownTimer countDowntimer = new MyCountDownTimer(ConstApp.VOLID_CODE_SECONDS, 1000, tv_getcode,
+                getResources().getDrawable(R.drawable.reg_suc_bar1), getResources().getDrawable(R.drawable.reg_suc_bar2));
+        countDowntimer.start();
+
+        RequestParams params = new RequestParams();
+        params.add("tele", phone);
+        showProgress("正在发送");
+        HttpUtil.get(ConfigXy.XY_SMSVALDATE, params, new HttpUtil.RequestListener() {
+
+            @Override
+            public void success(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    validCode = object.getString("result");
+                    Log.i("注册码：", validCode);
+                    disShowProgress();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void failed(Throwable error) {
+                disShowProgress();
+                showE404();
+            }
+
+        });
     }
 
 
@@ -155,6 +231,30 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
         if (!StringUtils.isCellPhone(et_phone.getText().toString().trim())) {
             ToastUtils.showShort(this, "手机号码格式不正确");
             et_phone.requestFocus();
+            return;
+        }
+
+        if (StringUtils.isBlank(et_iccu.getText().toString().trim())) {
+            ToastUtils.showShort(this, "发卡行不能为空");
+            et_iccu.requestFocus();
+            return;
+        }
+
+        if (StringUtils.isBlank(et_cvv2.getText().toString().trim())) {
+            ToastUtils.showShort(this, "CVV2不能为空");
+            et_cvv2.requestFocus();
+            return;
+        }
+
+        if (StringUtils.isBlank(et_date.getText().toString().trim())) {
+            ToastUtils.showShort(this, "有效期不能为空");
+            et_date.requestFocus();
+            return;
+        }
+
+        if (StringUtils.isBlank(et_code.getText().toString().trim())) {
+            ToastUtils.showShort(this, "验证码不能为空");
+            et_code.requestFocus();
             return;
         }
 

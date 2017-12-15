@@ -13,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -29,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.tool.utils.utils.StatusBarUtil;
 import com.views.popwindow.bean.BaseFilter;
 import com.views.popwindow.pop.CommonFilterPop;
 import com.yywf.R;
@@ -79,6 +81,18 @@ public abstract class BaseActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         mContext = this;
+    }
+
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+        super.setContentView(layoutResID);
+        setStatusBar();
+    }
+
+    protected void setStatusBar() {
+//        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary));
+//        StatusBarUtil.setTranslucent((Activity)mContext, 12);
+        StatusBarUtil.setTranslucent((Activity)mContext);
     }
 
     /**

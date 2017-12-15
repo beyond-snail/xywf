@@ -84,4 +84,8 @@ public class ConfigXy {
     public static final String GET_CHECK_QR_CODE_API = "";
 
 
+    //还款计划列表
+    public static final String PLAN_LIST = "";
+
+
 }

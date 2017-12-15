@@ -1,6 +1,7 @@
 package com.yywf.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.method.NumberKeyListener;
@@ -60,6 +61,12 @@ public class ActivityCredit extends BaseActivity implements OnClickListener {
         }
         if (findViewById(R.id.img_right) != null){
             findViewById(R.id.img_right).setVisibility(View.VISIBLE);
+            findViewById(R.id.img_right).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 4));
+                }
+            });
         }
         initView();
     }

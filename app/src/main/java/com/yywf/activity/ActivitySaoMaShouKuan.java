@@ -1,6 +1,7 @@
 package com.yywf.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -40,6 +41,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.loopj.android.http.RequestParams;
 import com.tool.utils.utils.ScreenUtils;
+import com.tool.utils.utils.StatusBarUtil;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.ToastUtils;
 import com.tool.utils.utils.UtilPreference;
@@ -69,6 +71,8 @@ public class ActivitySaoMaShouKuan extends BaseActivity implements OnClickListen
 		mContext = this;
 		setContentView(R.layout.activity_qb_pay);
 		MyActivityManager.getInstance().addActivity(this);
+
+
 
 		initTitle("扫码收钱");
 		if (findViewById(R.id.backBtn) != null) {

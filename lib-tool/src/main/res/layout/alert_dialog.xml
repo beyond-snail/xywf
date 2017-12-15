@@ -7,12 +7,14 @@
 
     <TextView
         android:id="@+id/tv_alert_dialog_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
         android:singleLine="true"
-        android:text="title"
+        android:text=""
         android:textColor="@color/black"
         android:textSize="18sp" />
 
@@ -20,8 +22,11 @@
         android:id="@+id/tv_alert_dialog_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:layout_margin="10dp"
         android:textColor="@color/black"
+        android:text=""
         android:textSize="16sp" />
 
     <View
@@ -35,13 +40,14 @@
         android:layout_height="45dp"
         android:orientation="horizontal">
 
-        <Button
+        <TextView
             android:id="@+id/btn_alert_dialog_btn_left"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:layout_weight="1"
-            android:background="@drawable/ic_alert_dialog_btn_left_pressed_effect"
-            android:textColor="#0288D1"
+            android:text="--"
             android:textSize="16sp" />
 
         <View
@@ -49,13 +55,13 @@
             android:layout_height="match_parent"
             android:background="#A9A9A9" />
 
-        <Button
+        <TextView
             android:id="@+id/btn_alert_dialog_btn_right"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/ic_alert_dialog_btn_right_pressed_effect"
-            android:textColor="#0288D1"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:textSize="16sp" />
     </LinearLayout>
 </LinearLayout>

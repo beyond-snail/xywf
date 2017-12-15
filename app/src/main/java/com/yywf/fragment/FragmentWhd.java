@@ -88,7 +88,7 @@ public class FragmentWhd extends AbstractFragment implements
 
 
         listview = (PullToRefreshListView)fragment.findViewById(R.id.pull_refresh_listView);
-        bankAdapter = new BankListAdapter((Activity) mContext, bankList);
+        bankAdapter = new BankListAdapter((Activity) mContext, bankList, 1);
         listview.setAdapter(bankAdapter);
 
         // 下拉刷新、上拉加载更多

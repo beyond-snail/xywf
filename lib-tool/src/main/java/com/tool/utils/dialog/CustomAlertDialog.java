@@ -70,6 +70,19 @@ public class CustomAlertDialog extends AlertDialog {
         this.tvTitle.setText(title);
     }
 
+
+    //设置字体颜色
+    public void setTitleColor(int Color){
+        this.tvTitle.setTextColor(Color);
+    }
+
+    //设置title 背景
+    public void setTitleBg(int bg){
+        tvTitle.setBackgroundResource(bg);
+    }
+
+
+
     /**
      * 设置标题
      *
@@ -114,6 +127,12 @@ public class CustomAlertDialog extends AlertDialog {
         btnLeft.setOnClickListener(listener);
     }
 
+    public void setPositiveButton(CharSequence text, View.OnClickListener listener, int textColor) {
+        btnLeft.setText(text);
+        btnRight.setTextColor(mContext.getResources().getColorStateList(textColor));
+        btnLeft.setOnClickListener(listener);
+    }
+
     /**
      * 设置"确定"按钮
      *
@@ -133,6 +152,13 @@ public class CustomAlertDialog extends AlertDialog {
      */
     public void setNegativeButton(CharSequence text, View.OnClickListener listener) {
         btnRight.setText(text);
+        btnRight.setOnClickListener(listener);
+    }
+
+    //通过资源加载字体颜色
+    public void setNegativeButton(CharSequence text, View.OnClickListener listener, int textColor) {
+        btnRight.setText(text);
+        btnRight.setTextColor(mContext.getResources().getColorStateList(textColor));
         btnRight.setOnClickListener(listener);
     }
 

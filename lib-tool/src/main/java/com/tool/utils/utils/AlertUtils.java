@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.tool.R;
 import com.tool.utils.dialog.CommonCustomDialog;
@@ -573,4 +575,6 @@ public class AlertUtils {
 		Dialog dialog = builder.create();
 		dialog.show();
 	}
+
+
 }

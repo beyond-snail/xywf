@@ -1,6 +1,7 @@
 package com.yywf.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.ToastUtils;
 import com.yywf.R;
+import com.yywf.activity.ActivitySecuritySetting;
+import com.yywf.activity.ActivitySmartCreditNow;
 import com.yywf.model.BankCardInfo;
 
 import java.util.List;
@@ -23,10 +26,12 @@ public class BankListAdapter extends BaseAdapter{
 	private Activity activity;// 上下文
 	private List<BankCardInfo> list;
 	private LayoutInflater inflater = null;// 导入布局
+	private int UiType = 0; //1：普通， 2：智能还款
 
-	public BankListAdapter(Activity context, List<BankCardInfo> list) {
+	public BankListAdapter(Activity context, List<BankCardInfo> list, int UiType) {
 		this.activity = context;
 		this.list = list;
+		this.UiType = UiType;
 		inflater = LayoutInflater.from(context);
 	}
 
@@ -73,10 +78,16 @@ public class BankListAdapter extends BaseAdapter{
 		holder.tvZdDay.setText(list.get(position).getZdDay()+"日");
 		holder.tvHkDay.setText(list.get(position).getHkDay()+"日");
 		holder.iconBank.setImageResource(R.drawable.bank_jiaotong);
+		if (UiType == 2){
+			holder.tvHk.setText("智能还款");
+		}
 		holder.tvHk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				ToastUtils.showShort(activity, position+"");
+				if (UiType == 2){
+					activity.startActivity(new Intent(activity, ActivitySmartCreditNow.class));
+				}
 			}
 		});
 

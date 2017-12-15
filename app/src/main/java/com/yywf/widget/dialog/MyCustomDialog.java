@@ -353,7 +353,7 @@ public class MyCustomDialog extends Dialog {
 		// 适应屏幕
 		DisplayMetrics mDisplayMetrics = this.getContext().getResources().getDisplayMetrics();
 		if (mDisplayMetrics.widthPixels < mDisplayMetrics.heightPixels) {
-			int paddWidth = mDisplayMetrics.widthPixels / 6;
+			int paddWidth = mDisplayMetrics.widthPixels / 5;
 			getWindow().setLayout(mDisplayMetrics.widthPixels - paddWidth, LayoutParams.WRAP_CONTENT);
 		} else {
 			int paddWidth = mDisplayMetrics.widthPixels / 2;

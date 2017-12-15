@@ -1,14 +1,19 @@
 package com.yywf.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
+import com.tool.utils.dialog.CustomAlertDialog;
 import com.tool.utils.passwordView.KeyBoardDialog;
 import com.tool.utils.passwordView.PayPasswordView;
 import com.tool.utils.utils.StringUtils;
@@ -17,6 +22,8 @@ import com.yywf.R;
 import com.yywf.config.ConfigXy;
 import com.yywf.http.HttpUtil;
 import com.yywf.util.MyActivityManager;
+import com.yywf.widget.dialog.DialogUtils;
+import com.yywf.widget.dialog.MyCustomDialog;
 
 import org.json.JSONObject;
 
@@ -28,6 +35,8 @@ public class ActivityTest extends BaseActivity implements OnClickListener {
 
 
 	KeyBoardDialog keyboard;
+
+	MyCustomDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +74,21 @@ public class ActivityTest extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_pwd:// 登录
-			keyboard = new KeyBoardDialog(ActivityTest.this, getDecorViewDialog());
-			keyboard.show();
+//			keyboard = new KeyBoardDialog(ActivityTest.this, getDecorViewDialog());
+//			keyboard.show();
+			dialog = DialogUtils.showDialog(mContext, "温馨提示", "您还未成为沃富会员，是否支付199元成为会员", new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					ToastUtils.CustomShow(mContext, "左边按钮");
+					dialog.dismiss();
+				}
+			}, new OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					ToastUtils.CustomShow(mContext, "右边按钮");
+					dialog.dismiss();
+				}
+			});
 			break;
 
 		default:
@@ -129,6 +151,7 @@ public class ActivityTest extends BaseActivity implements OnClickListener {
 			}
 		}).getView();
 	}
+
 
 
 

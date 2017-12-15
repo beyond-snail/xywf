@@ -16,6 +16,7 @@ public class ActivitySetting extends BaseActivity implements View.OnClickListene
 	private RelativeLayout ll_about_us;
 
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,6 +38,8 @@ public class ActivitySetting extends BaseActivity implements View.OnClickListene
 		ll_set.setOnClickListener(this);
 		ll_about_us = relativeLayout(R.id.ll_about_us);
 		ll_about_us.setOnClickListener(this);
+
+		button(R.id.btn_logout);
 
 	}
 
@@ -62,6 +65,9 @@ public class ActivitySetting extends BaseActivity implements View.OnClickListene
 				break;
 			case R.id.ll_about_us:
 				startActivity(new Intent(mContext, ActivityAboutUs.class));
+				break;
+			case R.id.btn_logout: //退出登录
+
 				break;
 		}
 	}

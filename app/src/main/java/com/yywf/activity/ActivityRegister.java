@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
@@ -42,6 +43,7 @@ public class ActivityRegister extends BaseActivity implements OnClickListener, O
 	private EditText et_telephone, et_code, et_pwd;
 	private TextView tv_getcode;
 	private Button btn_next;
+	private LinearLayout ll_user_protocol;
 
 	private String validCode;
 	private CheckBox cb;
@@ -84,11 +86,11 @@ public class ActivityRegister extends BaseActivity implements OnClickListener, O
 		//查看密码
 		((CheckBox) findViewById(R.id.cb_look)).setOnCheckedChangeListener(this);
 		// 注册协议
-		findViewById(R.id.btn_user_protocol).setOnClickListener(new OnClickListener() {
+		findViewById(R.id.ll_user_protocol).setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(mContext, ActivityAgreement.class);
+				Intent intent = new Intent(mContext, ActivityReadTxt.class).putExtra("type", 1);
 				startActivity(intent);
 			}
 		});

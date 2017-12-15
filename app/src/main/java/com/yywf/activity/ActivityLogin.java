@@ -202,12 +202,12 @@ public class ActivityLogin extends BaseActivity implements OnClickListener, OnCh
 			break;
 		case R.id.btn_register:
 //			startActivity(new Intent(mContext, ActivityRegister.class));
-//			startActivity(new Intent(mContext, ActivityTest.class));
-			showRegisterSuccess();
+			startActivity(new Intent(mContext, ActivityTest.class));
+//			showRegisterSuccess();
 			break;
 		case R.id.btn_findPassword:// 密码找回
-//			showRegisterSuccess();
-			showChoiceCredit();
+			showRegisterSuccess();
+//			showChoiceCredit();
 //			startActivity(new Intent(mContext, ActivityForgotPwd.class));
 			break;
 //		case R.id.iv_qq:// 第三方qq登录
@@ -236,6 +236,7 @@ public class ActivityLogin extends BaseActivity implements OnClickListener, OnCh
 			return;
 		}
 		if (StringUtils.isBlank(password)) {
+
 			et_password.setError("密码不能为空");
 			et_password.requestFocus();
 			return;

@@ -1,5 +1,6 @@
 package com.yywf.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tool.utils.utils.StatusBarUtil;
 import com.tool.utils.utils.UtilPreference;
 import com.yywf.R;
 import com.yywf.fragment.FragmentHomePage;
@@ -50,6 +52,7 @@ public class ActivityHome extends FragmentActivity implements OnClickListener{
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(R.layout.activity_home);
+        StatusBarUtil.setTranslucent((Activity)mContext);
 
         MyActivityManager.getInstance().addActivity(this);
         initView();
