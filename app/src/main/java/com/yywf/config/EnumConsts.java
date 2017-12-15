@@ -121,4 +121,58 @@ public class EnumConsts {
 		}
 	}
 
+
+	public enum BankMenuType {
+		MENU_1(1, R.drawable.bank_pufa,"浦发银行"),
+		MENU_2(2, R.drawable.bank_mingsheng,"民生银行"),
+		MENU_3(3, R.drawable.bank_xingye,"兴业银行"),
+		MENU_4(4, R.drawable.bank_pingan,"平安银行"),
+		MENU_5(5, R.drawable.bank_zhaoshang,"招商银行"),
+		MENU_6(6, R.drawable.bank_jiaotong,"交通银行"),
+
+		;
+
+		private int code;
+		private int bg;
+		private String name;
+
+		BankMenuType(int code, int bg, String name) {
+			this.code = code;
+			this.bg = bg;
+			this.name = name;
+		}
+
+		public int getCode() {
+			return code;
+		}
+
+		public int getBg() {
+			return bg;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public static BankMenuType getByCode(int code) {
+			BankMenuType[] timeZoneTypes = BankMenuType.values();
+			for (BankMenuType timeZoneType : timeZoneTypes) {
+				if (timeZoneType.getCode() == code) {
+					return timeZoneType;
+				}
+			}
+			return null;
+		}
+
+		public static int getCodeByName(String name) {
+			BankMenuType[] timeZoneTypes = BankMenuType.values();
+			for (BankMenuType timeZoneType : timeZoneTypes) {
+				if (timeZoneType.getName() == name) {
+					return timeZoneType.getCode();
+				}
+			}
+			return -1;
+		}
+	}
+
 }

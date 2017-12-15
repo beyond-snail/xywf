@@ -31,6 +31,8 @@ import com.tool.utils.view.MyGridView;
 import com.tool.utils.view.MyListView;
 import com.yywf.R;
 import com.yywf.activity.ActivityAddZhangDan;
+import com.yywf.activity.ActivityBanKTiE;
+import com.yywf.activity.ActivityBanKa;
 import com.yywf.activity.ActivityCredit;
 import com.yywf.activity.ActivityKjsk;
 import com.yywf.activity.ActivityMine;
@@ -125,13 +127,13 @@ public class FragmentHomePage extends AbstractFragment implements
                         startActivity(new Intent(mContext, ActivityCredit.class));
                         break;
                     case 4: //一键提额
-
+                        startActivity(new Intent(mContext, ActivityBanKTiE.class));
                         break;
                     case 5: //待办事项
 
                         break;
                     case 6: //一键办卡
-
+                        startActivity(new Intent(mContext, ActivityBanKa.class));
                         break;
                     case 7: //我的账单
 

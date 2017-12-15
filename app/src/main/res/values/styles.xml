@@ -13,4 +13,17 @@
 
     <style name="AppBaseTheme" >
     </style>
+
+    <style name="base_match">
+        <item name="android:layout_width">match_parent </item>
+        <item name="android:layout_height"> match_parent </item>
+    </style>
+    <!-- 自定义进度条 -->
+    <style name="progressbar_horizontal" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:maxHeight">5dip</item>
+        <item name="android:minHeight">5dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
+        <item name="android:progressDrawable">@drawable/web_progressbar</item>
+    </style>
 </resources>
