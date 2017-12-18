@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/lib-tool" />
             <option value="$PROJECT_DIR$/lib-zxing" />
+            <option value="$PROJECT_DIR$/magicindicator" />
             <option value="$PROJECT_DIR$/pulltorefresh" />
           </set>
         </option>

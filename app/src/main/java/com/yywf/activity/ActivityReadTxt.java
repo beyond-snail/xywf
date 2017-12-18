@@ -50,6 +50,10 @@ public class ActivityReadTxt extends BaseActivity {
 			initTitle("快捷收款用户需知");
 		}else if (type == 4){
 			initTitle("还信用卡用户需知");
+		}else if (type == 5){
+			initTitle("提现规则");
+		}else if (type == 6){
+			initTitle("抵用券使用需知");
 		}
 		if (findViewById(R.id.backBtn) != null) {
 			findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
@@ -71,6 +75,10 @@ public class ActivityReadTxt extends BaseActivity {
 				is = getAssets().open("kj.TXT");
 			}else if (type == 4){
 				is = getAssets().open("hk.TXT");
+			}else if (type == 5){
+				is = getAssets().open("tx.TXT");
+			}else if (type == 6){
+				is = getAssets().open("dyq.TXT");
 			}
 			br = new BufferedReader(new InputStreamReader(is));
 			String temp = "";

@@ -101,6 +101,27 @@
             android:textSize="@dimen/text_size_normal"/>
     </LinearLayout>
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="10sp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/gray"/>
+    <TextView
+        android:id="@+id/id_tx_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:text="提现规则"
+        android:textSize="10sp"
+        android:textColor="@color/text_font"/>
+
+
+
     <Button
         android:id="@+id/btn_save"
         android:layout_width="match_parent"

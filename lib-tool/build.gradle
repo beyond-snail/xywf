@@ -41,4 +41,5 @@ dependencies {
     compile 'com.squareup.okio:okio:1.9.0'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'me.weyye.hipermission:library:1.0.7'
+    compile project(':magicindicator')
 }

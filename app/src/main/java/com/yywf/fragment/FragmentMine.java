@@ -29,6 +29,7 @@ import com.yywf.activity.ActivityMyWallet;
 import com.yywf.activity.ActivitySaoMaShouKuan;
 import com.yywf.activity.ActivitySetting;
 import com.yywf.activity.ActivitySmrz;
+import com.yywf.activity.ActivityVoucherTab;
 import com.yywf.adapter.MyMenuAdapter;
 import com.yywf.config.EnumConsts;
 import com.yywf.model.Menu;
@@ -141,7 +142,7 @@ public class FragmentMine extends AbstractFragment implements
 //                        startActivity(new Intent(mContext, ActivityCredit.class));
                         break;
                     case 4: //抵用券
-
+                        startActivity(new Intent(mContext, ActivityVoucherTab.class));
                         break;
                 }
             }

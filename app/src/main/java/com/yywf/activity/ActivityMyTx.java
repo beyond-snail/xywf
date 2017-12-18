@@ -17,6 +17,8 @@ public class ActivityMyTx extends BaseActivity implements View.OnClickListener {
 	private final String TAG = "ActivityMyTx";
 	private TextView tv_tx_balance_amt;
 	private TextView all_tx;
+	private TextView id_tx_detail;
+
 
 	private MoneyEditText etTradMoney;
 
@@ -49,6 +51,8 @@ public class ActivityMyTx extends BaseActivity implements View.OnClickListener {
 		all_tx = textView(R.id.all_tx);
 		all_tx.setOnClickListener(this);
 
+		textView(R.id.id_tx_detail).setOnClickListener(this);
+
 		button(R.id.btn_save).setOnClickListener(this);
 
 		String balanceAmt = getIntent().getStringExtra("balance");
@@ -78,6 +82,10 @@ public class ActivityMyTx extends BaseActivity implements View.OnClickListener {
 			case R.id.all_tx:
 				etTradMoney.setText(tv_tx_balance_amt.getText().toString().trim());
 				etTradMoney.setSelection(etTradMoney.getText().length());
+				break;
+			case R.id.id_tx_detail:
+				Intent intent = new Intent(mContext, ActivityReadTxt.class).putExtra("type", 5);
+				startActivity(intent);
 				break;
 			case R.id.btn_save:
 				String amt = StringUtils.changeY2F(etTradMoney.getText().toString().trim());

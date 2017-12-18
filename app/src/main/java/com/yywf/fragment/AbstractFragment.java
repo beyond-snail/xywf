@@ -214,6 +214,9 @@ public class AbstractFragment extends Fragment {
 		}
 	}
 
+
+
+
 	/**
 	 * 获取TextView
 	 */
