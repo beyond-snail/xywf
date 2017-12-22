@@ -3,8 +3,16 @@ package com.yywf.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.loopj.android.http.RequestParams;
+import com.tool.utils.utils.ALog;
+import com.tool.utils.utils.SPUtils;
+import com.tool.utils.utils.UtilPreference;
+import com.yywf.activity.ActivityLogin;
+import com.yywf.config.ConfigXy;
+import com.yywf.http.HttpUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +39,15 @@ public class MyActivityManager {
 		}
 		return instance;
 	}
+
+
+	//获取最上面的页面
+	public Activity getTaskTop() {
+		return activities.get(activities.size() - 1);
+	}
+
+
+
 
 	public void addActivity(Activity activity) {
 		
@@ -141,7 +158,7 @@ public class MyActivityManager {
 	 * @param context
 	 */
 	public void logout(final Context context) {
-//		doLogout(context);
+		doLogout(context);
 		// 注销
 		for (Activity activity : activities) {
 			activity.finish();
@@ -149,15 +166,15 @@ public class MyActivityManager {
 		activities.clear();
 //		MainConstant.getInstance(context).logout();// 退出即时聊天服务器
 //
-//		Intent intent = new Intent(context, ActivityLogin.class);
-//		context.startActivity(intent);
+		Intent intent = new Intent(context, ActivityLogin.class);
+		context.startActivity(intent);
 	}
 
 	/**
 	 * 退出应用
 	 */
 	public void exit(Context mContext) {
-//		doLogout(mContext);
+		doLogout(mContext);
 //		MainConstant.getInstance(mContext).logout();// 退出即时聊天服务器
 		try {
 			for (Activity activity : activities) {
@@ -189,28 +206,30 @@ public class MyActivityManager {
 		}
 	}
 	
-//	/**
-//	 * 注销或退出客户端时注销用户在服务端的登录
-//	 */
-//	private void doLogout(Context mContext){
-//		String url = ConfigApp.HC_LOGOUT;
-//		String userId = UtilPreference.getStringValue(mContext, "userId");
-//		RequestParams params = new RequestParams();
-//		params.add("userId", userId);
-//
-//		HttpUtil.get(url, params, new RequestListener() {
-//
-//			@Override
-//			public void success(String response) {
+	/**
+	 * 注销或退出客户端时注销用户在服务端的登录
+	 */
+	private void doLogout(Context mContext){
+		String url = ConfigXy.XY_LOGOUT;
+		String memberId = UtilPreference.getStringValue(mContext, "memberId");
+		RequestParams params = new RequestParams();
+		params.add("memberId", memberId);
+
+		HttpUtil.get(url, params, new HttpUtil.RequestListener() {
+
+			@Override
+			public void success(String response) {
 //				Log.info("MyActivityManager", "注销成功：" + response);
-//			}
-//
-//			@Override
-//			public void failed(Throwable error) {
+				ALog.json(response);
+			}
+
+			@Override
+			public void failed(Throwable error) {
 //				Log.info("MyActivityManager", "注销失败：" + error.getMessage());
-//			}
-//		});
-//
-//	}
+				ALog.json(error.getMessage());
+			}
+		});
+
+	}
 
 }

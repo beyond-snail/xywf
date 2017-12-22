@@ -207,20 +207,14 @@ public class ActivityWelcome extends BaseActivity {
 	 * @return
 	 */
 	private boolean isHasLogin() {
-		String userId = UtilPreference.getStringValue(mContext, "userId");
 		String userName = UtilPreference.getStringValue(mContext, "userName");
-		// 聊天服务器标识 
-//		String channelId = UtilPreference.getStringValue(mContext, "channelId");
-		String appSid =  UtilPreference.getStringValue(mContext, "appSid");
-        HttpUtilKey.appSid = appSid;
+		String memberId = UtilPreference.getStringValue(mContext, "memberId");
+		// 聊天服务器标识
 
-		if (StringUtils.isBlank(userId)) {
-			return false;
-		}
 		if (StringUtils.isBlank(userName)) {
 			return false;
 		}
-		if (StringUtils.isBlank(appSid)) {
+		if (StringUtils.isBlank(memberId)) {
 			return false;
 		}
 		return true;

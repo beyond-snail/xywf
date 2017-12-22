@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.loopj.android.http.RequestParams;
 import com.tool.utils.utils.AlertUtils;
 import com.tool.utils.utils.StringUtils;
+import com.tool.utils.utils.ToastUtils;
 import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MyCountDownTimer;
 import com.yywf.R;
@@ -150,18 +151,23 @@ public class ActivityRegister extends BaseActivity implements OnClickListener, O
 		countDowntimer.start();
 
 		RequestParams params = new RequestParams();
-		params.add("tele", phone);
+		params.add("phone", phone);
 		showProgress("正在发送");
 		HttpUtil.get(ConfigXy.XY_SMSVALDATE, params, new HttpUtil.RequestListener() {
 
 			@Override
 			public void success(String response) {
+				disShowProgress();
 				try {
-					JSONObject object = new JSONObject(response);
-					validCode = object.getString("result");
-					Log.i("注册码：", validCode);
-					curPhone = phone;
-					disShowProgress();
+					JSONObject result = new JSONObject(response);
+					if (!result.optBoolean("status")) {
+						ToastUtils.CustomShow(mContext, result.optString("message"));
+					}else {
+//						validCode = result.getString("result");
+//						Log.i("注册码：", validCode);
+//						curPhone = phone;
+					}
+
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -200,8 +206,8 @@ public class ActivityRegister extends BaseActivity implements OnClickListener, O
 			et_pwd.setError("密码位数不能低于6！");
 			return null;
 		}
-		String code = et_code.getText().toString().replace(" ", "");
-		if (StringUtils.isBlank(code) || !code.equals(validCode)) {
+		String code = et_code.getText().toString().trim();
+		if (StringUtils.isBlank(code)) {
 			et_code.requestFocus();
 			et_code.setError("输入验证码错误！");
 			return null;
@@ -212,8 +218,9 @@ public class ActivityRegister extends BaseActivity implements OnClickListener, O
 			return null;
 		}
 
-		params.add("account", et_telephone.getText().toString());
-		params.add("password", et_pwd.getText().toString());
+		params.add("phone", et_telephone.getText().toString().trim());
+		params.add("password", et_pwd.getText().toString().trim());
+		params.add("code", code.trim());
 
 		return params;
 	}
@@ -225,8 +232,8 @@ public class ActivityRegister extends BaseActivity implements OnClickListener, O
 	 */
 	private void doSubmit(RequestParams params) {
 		String url = ConfigXy.XY_REGISTER;
-		final String phone = et_telephone.getText().toString();
-		final String pwd = et_pwd.getText().toString();
+//		final String phone = et_telephone.getText().toString();
+//		final String pwd = et_pwd.getText().toString();
 		showProgress("注册中...");
 		HttpUtil.post(url, params, new HttpUtil.RequestListener() {
 
@@ -235,31 +242,49 @@ public class ActivityRegister extends BaseActivity implements OnClickListener, O
 				Log.i(TAG, response);
 				disShowProgress();
 				try {
-					JSONObject data = new JSONObject(response);
-					String result = data.getString("message");
-					if (result.contains("成功")) {
-						result = "注册成功" + "\n帐号:" + phone;
-						AlertUtils.alert(result, mContext, new DialogInterface.OnClickListener() {
 
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								dialog.dismiss();
-								// 记住注册的账号和密码
-								UtilPreference.saveString(mContext, "userName", phone);
-								UtilPreference.saveString(mContext, "password", pwd);
-
-								onBackPressed();
-							}
-						});
-					} else {
-						AlertUtils.alert(result, mContext, new DialogInterface.OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								dialog.dismiss();
-							}
-						});
+					JSONObject result = new JSONObject(response);
+					if (!result.optBoolean("status")) {
+						ToastUtils.CustomShow(mContext, result.optString("message"));
+					}else {
+						JSONObject dataStr = result.getJSONObject("data");
+						String token = dataStr.optString("token");
+						String memberId = dataStr.optString("memberId");
+						int approve_status = dataStr.optInt("approve_status");
+						UtilPreference.saveString(mContext, "token", token);
+						UtilPreference.saveString(mContext, "memberId", memberId);
+						UtilPreference.saveInt(mContext, "approve_status", approve_status);
+						startActivity(new Intent(mContext, ActivityHome.class));
+						finish();
 					}
+
+
+
+//					String result = data.getString("message");
+//
+//					if (result.contains("成功")) {
+//						result = "注册成功" + "\n帐号:" + phone;
+//						AlertUtils.alert(result, mContext, new DialogInterface.OnClickListener() {
+//
+//							@Override
+//							public void onClick(DialogInterface dialog, int which) {
+//								dialog.dismiss();
+//								// 记住注册的账号和密码
+//								UtilPreference.saveString(mContext, "userName", phone);
+//								UtilPreference.saveString(mContext, "password", pwd);
+//
+//								onBackPressed();
+//							}
+//						});
+//					} else {
+//						AlertUtils.alert(result, mContext, new DialogInterface.OnClickListener() {
+//
+//							@Override
+//							public void onClick(DialogInterface dialog, int which) {
+//								dialog.dismiss();
+//							}
+//						});
+//					}
 
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -283,7 +308,7 @@ public class ActivityRegister extends BaseActivity implements OnClickListener, O
 		public void onTextChanged(CharSequence s, int start, int before, int count) {
 			String phone = s.toString();
 			if (phone.length() == 11) {
-				validPhone(phone);
+//				validPhone(phone);
 			}
 		}
 

@@ -17,6 +17,7 @@ import com.tool.utils.utils.ToastUtils;
 import com.yywf.R;
 import com.yywf.activity.ActivitySecuritySetting;
 import com.yywf.activity.ActivitySmartCreditNow;
+import com.yywf.config.EnumConsts;
 import com.yywf.model.BankCardInfo;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class BankListAdapter extends BaseAdapter{
 	private Activity activity;// 上下文
 	private List<BankCardInfo> list;
 	private LayoutInflater inflater = null;// 导入布局
-	private int UiType = 0; //1：普通， 2：智能还款
+	private int UiType = 0; //1：普通， 2：智能还款 , 3:隐藏
 
 	public BankListAdapter(Activity context, List<BankCardInfo> list, int UiType) {
 		this.activity = context;
@@ -71,15 +72,22 @@ public class BankListAdapter extends BaseAdapter{
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		holder.tvBankName.setText(list.get(position).getBankName());
-		holder.tvWh.setText(list.get(position).getwH());
-		holder.tvUserName.setText(list.get(position).getName());
+		holder.tvBankName.setText(list.get(position).getBank_name());
+
+		holder.tvWh.setText(StringUtils.getEndStr(list.get(position).getCard_num(), 4));
+		holder.tvUserName.setText(list.get(position).getMember_name());
+
 		holder.tvAmt.setText(StringUtils.formatIntMoney(list.get(position).getAmt()));
 		holder.tvZdDay.setText(list.get(position).getZdDay()+"日");
 		holder.tvHkDay.setText(list.get(position).getHkDay()+"日");
-		holder.iconBank.setImageResource(R.drawable.bank_jiaotong);
+
+		if (EnumConsts.BankUi.getTypeByName(list.get(position).getBank_name()) != null){
+			holder.iconBank.setImageResource(EnumConsts.BankUi.getTypeByName(list.get(position).getBank_name()).getIcon_id());
+		}
 		if (UiType == 2){
 			holder.tvHk.setText("智能还款");
+		} else if (UiType == 3){
+			holder.tvHk.setVisibility(View.GONE);
 		}
 		holder.tvHk.setOnClickListener(new View.OnClickListener() {
 			@Override

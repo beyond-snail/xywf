@@ -35,4 +35,7 @@
     <string name="pay_title">请输入支付密码</string>
     <string name="pay_sure">确认支付</string>
     <string name="pay_cancel">取消</string>
+
+    <!-- 图片裁剪 -->
+    <string name="gl_wait">请稍等</string>
 </resources>

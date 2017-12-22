@@ -69,11 +69,11 @@ public class ActivitySmartCredit extends BaseActivity implements OnClickListener
         for (int i =0; i < 2; i++){
             BankCardInfo info = new BankCardInfo();
             info.setAmt(222222);
-            info.setBankName("交通银行");
+            info.setBank_name("交通银行");
             info.setHkDay(6);
             info.setZdDay(20);
-            info.setwH("3333");
-            info.setName("吴从鹏");
+            info.setCard_num("3333");
+            info.setMember_name("吴从鹏");
             bankList.add(info);
         }
 

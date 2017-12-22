@@ -65,6 +65,15 @@ public class ActivityPublicWeb extends BaseActivity {
 		}
 		textView(R.id.tv_header).setText(
 				getIntent().getExtras().getString("title"));
+		if (findViewById(R.id.backBtn) != null) {
+			findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
+			findViewById(R.id.backBtn).setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					finish();
+				}
+			});
+		}
 
 	}
 

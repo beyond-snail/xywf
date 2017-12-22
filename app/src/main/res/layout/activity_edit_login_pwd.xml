@@ -40,7 +40,7 @@
             android:gravity="center_vertical"
             android:hint="请输入旧登录密码"
             android:inputType="textPassword"
-            android:maxLength="30"
+            android:maxLength="18"
             android:singleLine="true"
             android:textColor="@color/gray"
             android:textSize="@dimen/text_size_hdpi" />
@@ -77,7 +77,7 @@
             android:background="@null"
             android:gravity="center_vertical"
             android:hint="请输入新登录密码"
-            android:maxLength="20"
+            android:maxLength="18"
             android:inputType="textPassword"
             android:singleLine="true"
             android:textColor="@color/gray"
@@ -116,7 +116,7 @@
             android:gravity="center_vertical"
             android:hint="请确认新登录密码"
             android:inputType="textPassword"
-            android:maxLength="22"
+            android:maxLength="18"
             android:singleLine="true"
             android:textColor="@color/gray"
             android:textSize="@dimen/text_size_hdpi" />

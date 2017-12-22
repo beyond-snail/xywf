@@ -21,7 +21,7 @@ public class ConfigXy {
     public static final String HC_DOWNLOAD_APP = "http://app.yunl7.com/static/base/html/downapp.html";
 
 	// 正式 2.0
-	public static final String ZF_SERVER_API = "http://sbs.eboss007.com/EBosService/api";
+	public static final String ZF_SERVER_API = "http://121.40.64.167:9094/xinyiwofu/";
 	public static final String ZF_SERVER_API2 = "http://sbs.eboss007.com/EBosService/";
 	public static final String ZF_MID = "103387170609001"; // 正式(云流正式)
 
@@ -35,16 +35,24 @@ public class ConfigXy {
 
 
     //登录
-    public static final String XY_LOGIN = "";
+    public static final String XY_LOGIN = ZF_SERVER_API+"app/member/login";
 
     //注册验证码
-    public static final String XY_SMSVALDATE = "";
+    public static final String XY_SMSVALDATE = ZF_SERVER_API+"app/member/sendCode";
+
+    //快捷收款预下单
+    public static final String XY_KJSK_PREORDER = ZF_SERVER_API+"/app/member/existedCardOrderPay";
+
+    //快捷收款下单
+    public static final String XY_KJSK_PAY_SUBMIT = ZF_SERVER_API+"/app/member/orderPaySubmit";
+
+    public static final String XY_LOGOUT = ZF_SERVER_API+"app/member/outLogin";
 
     //验证手机号是否注册
     public static final String XY_VERITYTELEPHONE = "";
 
     //注册
-    public static final String XY_REGISTER = "";
+    public static final String XY_REGISTER = ZF_SERVER_API+"app/member/register";
 
     //忘记密码
     public static final String XY_FORGOT_PWD = "";
@@ -52,30 +60,45 @@ public class ConfigXy {
     //协议
     public static final String XY_PROTOCOL = "";
 
+    //广告
+    public static final String ZF_GET_ADS_API = ZF_SERVER_API+"app/member/advertiseList";
+
+    //关于我们
+    public static final String ZF_GET_ABOUT_US = ZF_SERVER_API+"app/member/groupInfo";
+
     //实名认证
-    public static final String XY_SMRZ = "";
+    public static final String XY_SMRZ = ZF_SERVER_API+"app/member/realCheck";
+
+    //获取实名认证信息
+    public static final String XY_GET_SMRZ_INFO = ZF_SERVER_API+"app/member/queryCardInfo";
+
+    //获取会员信息
+    public static final String XY_GET_MEMBER_INFO = ZF_SERVER_API+"app/member/memberInfo";
+
+    //修改个人信息
+    public static final String XY_EDIT_MEMBER_INFO = ZF_SERVER_API+"app/member/updateInfo";
 
 
     //修改登录密码
-    public static final String XY_EDIT_LOGIN_PWD = "";
+    public static final String XY_EDIT_LOGIN_PWD = ZF_SERVER_API+"app/member/updatepassword";
 
     //修改支付密码
-    public static final String XY_EDIT_PAY_PWD = "";
+//    public static final String XY_EDIT_PAY_PWD = "";
 
-    //忘记密码验证码
-    public static final String XY_FORGOT_PAY_PWD_VALDATE = "";
+    //忘记密码
+    public static final String XY_FORGOT_PAY_PWD = ZF_SERVER_API+"app/member/resetpassword";
 
     //信用卡列表
-    public static final String XY_BANK_INFO_LIST = "";
+    public static final String XY_BANK_INFO_LIST = ZF_SERVER_API+"app/member/queryCardList";
 
     //添加信用卡
-    public static final String XY_CREDIT_ADD = "";
+    public static final String XY_CREDIT_ADD =  ZF_SERVER_API+"/app/member/bindCreditCard";
 
     //储蓄卡信息
-    public static final String GET_DEBIT_INFO = "";
+    public static final String GET_DEBIT_INFO = ZF_SERVER_API+"app/member/queryCardList";
 
     //更换储蓄卡
-    public static final String CHANGE_DEBIT_INFO = "";
+    public static final String CHANGE_DEBIT_INFO = ZF_SERVER_API+"app/member/updateDebitCard";
 
     //获取收款二维码
     public static final String GET_CODE_API = "";

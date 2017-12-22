@@ -117,35 +117,7 @@ public class ActivityLogin extends BaseActivity implements OnClickListener, OnCh
 	}
 
 
-	private void checkPermission() {
-		List<PermissionItem> permissionItems = new ArrayList<PermissionItem>();
-		permissionItems.add(new PermissionItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, "存储", R.drawable.permission_ic_storage));
-		permissionItems.add(new PermissionItem(Manifest.permission.ACCESS_FINE_LOCATION, "定位", R.drawable.permission_ic_location));
-		HiPermission.create(mContext)
-				.permissions(permissionItems)
-				.checkMutiPermission(new PermissionCallback() {
-					@Override
-					public void onClose() {
-						Log.i(TAG, "onClose");
-						ToastUtils.showShort(mContext, "用户关闭权限申请");
-					}
 
-					@Override
-					public void onFinish() {
-//						ToastUtils.showShort(mContext, "所有权限申请完成");
-					}
-
-					@Override
-					public void onDeny(String permisson, int position) {
-						Log.i(TAG, "onDeny");
-					}
-
-					@Override
-					public void onGuarantee(String permisson, int position) {
-						Log.i(TAG, "onGuarantee");
-					}
-				});
-	}
 
 
 	private void initView() {
@@ -180,9 +152,9 @@ public class ActivityLogin extends BaseActivity implements OnClickListener, OnCh
 	@Override
 	protected void onResume() {
 		refresh();
-		initAutoComplete(atv_userName);
-		HttpUtilKey.appSid = "";
-		UtilPreference.saveString(mContext, "appSid","");
+//		initAutoComplete(atv_userName);
+//		HttpUtilKey.appSid = "";
+//		UtilPreference.saveString(mContext, "appSid","");
 		super.onResume();
 	}
 
@@ -196,19 +168,19 @@ public class ActivityLogin extends BaseActivity implements OnClickListener, OnCh
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_login:// 登录
-//			doLogin();
+			doLogin();
 //			showRegisterSuccess();
-			startActivity(new Intent(mContext, ActivityHome.class));
+//			startActivity(new Intent(mContext, ActivityHome.class));
 			break;
 		case R.id.btn_register:
-//			startActivity(new Intent(mContext, ActivityRegister.class));
-			startActivity(new Intent(mContext, ActivityTest.class));
+			startActivity(new Intent(mContext, ActivityRegister.class));
+//			startActivity(new Intent(mContext, ActivityTest.class));
 //			showRegisterSuccess();
 			break;
 		case R.id.btn_findPassword:// 密码找回
-			showRegisterSuccess();
+//			showRegisterSuccess();
 //			showChoiceCredit();
-//			startActivity(new Intent(mContext, ActivityForgotPwd.class));
+			startActivity(new Intent(mContext, ActivityForgotPwd.class));
 			break;
 //		case R.id.iv_qq:// 第三方qq登录
 //			mLoginAuth.doQQLogin();
@@ -227,8 +199,8 @@ public class ActivityLogin extends BaseActivity implements OnClickListener, OnCh
 	 * 执行登录
 	 */
 	private void doLogin() {
-		username = atv_userName.getText().toString();
-		password = et_password.getText().toString();
+		username = atv_userName.getText().toString().trim();
+		password = et_password.getText().toString().trim();
 
 		if (!StringUtils.isCellPhone(username)) {
 			atv_userName.setError("手机号码格式不正确");
@@ -244,7 +216,7 @@ public class ActivityLogin extends BaseActivity implements OnClickListener, OnCh
 		
 		showProgress("加载中...");
 		RequestParams params = new RequestParams();
-		params.add("account", username);
+		params.add("userName", username);
 		params.add("password", password);
 		HttpUtil.get(ConfigXy.XY_LOGIN, params, requestListener);
 
@@ -256,25 +228,30 @@ public class ActivityLogin extends BaseActivity implements OnClickListener, OnCh
 		public void success(String response) {
 			disShowProgress();
 			try {
-				JSONObject obj = new JSONObject(response);
-				if (!"success".equalsIgnoreCase(obj.optString("status", ""))) {
-					showErrorMsg(obj.optString("message"));
+				JSONObject result = new JSONObject(response);
+				if (!result.optBoolean("status")) {
+					showErrorMsg(result.getString("message"));
 					return;
 				}
 
-				JSONObject data = obj.getJSONObject("obj");
-				// 缓存登录环信要用的用户名
-				if (!data.has("huanxin") || StringUtils.isBlank(data.optString("huanxin"))) {
-					showErrorMsg("账号异常，请联系管理员处理！");
-					// return; 去掉环信限制
-				}
+//				JSONObject data = obj.getJSONObject("obj");
 
-				UtilPreference.saveLoginInfo(mContext, username, password, data);
-				saveHistory("");// 记住登录过的账号
-				
+
+//				UtilPreference.saveLoginInfo(mContext, username, password, data);
+//				saveHistory("");// 记住登录过的账号
+
+				JSONObject dataStr = result.getJSONObject("data");
+				String token = dataStr.optString("token");
+				String memberId = dataStr.optString("memberId");
+				int approve_status = dataStr.optInt("approve_status");
+				UtilPreference.saveString(mContext, "token", token);
+				UtilPreference.saveString(mContext, "userName", username);
+				UtilPreference.saveString(mContext, "password", password);
+				UtilPreference.saveString(mContext, "memberId", memberId);
+				UtilPreference.saveInt(mContext, "approve_status", approve_status);
 				
 
-//				startActivity(new Intent(mContext, ActivityHome.class));
+				startActivity(new Intent(mContext, ActivityHome.class));
 				finish();
 
 			} catch (Exception e) {

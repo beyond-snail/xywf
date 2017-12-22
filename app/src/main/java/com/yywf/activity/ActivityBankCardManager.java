@@ -16,17 +16,24 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.loopj.android.http.RequestParams;
+import com.tool.utils.utils.ALog;
+import com.tool.utils.utils.StringUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.RoundImageView;
 import com.yywf.R;
 import com.yywf.adapter.BankListAdapter;
 import com.yywf.config.ConfigXy;
+import com.yywf.config.EnumConsts;
 import com.yywf.http.HttpUtil;
 import com.yywf.model.BankCardInfo;
+import com.yywf.model.BankUserInfo;
+import com.yywf.model.UserInfo;
 import com.yywf.util.MyActivityManager;
 
 import org.json.JSONArray;
@@ -43,6 +50,8 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
     private PullToRefreshListView listview;
     private BankListAdapter bankAdapter;
     private List<BankCardInfo> bankList = new ArrayList<BankCardInfo>();
+
+    private List<BankCardInfo> vo;
 
     private RelativeLayout ll_credit;
     private LinearLayout ll_debit;
@@ -95,17 +104,17 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
 
 
 
-        //测试数据
-        for (int i =0; i < 2; i++){
-            BankCardInfo info = new BankCardInfo();
-            info.setAmt(222222);
-            info.setBankName("交通银行");
-            info.setHkDay(6);
-            info.setZdDay(20);
-            info.setwH("3333");
-            info.setName("吴从鹏");
-            bankList.add(info);
-        }
+//        //测试数据
+//        for (int i =0; i < 2; i++){
+//            BankCardInfo info = new BankCardInfo();
+//            info.setAmt(222222);
+//            info.setBankName("交通银行");
+//            info.setHkDay(6);
+//            info.setZdDay(20);
+//            info.setwH("3333");
+//            info.setName("吴从鹏");
+//            bankList.add(info);
+//        }
 
 
 
@@ -144,8 +153,7 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
                 refreshView.getLoadingLayoutProxy(false, true).setLastUpdatedLabel("更新于：" + label);
 
-                if (bankList.size() == 0) {
-                    handler.postDelayed(new Runnable() {
+                handler.postDelayed(new Runnable() {
 
                         @Override
                         public void run() {
@@ -154,10 +162,6 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
                         }
                     }, 1000);
 
-                } else {
-                    page++;
-                    loadData(false);
-                }
             }
         });
 
@@ -176,11 +180,9 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
         }
         String url = ConfigXy.XY_BANK_INFO_LIST;
         RequestParams params = new RequestParams();
-//        params.add("memberId", UtilPreference.getStringValue(mContext, "zf_member_id"));
-//        params.add("groupId", UtilPreference.getStringValue(mContext, "zf_group_id"));
-//        params.add("pageNo", page + "");
-//        params.add("pageSize", "10");
-//        params.add("token", UtilPreference.getStringValue(mContext, "token"));
+        params.put("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.put("type", "2");
+        params.put("token", UtilPreference.getStringValue(mContext, "token"));
 
         HttpUtil.get(url, params, new HttpUtil.RequestListener() {
 
@@ -199,28 +201,32 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
                         return;
                     }
 
-                    JSONArray obj = result.getJSONArray("data");
-                    if (obj.length() <= 0){
-                        bankAdapter.notifyDataSetChanged();
-                        listview.onRefreshComplete();
-                        return;
-                    }
+                    JSONObject obj = result.getJSONObject("data");
+                    String bank_list = obj.optString("bank_list");
+                    if (!StringUtils.isBlank(bank_list)) {
 
-                    Gson gson = new Gson();
-                    List<BankCardInfo> bankCardInfoList = gson.fromJson(obj.toString(), new TypeToken<List<BankCardInfo> >() {
-                    }.getType());
+                        Gson gson = new Gson();
+                        List<BankCardInfo> bankCardInfoList = gson.fromJson(bank_list, new TypeToken<List<BankCardInfo> >() {
+                        }.getType());
+                        if (bankCardInfoList.size() > 0) {
+                            linearLayout(R.id.id_no_data).setVisibility(View.GONE);
+                            bankList.addAll(bankList.size(), bankCardInfoList);
 
-                    if (bankCardInfoList.size() > 0) {
-                        linearLayout(R.id.id_no_data).setVisibility(View.GONE);
-                        bankList.addAll(bankList.size(), bankCardInfoList);
-
-                    } else {
+                        } else {
+                            if (bankList.size() > 0){
+                                linearLayout(R.id.id_no_data).setVisibility(View.GONE);
+                            }else{
+                                linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }else{
                         if (bankList.size() > 0){
                             linearLayout(R.id.id_no_data).setVisibility(View.GONE);
                         }else{
                             linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
                         }
                     }
+
 
 
                     bankAdapter.notifyDataSetChanged();
@@ -247,7 +253,14 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
 	@Override
 	protected void onResume() {
 		super.onResume();
-//        reloadData();
+        if (ll_credit.getVisibility() == View.VISIBLE) {
+            reloadData();
+        }
+
+        if (ll_debit.getVisibility() == View.VISIBLE){
+            //加载储蓄卡的信息
+            loadDebitCardInfo();
+        }
 
 	}
 
@@ -316,8 +329,9 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
     private void loadDebitCardInfo() {
         showProgress("加载中...");
         RequestParams params = new RequestParams();
-//        params.add("id", userId);
-
+        params.put("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.put("type", "1");
+        params.put("token", UtilPreference.getStringValue(mContext, "token"));
         String url = ConfigXy.GET_DEBIT_INFO;
         HttpUtil.get(url, params, new HttpUtil.RequestListener() {
 
@@ -326,12 +340,42 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
                 disShowProgress();
                 try {
                     JSONObject result = new JSONObject(response);
-//                    String obj = result.getString("obj");
-//                    UserInfoVO vo = (UserInfoVO) GsonUtil.getInstance().convertJsonStringToObject(obj,
-//                            UserInfoVO.class);
-//                    initUserInfo(vo);
-                } catch (JSONException e) {
-                    Log.e(TAG, "json解析出错:" + e.getMessage());
+                    if (!result.optBoolean("status")) {
+                        showErrorMsg(result.getString("message"));
+                        return;
+                    }
+                    JSONObject obj = result.getJSONObject("data");
+                    String bank_list = obj.optString("bank_list");
+
+                    if (!StringUtils.isBlank(bank_list)) {
+                        Gson gson = new Gson();
+                         vo = gson.fromJson(bank_list, new TypeToken<List<BankCardInfo> >() {
+                        }.getType());
+
+
+
+                        if (vo != null){
+                            if (!StringUtils.isBlank(vo.get(0).getMember_name())){
+                                userName.setText(vo.get(0).getMember_name());
+                            }
+                            if (!StringUtils.isBlank(vo.get(0).getBank_name())){
+                                bankName.setText(vo.get(0).getBank_name());
+
+                                if (EnumConsts.BankUi.getTypeByName(vo.get(0).getBank_name()) != null){
+                                    imageView.setImageResource(EnumConsts.BankUi.getTypeByName(vo.get(0).getBank_name()).getIcon_id());
+                                }
+                            }
+                            if (!StringUtils.isBlank(vo.get(0).getCard_num())){
+                                bankCarkNo.setText(vo.get(0).getCard_num());
+                            }
+
+
+                        }
+                    }
+
+
+                } catch (Exception e) {
+                    Log.e(TAG, "doLogin() Exception: " + e.getMessage());
                 }
             }
 

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.loopj.android.http.RequestParams;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.ToastUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.utils.ValidateUtil;
 import com.tool.utils.view.MyCountDownTimer;
 import com.tool.utils.view.Split4EditTextWatcher;
@@ -126,8 +127,11 @@ public class ActivityEditLoginPwd extends BaseActivity implements OnClickListene
 
         showProgress("加载中...");
         RequestParams params = new RequestParams();
-//		params.add("account", username);
-//		params.add("password", password);
+        params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.add("token", UtilPreference.getStringValue(mContext, "token"));
+		params.add("oldPassword", et_old_login_pwd.getText().toString().trim());
+		params.add("newPassword", et_new_login_pwd.getText().toString().trim());
+		params.add("type", "1");
         HttpUtil.get(ConfigXy.XY_EDIT_LOGIN_PWD, params, requestListener);
 
     }
@@ -138,7 +142,16 @@ public class ActivityEditLoginPwd extends BaseActivity implements OnClickListene
         public void success(String response) {
             disShowProgress();
             try {
-                JSONObject obj = new JSONObject(response);
+                JSONObject result = new JSONObject(response);
+                if (!result.optBoolean("status")) {
+                    ToastUtils.CustomShow(mContext, result.optString("message"));
+                }else{
+                    //修改后登录
+                    ToastUtils.CustomShow(mContext, result.optString("message"));
+                    UtilPreference.clearNotKeyValues(mContext);
+                    // 退出账号 返回到登录页面
+                    MyActivityManager.getInstance().logout(mContext);
+                }
 
 
             } catch (Exception e) {

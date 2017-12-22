@@ -697,7 +697,7 @@ public class StringUtils {
 	}
 
 	/**
-	 * 屏蔽卡号
+	 * 屏蔽卡号和身份证号
 	 * 
 	 * @param cardNo
 	 *            银行卡号
@@ -718,6 +718,32 @@ public class StringUtils {
 		sb.append(cardNo.substring(0, 6)).append(shieldedText).append(cardNo.substring(length - 4, length));
 		return sb.toString();
 	}
+
+
+	/**
+	 * 屏蔽手机号
+	 *
+	 * @param phoneNO
+	 *
+	 * @return 屏蔽后的卡号
+	 */
+	public static String formatPhoneNo(String phoneNO) {
+		if (!checkNotNull(phoneNO)) {
+			LogUtils.e("屏蔽手机号", " phoneNO null");
+			return "";
+		}
+		int length = phoneNO.length();
+
+		String shieldedText = "";
+		for (int i = 0; i < 4; i++) {
+			shieldedText += "*";
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append(phoneNO.substring(0, 3)).append(shieldedText).append(phoneNO.substring(length - 4, length));
+		return sb.toString();
+	}
+
+
 
 
 	/**
@@ -883,6 +909,24 @@ public class StringUtils {
 		}
 		return str;
 	}
+
+
+	/**
+	 * 截取字串后几位
+	 * @param str
+	 * @param n
+	 * @return
+	 */
+	public static String getEndStr(String str, int n){
+		if (isBlank(str)){
+			return "";
+		}
+		if (str.length() < n){
+			return "";
+		}
+		return str.substring(str.length()-n);
+	}
+
 
 
 	/**

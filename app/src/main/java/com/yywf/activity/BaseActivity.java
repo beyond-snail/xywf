@@ -1,5 +1,6 @@
 package com.yywf.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -15,6 +16,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -31,6 +33,7 @@ import android.widget.Toast;
 
 
 import com.tool.utils.utils.StatusBarUtil;
+import com.tool.utils.utils.ToastUtils;
 import com.views.popwindow.bean.BaseFilter;
 import com.views.popwindow.pop.CommonFilterPop;
 import com.yywf.R;
@@ -38,6 +41,10 @@ import com.yywf.util.MyActivityManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import me.weyye.hipermission.HiPermission;
+import me.weyye.hipermission.PermissionCallback;
+import me.weyye.hipermission.PermissionItem;
 
 public abstract class BaseActivity extends Activity {
 
@@ -359,7 +366,7 @@ public abstract class BaseActivity extends Activity {
      * 显示数据加载状态
      *
      * @param loading
-     * @param failed
+     * @param
      * @param datas
      * @param type
      */
@@ -521,5 +528,37 @@ public abstract class BaseActivity extends Activity {
             mPopupWindow.dismiss();
             mPopupWindow = null;
         }
+    }
+
+
+
+    public void checkPermission() {
+//        List<PermissionItem> permissionItems = new ArrayList<PermissionItem>();
+//        permissionItems.add(new PermissionItem(Manifest.permission.WRITE_EXTERNAL_STORAGE, "存储", R.drawable.permission_ic_storage));
+//        permissionItems.add(new PermissionItem(Manifest.permission.ACCESS_FINE_LOCATION, "定位", R.drawable.permission_ic_location));
+        HiPermission.create(mContext)
+//                .permissions(permissionItems)
+                .checkMutiPermission(new PermissionCallback() {
+                    @Override
+                    public void onClose() {
+                        Log.i(TAG, "onClose");
+                        ToastUtils.showShort(mContext, "用户关闭权限申请");
+                    }
+
+                    @Override
+                    public void onFinish() {
+//						ToastUtils.showShort(mContext, "所有权限申请完成");
+                    }
+
+                    @Override
+                    public void onDeny(String permisson, int position) {
+                        Log.i(TAG, "onDeny");
+                    }
+
+                    @Override
+                    public void onGuarantee(String permisson, int position) {
+                        Log.i(TAG, "onGuarantee");
+                    }
+                });
     }
 }

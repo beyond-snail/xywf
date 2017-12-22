@@ -15,6 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.loopj.android.http.RequestParams;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tool.utils.utils.StringUtils;
+import com.tool.utils.utils.ToastUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MyGridView;
 import com.tool.utils.view.MyListView;
 import com.tool.utils.view.RoundImageView;
@@ -25,14 +30,21 @@ import com.yywf.activity.ActivityFollowUs;
 import com.yywf.activity.ActivityHome;
 import com.yywf.activity.ActivityKjsk;
 import com.yywf.activity.ActivityMine;
+import com.yywf.activity.ActivityMyQr;
+import com.yywf.activity.ActivityMyTeam;
 import com.yywf.activity.ActivityMyWallet;
 import com.yywf.activity.ActivitySaoMaShouKuan;
 import com.yywf.activity.ActivitySetting;
 import com.yywf.activity.ActivitySmrz;
 import com.yywf.activity.ActivityVoucherTab;
 import com.yywf.adapter.MyMenuAdapter;
+import com.yywf.config.ConfigXy;
 import com.yywf.config.EnumConsts;
+import com.yywf.http.HttpUtil;
 import com.yywf.model.Menu;
+import com.yywf.util.MyActivityManager;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +56,10 @@ public class FragmentMine extends AbstractFragment implements
     private static final String TAG = "FragmentMine";
     private RoundImageView roundImageView;
     private TextView tvName;
+    private TextView tvGradeName;
     private TextView tvPhone;
     private TextView tvRz;
-    private TextView tvBalanceAmt;
+//    private TextView tvBalanceAmt;
     private TextView tvLxwmTel;
     private RelativeLayout rl_smrz;
     private RelativeLayout rl_bank_manager;
@@ -84,9 +97,10 @@ public class FragmentMine extends AbstractFragment implements
 
         roundImageView = fragment.findViewById(R.id.iv_img_header);
         tvName = fragment.findViewById(R.id.tv_name);
+        tvGradeName = fragment.findViewById(R.id.grade_name);
         tvPhone = fragment.findViewById(R.id.tv_phone);
         tvRz = fragment.findViewById(R.id.tv_rz);
-        tvBalanceAmt = fragment.findViewById(R.id.tv_balance_amt);
+//        tvBalanceAmt = fragment.findViewById(R.id.tv_balance_amt);
         tvLxwmTel = fragment.findViewById(R.id.tv_lxwm_tel);
 
         rl_smrz = fragment.findViewById(R.id.rl_smrz);
@@ -136,10 +150,10 @@ public class FragmentMine extends AbstractFragment implements
                         startActivity(new Intent(mContext, ActivityMyWallet.class));
                         break;
                     case 2: //我的团队
-
+                        startActivity(new Intent(mContext, ActivityMyTeam.class));
                         break;
                     case 3: //推广二维码
-//                        startActivity(new Intent(mContext, ActivityCredit.class));
+                        startActivity(new Intent(mContext, ActivityMyQr.class));
                         break;
                     case 4: //抵用券
                         startActivity(new Intent(mContext, ActivityVoucherTab.class));
@@ -154,7 +168,7 @@ public class FragmentMine extends AbstractFragment implements
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.ll_user_info: //个人中心
-                startActivity(new Intent(mContext, ActivityMine.class));
+                startActivity(new Intent(mContext, ActivityMine.class).putExtra("userName", tvName.getText().toString().trim()));
                 break;
             case R.id.rl_smrz: //实名认证
                 startActivity(new Intent(mContext, ActivitySmrz.class));
@@ -178,6 +192,82 @@ public class FragmentMine extends AbstractFragment implements
 
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getMemberInfo();
+    }
+
+    private void getMemberInfo() {
+
+        showProgress("加载中...");
+        RequestParams params = new RequestParams();
+        params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.add("token", UtilPreference.getStringValue(mContext, "token"));
+        HttpUtil.get(ConfigXy.XY_GET_MEMBER_INFO, params, requestListener);
+    }
+
+    private HttpUtil.RequestListener requestListener = new HttpUtil.RequestListener() {
+
+        @Override
+        public void success(String response) {
+            disShowProgress();
+            try {
+                JSONObject result = new JSONObject(response);
+                if (!result.optBoolean("status")) {
+                    showErrorMsg(result.getString("message"));
+                    return;
+                }
+
+                JSONObject dataStr = result.getJSONObject("data");
+                String name = dataStr.optString("name");
+                String grade_name = dataStr.optString("grade_name");
+                String icon = dataStr.optString("icon");
+                String service_phone = dataStr.optString("service_phone");
+                String phone = dataStr.optString("phone");
+                int status = dataStr.optInt("status");
+
+
+                if (!StringUtils.isBlank(icon)){
+                    ImageLoader.getInstance().displayImage(icon, roundImageView);
+                }
+
+                if (!StringUtils.isBlank(name)){
+                    tvName.setText(name);
+                }
+
+                if (!StringUtils.isBlank(grade_name)){
+                    tvGradeName.setText(grade_name);
+                }
+
+                if (!StringUtils.isBlank(service_phone)){
+                    tvLxwmTel.setText(service_phone);
+                }
+
+                if (!StringUtils.isBlank(phone)){
+                    tvPhone.setText(phone);
+                }
+
+                if (status == 1){
+                    tvRz.setVisibility(View.VISIBLE);
+                }
+
+
+
+
+
+            } catch (Exception e) {
+                Log.e(TAG, "doCommit() Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        public void failed(Throwable error) {
+            disShowProgress();
+            showE404();
+        }
+    };
 
 
 }

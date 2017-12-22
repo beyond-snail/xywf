@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.loopj.android.http.RequestParams;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.ToastUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.utils.ValidateUtil;
 import com.tool.utils.view.MyCountDownTimer;
 import com.tool.utils.view.Split4EditTextWatcher;
@@ -29,7 +30,7 @@ import java.text.ParseException;
 
 public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
 
-    private final String TAG = "ActivityChangeDebitInfo";
+    private final String TAG = "ActivityCreditAdd";
     private EditText et_user_name;
     private EditText et_user_id;
     private EditText et_card_no;
@@ -45,7 +46,6 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
     private TextView tv_getcode;
 
 
-    private String validCode;
 
 
     @Override
@@ -159,17 +159,19 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
         countDowntimer.start();
 
         RequestParams params = new RequestParams();
-        params.add("tele", phone);
+        params.add("phone", phone);
         showProgress("正在发送");
         HttpUtil.get(ConfigXy.XY_SMSVALDATE, params, new HttpUtil.RequestListener() {
 
             @Override
             public void success(String response) {
+                disShowProgress();
                 try {
-                    JSONObject object = new JSONObject(response);
-                    validCode = object.getString("result");
-                    Log.i("注册码：", validCode);
-                    disShowProgress();
+                    JSONObject result = new JSONObject(response);
+                    if (!result.optBoolean("status")) {
+                        ToastUtils.CustomShow(mContext, result.optString("message"));
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -192,6 +194,9 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
     private void doCommit() throws ParseException {
 
 
+        String bandCard = StringUtils.replaceBlank(et_card_no.getText().toString().trim());
+
+
         if (StringUtils.isBlank(et_user_name.getText().toString().trim())) {
             ToastUtils.showShort(this, "姓名不能为空");
             et_user_name.requestFocus();
@@ -210,13 +215,13 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
             return;
         }
 
-        if (StringUtils.isBlank(et_card_no.getText().toString().trim())) {
+        if (StringUtils.isBlank(bandCard)) {
             ToastUtils.showShort(this, "银行卡号不能为空");
             et_card_no.requestFocus();
             return;
         }
 
-        if (!StringUtils.checkBankCard(et_card_no.getText().toString().trim())) {
+        if (!StringUtils.checkBankCard(bandCard)) {
             ToastUtils.showShort(this, "请输入正确银行卡号");
             et_card_no.requestFocus();
             return;
@@ -234,11 +239,11 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
             return;
         }
 
-        if (StringUtils.isBlank(et_iccu.getText().toString().trim())) {
-            ToastUtils.showShort(this, "发卡行不能为空");
-            et_iccu.requestFocus();
-            return;
-        }
+//        if (StringUtils.isBlank(et_iccu.getText().toString().trim())) {
+//            ToastUtils.showShort(this, "发卡行不能为空");
+//            et_iccu.requestFocus();
+//            return;
+//        }
 
         if (StringUtils.isBlank(et_cvv2.getText().toString().trim())) {
             ToastUtils.showShort(this, "CVV2不能为空");
@@ -260,13 +265,13 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
 
         if (StringUtils.isBlank(et_bill_day.getText().toString().trim())) {
             ToastUtils.showShort(this, "账单日不为空");
-            et_phone.requestFocus();
+            et_bill_day.requestFocus();
             return;
         }
 
         if (StringUtils.isBlank(et_repayment_day.getText().toString().trim())) {
             ToastUtils.showShort(this, "还款日不为空");
-            et_phone.requestFocus();
+            et_repayment_day.requestFocus();
             return;
         }
 
@@ -277,8 +282,17 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
 
         showProgress("加载中...");
         RequestParams params = new RequestParams();
-//		params.add("account", username);
-//		params.add("password", password);
+        params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.add("token", UtilPreference.getStringValue(mContext, "token"));
+        params.add("cardNum",bandCard);
+        params.add("idName", et_user_name.getText().toString().trim());
+        params.add("idNo", et_user_id.getText().toString().trim());
+        params.add("phone", et_phone.getText().toString().trim());
+        params.add("cardCvn", et_cvv2.getText().toString().trim());
+        params.add("cardExpdate", et_date.getText().toString().trim());
+        params.add("billDate", et_bill_day.getText().toString().trim());
+        params.add("payDate", et_repayment_day.getText().toString().trim());
+        params.add("code", et_code.getText().toString().trim());
         HttpUtil.get(ConfigXy.XY_CREDIT_ADD, params, requestListener);
 
     }
@@ -289,7 +303,13 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
         public void success(String response) {
             disShowProgress();
             try {
-                JSONObject obj = new JSONObject(response);
+                JSONObject result = new JSONObject(response);
+                if (!result.optBoolean("status")) {
+                    ToastUtils.CustomShow(mContext, result.optString("message"));
+                }else{
+                    ToastUtils.CustomShow(mContext, result.optString("message"));
+                    finish();
+                }
 
 
             } catch (Exception e) {

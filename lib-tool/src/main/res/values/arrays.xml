@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="gender">
+        <item>男|1</item>
+        <item>女|2</item>
+    </string-array>
+    <string-array name="driver_license">
+        <item>A类驾照|1</item>
+        <item>B类驾照|2</item>
+        <item>C类驾照|3</item>
+    </string-array>
+    <string-array name="notice_change_type">
+        <item>清零操作</item>
+        <item>单据上传</item>
+        <item>单据相册</item>
+    </string-array>
+    <string-array name="oil_type">
+        <item>汽油92</item>
+        <item>汽油95</item>
+        <item>柴油0</item>
+    </string-array>
+    <string-array name="range">
+        <item>1公里</item>
+        <item>5公里</item>
+        <item>10公里</item>
+        <item>30公里</item>
+    </string-array>
+    <string-array name="notice_types">
+        <item>提醒1次|1</item>
+        <item>提醒多次|2</item>
+        <item>屏蔽消息|3</item>
+    </string-array>
+
+    <!-- share items -->
+    <string-array name="app_share_items">
+        <item>新浪微博</item>
+        <item>腾讯微博</item>
+        <item>更多...</item>
+    </string-array>
+
+    <!-- 一键扫描项 -->
+    <string-array name="scan_items">
+        <item>010101010010101100110</item>
+        <item>101001101010110101001</item>
+        <item>011010010011000101010</item>
+        <item>010101010011011000010</item>
+        <item>101011010101101101001</item>
+        <item>111010100010010101110</item>
+        <item>000010101010111101010</item>
+        <item>000110101011101001011</item>
+        <item>010010101010100011101</item>
+        <item>111010100101010010101</item>
+        <item>110101001010101001000</item>
+        <item>001010101100101010011</item>
+        <item>010101010011011000010</item>
+        <item>101011010101101101001</item>
+        <item>111010100010010101110</item>
+        <item>010101010011011000010</item>
+        <item>101011010101101101001</item>
+        <item>111010100010010101110</item>
+        <item>000010101010111101010</item>
+        <item>000110101011101001011</item>
+        <item>010010101010100011101</item>
+        <item>010101010010101100110</item>
+        <item>101001101010110101001</item>
+        <item>011010010011000101010</item>
+        <item>010101010011011000010</item>
+        <item>101011010101101101001</item>
+        <item>111010100010010101110</item>
+        <item>000010101010111101010</item>
+        <item>000110101011101001011</item>
+        <item>010010101010100011101</item>
+        <item>111010100101010010101</item>
+        <item>110101001010101001000</item>
+    </string-array>
+    
+    <string-array name="oil_brand">
+        <item>美孚|1</item>
+        <item>嘉实多|2</item>
+        <item>壳牌|3</item>
+    </string-array>
+    
+    <string-array name="oil_type2">
+        <item>全合成|1</item>
+        <item>半合成|2</item>
+        <item>矿物油|3</item>
+    </string-array>
+    
+    <string-array name="oil_guige">
+        <item>0-40|1</item>
+        <item>10-40|2</item>
+    </string-array>
+    
+    <!-- 排序类型 -->
+    <string-array name="sortType">
+        <item>默认排序</item>
+        <item>按价格升序</item>
+        <item>按价格降序</item>
+        <item>按销量升序</item>
+        <item>按销量降序</item>
+    </string-array>
+    
+      <!-- 分享商城商品列表排序类型 -->
+    <string-array name="orderByType">
+        <item>升序</item>
+        <item>降序</item>
+    </string-array>
+    
+    
+    <!-- 开户行 提现银行-->
+	<string-array name="date">
+            <item>中国银行|104100000004</item>
+            <item>工商银行|102100099996</item>
+            <item>农业银行|103100000018</item>
+            <item>建设银行|105100000017</item>
+            <item>交通银行|301290011110</item>
+            <item>招商银行|308584001024</item>
+            <item>民生银行|305100000013</item>
+            <item>浦发银行|310290098012</item>
+            <item>兴业银行|309391000011</item>
+            <item>平安银行|307584008005</item>
+            <item>中信银行|302100011106</item>
+            <item>光大银行|303100000006</item>
+            <item>广发银行|306290003518</item>
+        <!--<item>邮储银行|403100000004</item>-->
+            <item>华夏银行|304100040000</item>
+        <!--<item>北京银行|313100000013</item>-->
+        <!--<item>厦门银行|313393080005</item>-->
+        <!--<item>上海银行|325290000012</item>-->
+        <!--<item>上海农村商业银行|322290000011</item>-->
+    </string-array>
+    
+	<!-- 开户行 快捷银行-->
+	<string-array name="date1">
+        <item>工商银行|0801020000</item>
+        <item>光大银行|0803030000</item>
+        <item>广发银行|0803060000</item>
+        <item>华夏银行|0803040000</item>
+        <item>建设银行|0801050000</item>
+        <item>交通银行|0803010000</item>
+        <item>民生银行|0803050000</item>
+        <item>农业银行|0801030000</item>
+        <item>平安银行|0804100000</item>
+        <item>浦东发展银行|0803100000</item>
+        <item>兴业银行|0803090000</item>
+        <item>邮政储蓄银行|0801000000</item>
+        <item>中国银行|0801040000</item>
+        <item>中信银行|0863020000</item>
+        <item>招商银行|0803080000</item>
+        
+    </string-array>
+</resources>

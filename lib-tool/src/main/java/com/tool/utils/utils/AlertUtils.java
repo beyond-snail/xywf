@@ -285,6 +285,7 @@ public class AlertUtils {
 		CustomDialog.Builder builder = new CustomDialog.Builder(ctx, R.style.MyDialogStyleBottom);
 		builder.setTitle(title);
 		builder.setItems(items, itemClickListener);
+		builder.setDismis(true);
 		builder.setNegativeButton("取消", new OnClickListener() {
 
 			@Override

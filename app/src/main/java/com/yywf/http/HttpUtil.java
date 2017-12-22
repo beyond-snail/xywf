@@ -8,6 +8,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.BinaryHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.tool.utils.utils.ALog;
 import com.tool.utils.utils.UtilPreference;
 import com.yywf.myapplication.MainApplication;
 
@@ -43,9 +44,9 @@ public class HttpUtil {
 	 * @param res
 	 */
 	public static void get(String url, RequestParams params, final RequestListener res) {
-		String appSid = UtilPreference.getStringValue(MainApplication.applicationContext, "appSid");
-		params.add("app_member_sid", appSid);
-		Log.i("HttpUtil", url + "?" + params.toString());
+//		String appSid = UtilPreference.getStringValue(MainApplication.applicationContext, "appSid");
+//		params.add("app_member_sid", appSid);
+		Log.e("HttpUtil", url + "?" + params.toString());
 		client.addHeader("User-Agent", "Java");
 		client.get(url, params, new AsyncHttpResponseHandler() {
 
@@ -63,7 +64,7 @@ public class HttpUtil {
 
 	public static void get(String url, final RequestListener res) {
 
-		Log.i("HttpUtil", url);
+		Log.e("HttpUtil", url);
 		client.addHeader("User-Agent", "Java");
 		client.get(url, new AsyncHttpResponseHandler() {
 
@@ -88,7 +89,7 @@ public class HttpUtil {
 	 * @param res
 	 */
 	public static void get(String urlString, JsonHttpResponseHandler res) {
-		Log.i("HttpUtil", urlString);
+		Log.e("HttpUtil", urlString);
 		client.get(urlString, res);
 	}
 
@@ -100,7 +101,7 @@ public class HttpUtil {
 	 * @param res
 	 */
 	public static void get(String urlString, RequestParams params, JsonHttpResponseHandler res) {
-		Log.i("HttpUtil", urlString + "?" + params.toString());
+		Log.e("HttpUtil", urlString + "?" + params.toString());
 		client.get(urlString, params, res);
 	}
 
@@ -111,7 +112,7 @@ public class HttpUtil {
 	 * @param bHandler
 	 */
 	public static void get(String uString, BinaryHttpResponseHandler bHandler) {
-		Log.i("HttpUtil", uString);
+		Log.e("HttpUtil", uString);
 		client.get(uString, bHandler);
 	}
 
@@ -125,7 +126,7 @@ public class HttpUtil {
 	public static void post(String url, RequestParams params, final RequestListener res) {
 		String appSid = UtilPreference.getStringValue(MainApplication.applicationContext, "appSid");
 		params.add("app_member_sid", appSid);
-		Log.i("HttpUtil", url + "?" + params.toString());
+		Log.e("HttpUtil", url + "?" + params.toString());
 		client.addHeader("User-Agent", "Java");
 		client.post(url, params, new AsyncHttpResponseHandler() {
 
@@ -155,7 +156,7 @@ public class HttpUtil {
 //				} catch (NumberFormatException e) {
 //					Log.e("HttpUtil", "appid失效");
 //				}
-				Log.i("HttpUtil", "result:" + result);
+				ALog.json("HttpUtil", result);
 				res.success(result);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();

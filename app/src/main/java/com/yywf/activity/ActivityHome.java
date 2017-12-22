@@ -2,6 +2,7 @@ package com.yywf.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -26,6 +28,7 @@ import com.yywf.fragment.FragmentWhd;
 import com.yywf.fragmenttab.FragmentTab;
 import com.yywf.fragmenttab.TabItemImpl;
 import com.yywf.util.MyActivityManager;
+import com.yywf.widget.dialog.MyCustomDialog;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -56,9 +59,59 @@ public class ActivityHome extends FragmentActivity implements OnClickListener{
 
         MyActivityManager.getInstance().addActivity(this);
         initView();
+//
+//        //判断是否实名认证
+//        checkApproveStatus();
 
     }
 
+    private void checkApproveStatus(){
+        //判断是否实名认证
+        int approve_status = UtilPreference.getIntValue(mContext, "approve_status");
+        if (approve_status == 0){
+            showRegisterSuccess();
+        }
+    }
+
+
+    public void showRegisterSuccess(){
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.dialog_register_success, null);
+        final MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(mContext,
+                R.style.MyDialogStyleBottom);
+        customBuilder.setCancelable(true);
+        customBuilder.setCanceledOnTouchOutside(false);
+        customBuilder.setLine(0);// 分割横线所处位置 在自定义布局上下或隐藏 0隐藏 1线在上方
+        customBuilder.setContentView(view);
+        // 2线在下方
+        customBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog,
+                                int which) {
+                dialog.dismiss();
+                startActivity(new Intent(mContext, ActivitySmrz.class));
+            }
+        });
+        customBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog,
+                                int which) {
+//                dialog.dismiss();
+                dialog.dismiss();
+                finish();
+            }
+        });
+        final MyCustomDialog dialog = customBuilder.create();
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                //直接退出应用
+                dialog.dismiss();
+                finish();
+            }
+        });
+        dialog.show();
+    }
 
 
 
@@ -72,13 +125,13 @@ public class ActivityHome extends FragmentActivity implements OnClickListener{
         //
         mFragmentTab = new FragmentTab(getSupportFragmentManager());
         mFragmentTab.addTabItem(new TabItemImpl<FragmentHomePage>(mContext,
-                "main", FragmentHomePage.class));
+                "FragmentHomePage", FragmentHomePage.class));
         mFragmentTab.addTabItem(new TabItemImpl<FragmentWhd>(mContext,
-                "whd", FragmentWhd.class));
+                "FragmentWhd", FragmentWhd.class));
         mFragmentTab.addTabItem(new TabItemImpl<FragmentMine>(mContext,
-                "mine", FragmentMine.class));
+                "FragmentMine", FragmentMine.class));
 
-        mFragmentTab.selectTab("main");
+        mFragmentTab.selectTab("FragmentHomePage");
         doSelect(0);
     }
 
@@ -89,15 +142,15 @@ public class ActivityHome extends FragmentActivity implements OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_home_1://
-                mFragmentTab.selectTab("main");
+                mFragmentTab.selectTab("FragmentHomePage");
                 doSelect(0);
                 break;
             case R.id.rl_home_2://
-                mFragmentTab.selectTab("whd");
+                mFragmentTab.selectTab("FragmentWhd");
                 doSelect(1);
                 break;
             case R.id.rl_home_3://
-                mFragmentTab.selectTab("mine");
+                mFragmentTab.selectTab("FragmentMine");
                 doSelect(2);
                 break;
             default:
@@ -209,6 +262,7 @@ public class ActivityHome extends FragmentActivity implements OnClickListener{
     @Override
     protected void onResume() {
         super.onResume();
+        checkApproveStatus();
 
     }
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.loopj.android.http.RequestParams;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.ToastUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MyCountDownTimer;
 import com.yywf.R;
 import com.yywf.config.ConfigXy;
@@ -95,6 +96,7 @@ public class ActivityForgotPayPwd extends BaseActivity implements OnClickListene
                 }
                 ll_code.setVisibility(View.GONE);
                 ll_edit_pwd.setVisibility(View.VISIBLE);
+                validCode = et_code.getText().toString().trim();
                 initTitle("重置支付密码");
                 break;
             case R.id.btn_commit://提交
@@ -114,6 +116,7 @@ public class ActivityForgotPayPwd extends BaseActivity implements OnClickListene
 
     /**
      * 从服务器获取验证码
+     *
      */
     private void getValidCode() {
         MyCountDownTimer countDowntimer = new MyCountDownTimer(ConstApp.VOLID_CODE_SECONDS, 1000, tv_getcode,
@@ -121,17 +124,19 @@ public class ActivityForgotPayPwd extends BaseActivity implements OnClickListene
         countDowntimer.start();
 
         RequestParams params = new RequestParams();
-//        params.add("tele", phone);
+        params.add("phone",  UtilPreference.getStringValue(mContext, "username"));
         showProgress("正在发送");
-        HttpUtil.get(ConfigXy.XY_FORGOT_PAY_PWD_VALDATE, params, new HttpUtil.RequestListener() {
+        HttpUtil.get(ConfigXy.XY_SMSVALDATE, params, new HttpUtil.RequestListener() {
 
             @Override
             public void success(String response) {
+                disShowProgress();
                 try {
-                    JSONObject object = new JSONObject(response);
-                    validCode = object.getString("result");
-                    Log.i("注册码：", validCode);
-                    disShowProgress();
+                    JSONObject result = new JSONObject(response);
+                    if (!result.optBoolean("status")) {
+                        ToastUtils.CustomShow(mContext, result.optString("message"));
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -176,9 +181,13 @@ public class ActivityForgotPayPwd extends BaseActivity implements OnClickListene
 
         showProgress("加载中...");
         RequestParams params = new RequestParams();
-//		params.add("account", username);
-//		params.add("password", password);
-        HttpUtil.get(ConfigXy.XY_EDIT_PAY_PWD, params, requestListener);
+        params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.add("token", UtilPreference.getStringValue(mContext, "token"));
+        params.add("phone", UtilPreference.getStringValue(mContext, "userName"));
+        params.add("password", et_new_pay_pwd.getText().toString().trim());
+        params.add("code", validCode);
+        params.add("type", "2");
+        HttpUtil.get(ConfigXy.XY_FORGOT_PAY_PWD, params, requestListener);
 
     }
 
@@ -188,7 +197,14 @@ public class ActivityForgotPayPwd extends BaseActivity implements OnClickListene
         public void success(String response) {
             disShowProgress();
             try {
-                JSONObject obj = new JSONObject(response);
+                JSONObject result = new JSONObject(response);
+                if (!result.optBoolean("status")) {
+                    ToastUtils.CustomShow(mContext, result.optString("message"));
+                }else{
+                    ToastUtils.CustomShow(mContext, result.optString("message"));
+                    finish();
+                }
+
 
 
             } catch (Exception e) {

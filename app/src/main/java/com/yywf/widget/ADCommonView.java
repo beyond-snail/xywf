@@ -172,7 +172,7 @@ public class ADCommonView extends LinearLayout implements OnClickListener {
 			if (advertis.size() > 0) {
 				for (int j = 0; j < advertis.size(); j++) {
 					// 添加一张广告图片
-					ImageView iv = addImages(advertis.get(j).getPhotoUrl(),
+					ImageView iv = addImages(advertis.get(j).getPhoto_url(),
 							j == 0);
 					if (isClickable) {
 						iv.setTag(advertis.get(j));

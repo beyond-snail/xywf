@@ -98,7 +98,7 @@ public class MyMenuAdapter extends BaseAdapter {
 //            int width = dm.widthPixels;
             int height = dm.widthPixels;// dm.heightPixels - ScreenUtils.dp2px(100, mContext);//高度
 
-            AbsListView.LayoutParams param = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height/5 - 10);
+            AbsListView.LayoutParams param = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height/5);
             convertView.setLayoutParams(param);
 
             holder.imag = (ImageView) convertView.findViewById(R.id.id_icon);

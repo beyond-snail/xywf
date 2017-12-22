@@ -1,40 +1,31 @@
 package com.yywf.model;
 
 public class AdInfo {
-	private int sort;
-	private String advertName;
-	private String photoUrl;
-	private String clickUrl;
+	private int id;
+	private String photo_url;
+	private String click_url;
 
-	public int getSort() {
-		return sort;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setSort(int sort) {
-		this.sort = sort;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public String getAdvertName() {
-		return advertName;
-	}
+    public String getPhoto_url() {
+        return photo_url;
+    }
 
-	public void setAdvertName(String advertName) {
-		this.advertName = advertName;
-	}
+    public void setPhoto_url(String photo_url) {
+        this.photo_url = photo_url;
+    }
 
-	public String getPhotoUrl() {
-		return photoUrl;
-	}
+    public String getClick_url() {
+        return click_url;
+    }
 
-	public void setPhotoUrl(String photoUrl) {
-		this.photoUrl = photoUrl;
-	}
-
-	public String getClickUrl() {
-		return clickUrl;
-	}
-
-	public void setClickUrl(String clickUrl) {
-		this.clickUrl = clickUrl;
-	}
+    public void setClick_url(String click_url) {
+        this.click_url = click_url;
+    }
 }

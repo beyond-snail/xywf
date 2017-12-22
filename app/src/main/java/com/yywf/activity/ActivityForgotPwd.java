@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.loopj.android.http.RequestParams;
 import com.tool.utils.utils.AlertUtils;
 import com.tool.utils.utils.StringUtils;
+import com.tool.utils.utils.ToastUtils;
 import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MyCountDownTimer;
 import com.yywf.R;
@@ -102,7 +103,7 @@ public class ActivityForgotPwd extends BaseActivity implements OnClickListener, 
 
 	/**
 	 * 从服务器获取验证码
-	 * 
+	 *
 	 * @param phone
 	 */
 	private void getValidCode(final String phone) {
@@ -111,18 +112,19 @@ public class ActivityForgotPwd extends BaseActivity implements OnClickListener, 
 		countDowntimer.start();
 
 		RequestParams params = new RequestParams();
-		params.add("tele", phone);
+		params.add("phone", phone);
 		showProgress("正在发送");
 		HttpUtil.get(ConfigXy.XY_SMSVALDATE, params, new HttpUtil.RequestListener() {
 
 			@Override
 			public void success(String response) {
+				disShowProgress();
 				try {
-					JSONObject object = new JSONObject(response);
-					validCode = object.getString("result");
-					Log.i("注册码：", validCode);
-					curPhone = phone;
-					disShowProgress();
+					JSONObject result = new JSONObject(response);
+					if (!result.optBoolean("status")) {
+						ToastUtils.CustomShow(mContext, result.optString("message"));
+					}
+
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -136,7 +138,6 @@ public class ActivityForgotPwd extends BaseActivity implements OnClickListener, 
 
 		});
 	}
-
 
 	/**
 	 * 重置密码
@@ -168,45 +169,28 @@ public class ActivityForgotPwd extends BaseActivity implements OnClickListener, 
 			return;
 		}
 
-		showProgress("正在重置密码，请稍后...");
 
-		String url = ConfigXy.XY_FORGOT_PWD;
+		showProgress("加载中...");
 		RequestParams params = new RequestParams();
-		params.add("account", phone);
-		params.add("password", pwd);
+		params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+		params.add("token", UtilPreference.getStringValue(mContext, "token"));
+		params.add("phone", phone);
+		params.add("password", et_comfirm_pwd.getText().toString().trim());
+		params.add("code", validCode);
+		params.add("type", "1");
 
-		HttpUtil.get(url, params, new HttpUtil.RequestListener() {
+		HttpUtil.get(ConfigXy.XY_FORGOT_PAY_PWD, params, new HttpUtil.RequestListener() {
 
 			@Override
 			public void success(String response) {
 				disShowProgress();
 				try {
 					JSONObject result = new JSONObject(response);
-					if (result.optString("status").equals("success")) {// 重置密码成功
-
-						AlertUtils.alert("修改密码成功", mContext, new DialogInterface.OnClickListener() {
-
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								dialog.dismiss();
-								UtilPreference.saveString(mContext, "userName", phone);
-								UtilPreference.saveString(mContext, "password", pwd);
-
-								onBackPressed();
-
-							}
-						});
-					} else {
-						AlertUtils.alert(result.optString("messgae", "修改密码失败"), mContext,
-								new DialogInterface.OnClickListener() {
-
-									@Override
-									public void onClick(DialogInterface dialog, int which) {
-										dialog.dismiss();
-										onBackPressed();
-
-									}
-								});
+					if (!result.optBoolean("status")) {
+						ToastUtils.CustomShow(mContext, result.optString("message"));
+					}else{
+						ToastUtils.CustomShow(mContext, result.optString("message"));
+						finish();
 					}
 
 				} catch (JSONException e) {
@@ -253,7 +237,7 @@ public class ActivityForgotPwd extends BaseActivity implements OnClickListener, 
 				et_code.requestFocus();
 				return;
 			}
-
+			validCode = et_code.getText().toString().trim();
 			ll_step_1.setVisibility(View.GONE);
 			ll_step_2.setVisibility(View.VISIBLE);
 			initTitle("设置密码");

@@ -116,18 +116,18 @@ public class UtilPreference {
     public static void clearNotKeyValues(final Context context) {
         String userName = getStringValue(context, "userName");
         String password = getStringValue(context, "password");
-        String login_history = getStringValue(context, "login_history");
-        String appSid = getStringValue(context, "appSid");
-        String deviceNo = getStringValue(context, "deviceNo");
-        String wifi = getStringValue(context, deviceNo + "_WIFI");
+        String token = getStringValue(context, "token");
+        String memberId = getStringValue(context, "memberId");
+        int approve_status = getIntValue(context, "approve_status");
 
         clearLocalValues(context);
 
-        saveString(context, "userName", userName);
-        saveString(context, "password", password);
-        saveString(context, "login_history", login_history);
-        saveString(context, "appSid", appSid);
-        saveString(context, deviceNo + "_WIFI", wifi);
+
+//        saveString(context, "userName", userName);
+//        saveString(context, "password", password);
+//        saveString(context, "token", token);
+//        saveString(context, "memberId", memberId);
+//        saveInt(context, "approve_status", approve_status);
 
     }
 

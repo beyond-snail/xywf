@@ -19,8 +19,8 @@ public class CustomAlertDialog extends AlertDialog {
     private boolean mSingleButton;
     private TextView tvTitle;
     private TextView tvMessage;
-    private Button btnLeft;
-    private Button btnRight;
+    private TextView btnLeft;
+    private TextView btnRight;
 
     /**
      * 自定义对话框的构造函数,默认为两个按钮
@@ -50,8 +50,8 @@ public class CustomAlertDialog extends AlertDialog {
         setContentView(R.layout.alert_dialog);
         tvTitle = (TextView) findViewById(R.id.tv_alert_dialog_title);
         tvMessage = (TextView) findViewById(R.id.tv_alert_dialog_message);
-        btnLeft = (Button) findViewById(R.id.btn_alert_dialog_btn_left);
-        btnRight = (Button) findViewById(R.id.btn_alert_dialog_btn_right);
+        btnLeft = (TextView) findViewById(R.id.btn_alert_dialog_btn_left);
+        btnRight = (TextView) findViewById(R.id.btn_alert_dialog_btn_right);
         tvTitle.getPaint().setFakeBoldText(true);
         if (mSingleButton) {
             btnLeft.setBackgroundResource(R.drawable.ic_alert_dialog_btn_pressed_effect);

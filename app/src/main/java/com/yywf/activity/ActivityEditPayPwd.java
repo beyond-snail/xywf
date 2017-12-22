@@ -9,6 +9,7 @@ import android.widget.EditText;
 import com.loopj.android.http.RequestParams;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.ToastUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.yywf.R;
 import com.yywf.config.ConfigXy;
 import com.yywf.http.HttpUtil;
@@ -118,9 +119,12 @@ public class ActivityEditPayPwd extends BaseActivity implements OnClickListener 
 
         showProgress("加载中...");
         RequestParams params = new RequestParams();
-//		params.add("account", username);
-//		params.add("password", password);
-        HttpUtil.get(ConfigXy.XY_EDIT_PAY_PWD, params, requestListener);
+        params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.add("token", UtilPreference.getStringValue(mContext, "token"));
+        params.add("oldPassword", et_old_pay_pwd.getText().toString().trim());
+        params.add("newPassword", et_new_pay_pwd.getText().toString().trim());
+        params.add("type", "2");
+        HttpUtil.get(ConfigXy.XY_EDIT_LOGIN_PWD, params, requestListener);
 
     }
 
@@ -130,7 +134,14 @@ public class ActivityEditPayPwd extends BaseActivity implements OnClickListener 
         public void success(String response) {
             disShowProgress();
             try {
-                JSONObject obj = new JSONObject(response);
+                JSONObject result = new JSONObject(response);
+                if (!result.optBoolean("status")) {
+                    ToastUtils.CustomShow(mContext, result.optString("message"));
+                }else{
+                    ToastUtils.CustomShow(mContext, result.optString("message"));
+                    finish();
+                }
+
 
 
             } catch (Exception e) {

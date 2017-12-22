@@ -173,10 +173,11 @@
     <color name="status_text">#ffffffff</color>
 
 
+
     <color name="btn_purple_normal_ok">#2085D3</color>
     <color name="btn_purple_press_ok">#2179bd</color>
-    <color name="btn_purple_normal_cancel">#46a0e5</color>
-    <color name="btn_purple_press_cancel">#379ae7</color>
+    <color name="btn_purple_normal_cancel">#d9d9d9</color>
+    <color name="btn_purple_press_cancel">#cccccc</color>
 
     <color name="gray_pressed">#b5b5b6</color>
     <color name="gray_normal">#666667</color>
@@ -223,6 +224,9 @@
     <!-- 银色 -->
     <!--<color name="lightgrey">#D3D3D3</color>-->
     <color name="transparent2">#50000000</color>
+
+
+    <color name="gl_background">#737373</color>
 
 
 </resources>

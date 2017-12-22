@@ -199,7 +199,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="@null"
                 android:gravity="center_vertical"
-                android:hint="请输入有效期(例:0519)"
+                android:hint="请输入有效期年年月月(例:1905)"
                 android:inputType="number"
                 android:maxLength="4"
                 android:singleLine="true"
@@ -218,6 +218,7 @@
             android:background="@drawable/setting_list_bg"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
+            android:visibility="gone"
             android:paddingRight="10dp">
 
             <TextView

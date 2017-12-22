@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tool.utils.utils.UtilPreference;
 import com.yywf.R;
 import com.yywf.util.MyActivityManager;
 
@@ -39,7 +40,7 @@ public class ActivitySetting extends BaseActivity implements View.OnClickListene
 		ll_about_us = relativeLayout(R.id.ll_about_us);
 		ll_about_us.setOnClickListener(this);
 
-		button(R.id.btn_logout);
+		button(R.id.btn_logout).setOnClickListener(this);
 
 	}
 
@@ -67,7 +68,9 @@ public class ActivitySetting extends BaseActivity implements View.OnClickListene
 				startActivity(new Intent(mContext, ActivityAboutUs.class));
 				break;
 			case R.id.btn_logout: //退出登录
-
+				UtilPreference.clearNotKeyValues(mContext);
+				// 退出账号 返回到登录页面
+				MyActivityManager.getInstance().logout(mContext);
 				break;
 		}
 	}

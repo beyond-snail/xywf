@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.tool.R;
 import com.tool.utils.utils.StringUtils;
 
+
 /**
  * 自定义对话框
  * 
@@ -50,6 +51,7 @@ public class CustomDialog extends Dialog {
 		private boolean iscancel_back = true;// 回车键能否取消
 		private boolean iscancel_out = false;// 点击对话框外部能否取消
 		private boolean isHtml = false;// message是否为html格式显示
+		private boolean isDismis = false; //右上角是否隐藏
 
 		// 列表
 		private OnClickListener itemClickListener;
@@ -78,8 +80,8 @@ public class CustomDialog extends Dialog {
 
 		/**
 		 * Set the Dialog message from resource
-		 * 
-		 * @param
+		 *
+		 * @param title
 		 * @return
 		 */
 		public Builder setMessage(int message) {
@@ -92,6 +94,11 @@ public class CustomDialog extends Dialog {
 			return this;
 		}
 
+		public Builder setDismis(boolean isDismis) {
+			this.isDismis = isDismis;
+			return this;
+		}
+
 		public Builder setCanceledOnTouchOutside(boolean iscancel) {
 			this.iscancel_out = iscancel;
 			return this;
@@ -99,7 +106,7 @@ public class CustomDialog extends Dialog {
 
 		/**
 		 * Set the Dialog title from resource
-		 * 
+		 *
 		 * @param title
 		 * @return
 		 */
@@ -110,7 +117,7 @@ public class CustomDialog extends Dialog {
 
 		/**
 		 * Set the Dialog title from String
-		 * 
+		 *
 		 * @param title
 		 * @return
 		 */
@@ -140,8 +147,8 @@ public class CustomDialog extends Dialog {
 
 		/**
 		 * Set the Dialog items
-		 * 
-		 * @param
+		 *
+		 * @param title
 		 * @return
 		 */
 		public Builder setItems(CharSequence[] items, OnClickListener itemClickListener) {
@@ -152,7 +159,7 @@ public class CustomDialog extends Dialog {
 
 		/**
 		 * Set the positive button resource and it's listener
-		 * 
+		 *
 		 * @param positiveButtonText
 		 * @return
 		 */
@@ -321,6 +328,11 @@ public class CustomDialog extends Dialog {
 			}
 
 			ImageView iv_close = ((ImageView) dialog.findViewById(R.id.iv_close));
+			
+			if (isDismis){
+				iv_close.setVisibility(View.GONE);
+			}
+			
 			iv_close.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -336,6 +348,7 @@ public class CustomDialog extends Dialog {
 
 			dialog.setCancelable(iscancel_back);
 			dialog.setCanceledOnTouchOutside(iscancel_out);
+			
 			dialog.setWindow();
 
 			return dialog;

@@ -54,6 +54,8 @@ public class ActivityReadTxt extends BaseActivity {
 			initTitle("提现规则");
 		}else if (type == 6){
 			initTitle("抵用券使用需知");
+		}else{
+			initTitle("我要提额");
 		}
 		if (findViewById(R.id.backBtn) != null) {
 			findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
@@ -79,6 +81,34 @@ public class ActivityReadTxt extends BaseActivity {
 				is = getAssets().open("tx.TXT");
 			}else if (type == 6){
 				is = getAssets().open("dyq.TXT");
+			}else if (type == 11){
+				is = getAssets().open("pfyh.TXT");
+			}else if (type == 12){
+				is = getAssets().open("msyh.TXT");
+			}else if (type == 13){
+				is = getAssets().open("xyyh.TXT");
+			}else if (type == 14){
+				is = getAssets().open("payh.TXT");
+			}else if (type == 15){
+				is = getAssets().open("zsyh.TXT");
+			}else if (type == 16){
+				is = getAssets().open("jtyh.TXT");
+			}else if (type == 17){
+				is = getAssets().open("gsyh.TXT");
+			}else if (type == 18){
+				is = getAssets().open("jsyh.TXT");
+			}else if (type == 19){
+				is = getAssets().open("nyyh.TXT");
+			}else if (type == 20){
+				is = getAssets().open("zgyh.TXT");
+			}else if (type == 21){
+				is = getAssets().open("gfyh.TXT");
+			}else if (type == 22){
+				is = getAssets().open("zxyh.TXT");
+			}else if (type == 23){
+				is = getAssets().open("gdyh.TXT");
+			}else if (type == 24){
+				is = getAssets().open("hxyh.TXT");
 			}
 			br = new BufferedReader(new InputStreamReader(is));
 			String temp = "";

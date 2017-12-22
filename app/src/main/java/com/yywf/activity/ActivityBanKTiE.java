@@ -79,31 +79,48 @@ public class ActivityBanKTiE extends BaseActivity  {
 				int index = EnumConsts.BankMenuType.getCodeByName(list.get(position).getName());
 				switch (index){
 					case 1: //浦发银行
-						String url_pf = "https://ecentre.spdbccc.com.cn/creditcard/indexActivity.htm?data=P2070702&from=groupmessage&isappinstalled=0";
-						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_pf).putExtra("title",
-								list.get(position).getName()));
+						startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 11));
 						break;
 					case 2: //民生银行
-						String url_ms = "https://creditcard.cmbc.com.cn/wsv2/?etr=APXicO3mUhTAlWEAqQMJa4FVgFQTqg8ipFii6OA1uBbzF2z6BaCVuvZdc/nWOqWpSgIb2+HOyCA7QI5YU1MSz+Z3kCCeUGcReAjvcPz69bDSh8hWe4dL5E+QoXkNiepDWEX2QE1uycQOgxm4kX2Vio5AHWL+6lFyNtWwyyHaydVReAVYdAqzOv/rG+B7jAv/IhbMI+LwBmKaeChh0nuX7cAbkR0HyddQXzBVsec3i87Z2MwD12pnReGT5BTH4QfgDekN0KKplavPuU6zDHL77e1sEF2ssh5yUroax6sczK6lVRavAa0BIxYlpJ2qXABNZIKLjyDRw6id+GynnYn1QKSrIoDrAEDDX3awd4d2qDV4hGXe+M45nlLDkAv7zFS6tTghtahxXLOfHQLa1OPeYHoPKCMj9ggHAOG/nWsOFEVfRYbUXY8UrmyEJC6j5tYkOlpl8gE+SDZ6XRG8GHnTcuXD45+EThksLUvnfm/KEwDL3+58tEu/NyqB6o8IrxME";
-						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_ms).putExtra("title",
-								list.get(position).getName()));
+						startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 12));
 						break;
 					case 3: //兴业银行
-						String url_xy = "https://wm.cib.com.cn/application/cardapp/newfast/ApplyCard/toSelectCard?id=a8b4ff5394744e31ba3607c9668cd24c";
-						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_xy).putExtra("title",
-								list.get(position).getName()));
+						startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 13));
 						break;
 					case 4: //平安银行
-						String url_pa = "https://c.pingan.com/apply/mobile/apply/index.html?showt=1&scc=203100001&ccp=3a2a5a4a1a11a8a10a12a13a9a7a15a20&p=sn%3D%25E8%2582%2596%25E9%259B%2584sc%3DE00010242604ro%3DNcl%3D2&bt8=m_Q0Lp4Y911ouA2Img&isApp=true&bt2=E00010242604&bt5=employmee_edm&bt7=V0182&from=timeline&isappinstalled=0";
-						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_pa).putExtra("title",
-								list.get(position).getName()));
+						startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 14));
 						break;
 					case 5: //招商银行
-
+						startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 15));
 						break;
 					case 6: //交通银行
-
+						startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 16));
 						break;
+					case 7: //工商银行
+						startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 17));
+						break;
+					case 8: //建设银行
+						startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 18));
+						break;
+					case 9: //农业银行
+						startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 19));
+						break;
+					case 10: //中国银行
+						startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 20));
+						break;
+					case 11: //广发银行
+						startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 21));
+						break;
+					case 12: //中信银行
+						startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 22));
+						break;
+					case 13: //光大银行
+						startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 23));
+						break;
+					case 14: //华夏银行
+						startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 24));
+						break;
+
 
 				}
 			}
@@ -123,7 +140,7 @@ public class ActivityBanKTiE extends BaseActivity  {
 		List<AdInfo> infos = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
 			AdInfo info = new AdInfo();
-			info.setPhotoUrl("https://m.tourongjia.com/escrowwap/channelTemplateRed ");
+			info.setPhoto_url("https://m.tourongjia.com/escrowwap/channelTemplateRed ");
 			infos.add(info);
 		}
 		ADCommonView adCommonView = new ADCommonView(mContext, infos, false);

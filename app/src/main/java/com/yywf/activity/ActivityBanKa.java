@@ -64,10 +64,19 @@ public class ActivityBanKa extends BaseActivity  {
 
 	private void initMenu() {
 		for (int i = 0; i < EnumConsts.BankMenuType.values().length; i++){
-			Menu menu = new Menu();
-			menu.setBg(EnumConsts.BankMenuType.values()[i].getBg());
-			menu.setName(EnumConsts.BankMenuType.values()[i].getName());
-			list.add(menu);
+			switch (i){
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+					Menu menu = new Menu();
+					menu.setBg(EnumConsts.BankMenuType.values()[i].getBg());
+					menu.setName(EnumConsts.BankMenuType.values()[i].getName());
+					list.add(menu);
+					break;
+				default:
+					break;
+			}
 		}
 
 		gridView = (MyGridView) findViewById(R.id.id_gridview);
@@ -128,7 +137,7 @@ public class ActivityBanKa extends BaseActivity  {
 		List<AdInfo> infos = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
 			AdInfo info = new AdInfo();
-			info.setPhotoUrl("https://m.tourongjia.com/escrowwap/channelTemplateRed ");
+			info.setPhoto_url("https://m.tourongjia.com/escrowwap/channelTemplateRed ");
 			infos.add(info);
 		}
 		ADCommonView adCommonView = new ADCommonView(mContext, infos, false);
