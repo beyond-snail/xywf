@@ -54,7 +54,7 @@ public class ActivityMyWallet extends BaseActivity implements View.OnClickListen
 		textView(R.id.btn_sale).setOnClickListener(this);
 
 
-		tv_balance_amt.setText("123456789012");
+//		tv_balance_amt.setText("123456789012");
 
 	}
 

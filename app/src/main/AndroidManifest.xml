@@ -228,6 +228,12 @@
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>
         <activity
+            android:name=".activity.ActivityReadWord"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+        <activity
             android:name=".activity.ActivitySmartCredit"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
             android:screenOrientation="portrait"
@@ -361,6 +367,12 @@
         </activity>
         <activity
             android:name=".activity.ActivityBankCardList"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+        <activity
+            android:name=".activity.ActivityVipGrade"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar">

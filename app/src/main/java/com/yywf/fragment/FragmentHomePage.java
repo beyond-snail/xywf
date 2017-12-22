@@ -41,6 +41,7 @@ import com.yywf.activity.ActivityMine;
 import com.yywf.activity.ActivityMyZhangDan;
 import com.yywf.activity.ActivitySaoMaShouKuan;
 import com.yywf.activity.ActivitySmartCredit;
+import com.yywf.activity.ActivityVipGrade;
 import com.yywf.adapter.BankListAdapter;
 import com.yywf.adapter.MyMenuAdapter;
 import com.yywf.config.ConfigXy;
@@ -146,7 +147,7 @@ public class FragmentHomePage extends AbstractFragment implements
                         startActivity(new Intent(mContext, ActivityMyZhangDan.class));
                         break;
                     case 8: //购买等级
-                        startActivity(new Intent(mContext, ActivitySaoMaShouKuan.class));
+                        startActivity(new Intent(mContext, ActivityVipGrade.class));
                         break;
                 }
             }

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_header_with_transparent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#f5f5f5" />
+
+    <com.tool.utils.view.MyScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <com.tool.utils.view.MyGridView
+                android:id="@+id/id_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:listSelector="#00000000"
+                android:numColumns="5">
+
+            </com.tool.utils.view.MyGridView>
+
+
+            <com.tool.utils.view.MyGridView
+                android:id="@+id/id_gridview2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:listSelector="#00000000"
+                android:numColumns="5">
+
+            </com.tool.utils.view.MyGridView>
+
+            <com.tool.utils.view.MyGridView
+                android:id="@+id/id_gridview3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:listSelector="#00000000"
+                android:numColumns="4">
+
+            </com.tool.utils.view.MyGridView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="1.	普通用户，先行充值199元成为VIP0会员后，即可参加“推荐用户享受一级分销待遇”活动，成功推荐一位会员用户将获得系统返现金20元到“个人中心”我的钱包中奖励金中查看，分润万2，不限次数；VIP1（含）以上等级，享受对应级别返现、分润待遇，该级别次数用完后，如客户想要继续享受原VIP级别返现、分润待遇则需要继续充值次数，若客户放弃充值，将回到VIP0级别的会员返现、分润待遇。"
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="2.	所有等级均可享受激活返券，VIP8以上会员还能同时享受业务衍生返现。"
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="3.	激活返券以抵用券的形式发放至个人中心抵用券管理中，不提现，不转售，可抵扣充值次数金额。抵用券与充值金额1:1抵扣。"
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4.	成功激活标准：客户在首次充值199元成为会员后6个月内，消费总金额满5001元以上，消费类型包括快捷收款、智能还款、微代还。"
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="5.	业务衍生业绩：除激活消费类型涵盖四大业务外，后期的所有业务板块，该客户只要总消费额满5001元以上后，其他业务无消费门槛，均计入业务衍生业绩核算。"
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="6.	激活返券指被推荐用户首次充值成为会员后，在6个月内消费总金额超过5001元，则计为激活成功，抵用券即时5分钟内发放。抵用券使用有效期为发放日30天内，需使用于兑换抵扣对应等级次数，逾期作废。
+业务衍生返现有效期为购买日后3年内，每月15日，以现金方式充值至App“我的钱包”内的“我的分红”，客户可自行提现。
+"
+                android:textColor="@color/black"
+                android:textSize="14sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+        </LinearLayout>
+    </com.tool.utils.view.MyScrollView>
+
+</LinearLayout>

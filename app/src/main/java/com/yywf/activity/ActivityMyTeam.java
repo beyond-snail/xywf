@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -70,15 +71,18 @@ public class ActivityMyTeam extends BaseActivity implements View.OnClickListener
 		// 750-434
 		ll_advertis.setLayoutParams(linearParams);
 
-		List<AdInfo> infos = new ArrayList<>();
-		for (int i = 0; i < 3; i++) {
-			AdInfo info = new AdInfo();
-			info.setPhoto_url("https://m.tourongjia.com/escrowwap/channelTemplateRed ");
-			infos.add(info);
-		}
-		ADCommonView adCommonView = new ADCommonView(mContext, infos, false);
-		ll_advertis.addView(adCommonView);
+//		List<AdInfo> infos = new ArrayList<>();
+//		for (int i = 0; i < 3; i++) {
+//			AdInfo info = new AdInfo();
+//			info.setPhoto_url("https://m.tourongjia.com/escrowwap/channelTemplateRed ");
+//			infos.add(info);
+//		}
+//		ADCommonView adCommonView = new ADCommonView(mContext, infos, false);
+//		ll_advertis.addView(adCommonView);
 
+		ImageView imageView = new ImageView(mContext);
+		imageView.setImageResource(R.drawable.mygroup_banner);
+		ll_advertis.addView(imageView);
 
 	}
 
