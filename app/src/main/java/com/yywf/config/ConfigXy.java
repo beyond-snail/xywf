@@ -100,6 +100,12 @@ public class ConfigXy {
     //更换储蓄卡
     public static final String CHANGE_DEBIT_INFO = ZF_SERVER_API+"app/member/updateDebitCard";
 
+    //查询账单
+    public static final String QUERY_BILL = ZF_SERVER_API + "app/member/queryBill";
+
+    //费率说明
+    public static final String FEE_DESCRIPTION = ZF_SERVER_API + "app/member/feeDescription";
+
     //获取收款二维码
     public static final String GET_CODE_API = "";
 

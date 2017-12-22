@@ -16,12 +16,13 @@
         android:layout_height="wrap_content"
         android:background="@drawable/credit_bg"
         android:layout_margin="15dp"
+        android:padding="5dp"
         android:orientation="horizontal">
 
         <com.tool.utils.view.RoundImageView
             android:id="@+id/icon_bank"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_margin="10dp"
             android:layout_gravity="center_vertical"
             android:contentDescription="@null" />
@@ -30,14 +31,14 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
+                android:gravity="center_vertical|bottom"
                 android:orientation="horizontal">
 
                 <TextView
@@ -46,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:text="--"
                     android:textColor="@color/white"
-                    android:textSize="13sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/id_username"
@@ -84,8 +85,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/common_radius_rect_transparent_white"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="更换"

@@ -78,21 +78,21 @@ public class ActivityDaiBanShiXiang extends BaseActivity {
 
 	private void initView() {
 
-		for (int i = 0; i < 3; i++){
-			Message message = new Message();
-			message.setHasRead(true);
-			message.setMemo("fdsjlfjsfjjkjfksdjfksjflsdjfkdsjfl");
-			message.setGmtCreate("2017-12-15 18:03:12");
-			messageList.add(message);
-		}
-
-		for (int i = 0; i < 3; i++){
-			Message message = new Message();
-			message.setHasRead(false);
-			message.setMemo("fdsjlfjsfjjkjfksdjfksjflsdjfkdsjfl");
-			message.setGmtCreate("2017-12-15 18:03:12");
-			messageList.add(message);
-		}
+//		for (int i = 0; i < 3; i++){
+//			Message message = new Message();
+//			message.setHasRead(true);
+//			message.setMemo("fdsjlfjsfjjkjfksdjfksjflsdjfkdsjfl");
+//			message.setGmtCreate("2017-12-15 18:03:12");
+//			messageList.add(message);
+//		}
+//
+//		for (int i = 0; i < 3; i++){
+//			Message message = new Message();
+//			message.setHasRead(false);
+//			message.setMemo("fdsjlfjsfjjkjfksdjfksjflsdjfkdsjfl");
+//			message.setGmtCreate("2017-12-15 18:03:12");
+//			messageList.add(message);
+//		}
 
 
 

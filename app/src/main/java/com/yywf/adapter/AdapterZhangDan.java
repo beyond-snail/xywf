@@ -38,10 +38,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tool.utils.utils.StringUtils;
 import com.yywf.R;
+import com.yywf.config.EnumConsts;
 import com.yywf.model.PlanList;
 import com.yywf.model.ZhangDan;
 
@@ -88,10 +90,12 @@ public class AdapterZhangDan extends BaseAdapter {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.item_zd_list, parent, false);
 
-//            holder.id_tv_amt = (TextView) convertView.findViewById(R.id.id_tv_amt);
-//            holder.id_tv_count = (TextView) convertView.findViewById(R.id.id_tv_count);
-//            holder.id_tv_fee = (TextView) convertView.findViewById(R.id.id_tv_fee);
-//            holder.id_tv_sigle_amt = (TextView) convertView.findViewById(R.id.id_tv_sigle_amt);
+            holder.iv_img = (ImageView) convertView.findViewById(R.id.iv_img);
+            holder.id_content = (TextView) convertView.findViewById(R.id.id_content);
+            holder.id_tv_time = (TextView) convertView.findViewById(R.id.id_tv_time);
+            holder.id_tv_status_text = (TextView) convertView.findViewById(R.id.id_tv_status_text);
+            holder.id_tv_status = (TextView) convertView.findViewById(R.id.id_tv_status);
+            holder.id_tv_amt = (TextView) convertView.findViewById(R.id.id_tv_amt);
             convertView.setTag(holder);
 
         } else {
@@ -99,19 +103,25 @@ public class AdapterZhangDan extends BaseAdapter {
         }
         ZhangDan vo = list.get(position);
 
-//        holder.id_tv_amt.setText(StringUtils.formatIntMoney(vo.getAmt()));
-//        holder.id_tv_count.setText(vo.getTime1());
-//        holder.id_tv_fee.setText(StringUtils.formatIntMoney(vo.getFeeAmt()));
-//        holder.id_tv_sigle_amt.setText(vo.getTime2());
+        if (EnumConsts.BankUi.getTypeByName(vo.getCard_name()) != null){
+            holder.iv_img.setImageResource(EnumConsts.BankUi.getTypeByName(vo.getCard_name()).getIcon_id());
+        }
+        holder.id_content.setText(vo.getCard_name()+"尾号("+StringUtils.getEndStr(vo.getCard_num(), 4)+")");
+        holder.id_tv_time.setText(vo.getPay_date());
+        holder.id_tv_status_text.setText(vo.getTran_type()+":");
+        holder.id_tv_status.setText(vo.getStatus());
+        holder.id_tv_amt.setText("￥: "+StringUtils.formatIntMoney(vo.getOrder_amount())+"元");
 
         return convertView;
     }
 
     private static final class ViewHolder {
+        ImageView iv_img;
+        TextView id_content;
+        TextView id_tv_time;
+        TextView id_tv_status_text;
+        TextView id_tv_status;
         TextView id_tv_amt;
-        TextView id_tv_count;
-        TextView id_tv_fee;
-        TextView id_tv_sigle_amt;
 
     }
 }

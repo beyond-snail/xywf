@@ -193,9 +193,9 @@ public class ActivitySmrz extends BaseActivity implements OnClickListener {
                 getResources().getDrawable(R.drawable.reg_suc_bar1), getResources().getDrawable(R.drawable.reg_suc_bar2));
         countDowntimer.start();
 
+        showProgress("正在发送");
         RequestParams params = new RequestParams();
         params.add("phone", phone);
-        showProgress("正在发送");
         HttpUtil.get(ConfigXy.XY_SMSVALDATE, params, new HttpUtil.RequestListener() {
 
             @Override

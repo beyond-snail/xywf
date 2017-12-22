@@ -73,17 +73,17 @@ public class FragmentWhd extends AbstractFragment implements
         });
 
 
-        //测试数据
-        for (int i =0; i < 2; i++){
-            BankCardInfo info = new BankCardInfo();
-            info.setAmt(222222);
-            info.setBank_name("交通银行");
-            info.setHkDay(6);
-            info.setZdDay(20);
-            info.setCard_num("3333");
-            info.setMember_name("吴从鹏");
-            bankList.add(info);
-        }
+//        //测试数据
+//        for (int i =0; i < 2; i++){
+//            BankCardInfo info = new BankCardInfo();
+//            info.setAmt(222222);
+//            info.setBank_name("交通银行");
+//            info.setHkDay(6);
+//            info.setZdDay(20);
+//            info.setCard_num("3333");
+//            info.setMember_name("吴从鹏");
+//            bankList.add(info);
+//        }
 
 
 

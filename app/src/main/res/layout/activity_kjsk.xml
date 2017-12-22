@@ -143,32 +143,42 @@
         android:background="@drawable/setting_list_bg">
 
         <TextView
+            android:id="@+id/id_fee_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
             android:textColor="#999999"
             android:textSize="14sp"
-            android:ems="6"
-            android:text="实际到账金额"/>
+            android:text=""/>
 
-        <TextView
-            android:id="@+id/tv_tx_balance_amt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical"
-            android:textColor="#999999"
-            android:textSize="14sp"
-            android:text="0.00"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:textColor="#999999"
-            android:layout_marginLeft="4dp"
-            android:textSize="14sp"
-            android:text="元"/>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:textColor="#999999"-->
+            <!--android:textSize="14sp"-->
+            <!--android:ems="6"-->
+            <!--android:text="实际到账金额"/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tv_tx_balance_amt"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:textColor="#999999"-->
+            <!--android:textSize="14sp"-->
+            <!--android:text="0.00"/>-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:textColor="#999999"-->
+            <!--android:layout_marginLeft="4dp"-->
+            <!--android:textSize="14sp"-->
+            <!--android:text="元"/>-->
 
     </LinearLayout>
 

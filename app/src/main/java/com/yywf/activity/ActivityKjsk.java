@@ -45,7 +45,7 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
     private TextView bankName;
     private TextView userName;
     private TextView bankCarkNo;
-    private LinearLayout ll_change;
+    private TextView id_fee_description;
 
     private EditText et_code;
     private TextView tv_getcode;
@@ -53,17 +53,13 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
 
     private MoneyEditText et_amt;
 
-    private KeyBoardDialog keyboard;
 
-//    private String validCode;
 
     private BankCardInfo vo;
 
     private String orderId;
 
 
-//    private List<BankCardInfo> bankList = new ArrayList<BankCardInfo>();
-//    private MyListView lv;
 
 
     @Override
@@ -94,6 +90,7 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
         bankName = textView(R.id.id_bank_name);
         userName = textView(R.id.id_username);
         bankCarkNo = textView(R.id.id_bank_card);
+        id_fee_description = textView(R.id.id_fee_description);
         linearLayout(R.id.ll_change).setOnClickListener(this);
 
         // 获取验证码
@@ -114,7 +111,9 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
     protected void onResume() {
         super.onResume();
         loadData();
+        loadfeeDecriptionData();
     }
+
 
     @Override
     protected void onDestroy() {
@@ -217,42 +216,9 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
         params.add("orderId", orderId);
         HttpUtil.get(ConfigXy.XY_KJSK_PAY_SUBMIT, params, requestListener);
 
-
-//        keyboard = new KeyBoardDialog((Activity) mContext, getDecorViewDialog());
-//        keyboard.show();
     }
 
 
-//    protected View getDecorViewDialog() {
-//
-//        return PayPasswordView.getInstance("", mContext, new PayPasswordView.OnPayListener() {
-//
-//            @Override
-//            public void onSurePay(final String password) {// 这里调用验证密码是否正确的请求
-//
-//                // TODO Auto-generated method stub
-//				keyboard.dismiss();
-//				keyboard = null;
-//
-//                showProgress("加载中...");
-//                RequestParams params = new RequestParams();
-//                params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
-//                params.add("token", UtilPreference.getStringValue(mContext, "token"));
-//                params.add("verificationCode", et_code.getText().toString().trim());
-//                params.add("orderId", orderId);
-//                HttpUtil.get(ConfigXy.XY_KJSK_PAY_SUBMIT, params, requestListener);
-//
-//            }
-//
-//            @Override
-//            public void onCancelPay() {
-//                // TODO Auto-generated method stub
-//                keyboard.dismiss();
-//                keyboard = null;
-//                ToastUtils.showShort(getApplicationContext(), "交易已取消");
-//            }
-//        }).getView();
-//    }
 
     private HttpUtil.RequestListener requestListener = new HttpUtil.RequestListener() {
 
@@ -377,6 +343,53 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
             }
         }
     }
+
+
+
+    private void loadfeeDecriptionData() {
+
+        showProgress("加载中...");
+
+        String url = ConfigXy.FEE_DESCRIPTION;
+        RequestParams params = new RequestParams();
+        params.put("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.put("token", UtilPreference.getStringValue(mContext, "token"));
+
+        HttpUtil.get(url, params, new HttpUtil.RequestListener() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public void success(String response) {
+                disShowProgress();
+                try {
+
+                    JSONObject result = new JSONObject(response);
+
+                    if (!result.optBoolean("status")) {
+                        showErrorMsg(result.getString("message"));
+                        return;
+                    }
+
+                    String feeDescription = result.getString("message");
+                    if (!StringUtils.isBlank(feeDescription)){
+                        id_fee_description.setText(feeDescription);
+                    }
+
+
+
+                } catch (Exception e) {
+                    e.getMessage();
+                }
+            }
+
+            @Override
+            public void failed(Throwable error) {
+                disShowProgress();
+                showE404();
+            }
+        });
+    }
+
 
 
 }

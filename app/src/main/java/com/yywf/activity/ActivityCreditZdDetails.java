@@ -13,6 +13,8 @@ import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.loopj.android.http.RequestParams;
+import com.tool.utils.utils.StringUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MyListView;
 import com.yywf.R;
 import com.yywf.adapter.AdapterMessageNoticeNew;
@@ -66,15 +68,6 @@ public class ActivityCreditZdDetails extends BaseActivity {
 
 
 
-		for (int i = 0; i < 3; i++){
-			ZhangDan message = new ZhangDan();
-//			message.setHasRead(false);
-//			message.setMemo("fdsjlfjsfjjkjfksdjfksjflsdjfkdsjfl");
-//			message.setGmtCreate("2017-12-15 18:03:12");
-			zhangDanList.add(message);
-		}
-
-
 
 		myListView = findViewById(R.id.listview);
 		adapter = new AdapterZhangDan(mContext, zhangDanList);
@@ -118,21 +111,21 @@ public class ActivityCreditZdDetails extends BaseActivity {
 						DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
 				refreshView.getLoadingLayoutProxy(false, true).setLastUpdatedLabel("更新于：" + label);
 
-				if (zhangDanList.size() == 0) {
-					handler.postDelayed(new Runnable() {
+//				if (zhangDanList.size() == 0) {
+//					handler.postDelayed(new Runnable() {
+//
+//						@Override
+//						public void run() {
+//							showErrorMsg("没有更多了");
+//							// ListScrollUtil.setGridViewHeightBasedOnChildren(gridView);
+//							mPullRefreshScrollView.onRefreshComplete();
+//						}
+//					}, 1000);
 
-						@Override
-						public void run() {
-							showErrorMsg("没有更多了");
-							// ListScrollUtil.setGridViewHeightBasedOnChildren(gridView);
-							mPullRefreshScrollView.onRefreshComplete();
-						}
-					}, 1000);
-
-				} else {
+//				} else {
 					page++;
 					loadData(false);
-				}
+//				}
 			}
 		});
 	}
@@ -154,26 +147,19 @@ public class ActivityCreditZdDetails extends BaseActivity {
 
 	private void loadData(boolean showProgress) {
 
-
-
-		// String url = ConfigApp.HC_GET_STORE_GOODS;
-		String url = ConfigXy.PLAN_LIST;
 		RequestParams params = new RequestParams();
+		params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+		params.add("token", UtilPreference.getStringValue(mContext, "token"));
+		params.add("type", "2");
+		params.add("pageNo", page+"");
+		params.add("pageSize", "15");
 
-//		String id = UtilPreference.getStringValue(mContext, "zf_member_id");
-//		params.add("memberId", id);
-//		params.add("token", UtilPreference.getStringValue(mContext, "token"));
-//		params.add("page", page + "");// 当前页
-//		params.add("key", editText(R.id.query).getText().toString());
-//		params.add("sortType", sort_qb + "");
-//		if (cId != 0) {
-//			params.add("categroyId", cId + "");
-//		}
-//		if (showProgress) {
-//			showProgress("加载中...");
-//		}
 
-		HttpUtil.get(url, params, new HttpUtil.RequestListener() {
+		if (showProgress) {
+			showProgress("加载中...");
+		}
+
+		HttpUtil.get(ConfigXy.QUERY_BILL, params, new HttpUtil.RequestListener() {
 
 			@Override
 			public void success(String response) {
@@ -183,26 +169,48 @@ public class ActivityCreditZdDetails extends BaseActivity {
 					JSONObject result = new JSONObject(response);
 					if (!result.optBoolean("status")) {
 						// showErrorMsg(result.getString("message"));
+						// 刷新完成
+						mPullRefreshScrollView.onRefreshComplete();
 						return;
 					}
-					if (result.getString("data") != null) {
-						String str = result.getString("data");
+
+
+					JSONObject obj = result.getJSONObject("data");
+					String bank_list = obj.optString("comsume_list");
+					if (!StringUtils.isBlank(bank_list)) {
 
 						Gson gson = new Gson();
 						// json数据转换成List
-						List<ZhangDan> datas = gson.fromJson(str, new TypeToken<List<ZhangDan>>() {
+						List<ZhangDan> datas = gson.fromJson(obj.getString("comsume_list"), new TypeToken<List<ZhangDan>>() {
 						}.getType());
-						zhangDanList.addAll(datas);
-						adapter.notifyDataSetChanged();
-						if (zhangDanList.size() > 0) {
+						if (datas.size() > 0) {
 							linearLayout(R.id.id_no_data).setVisibility(View.GONE);
-							 mPullRefreshScrollView.setVisibility(View.VISIBLE);
+							zhangDanList.addAll(zhangDanList.size(), datas);
+
 						} else {
+							if (zhangDanList.size() > 0){
+								linearLayout(R.id.id_no_data).setVisibility(View.GONE);
+							}else{
+								linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
+							}
+						}
+					}else{
+						if (zhangDanList.size() > 0){
+							linearLayout(R.id.id_no_data).setVisibility(View.GONE);
+							handler.postDelayed(new Runnable() {
+
+								@Override
+								public void run() {
+									showErrorMsg("没有更多了");
+								}
+							}, 1000);
+						}else{
 							linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
-							 mPullRefreshScrollView.setVisibility(View.GONE);
 						}
 					}
-					// 刷新完成
+
+					adapter.notifyDataSetChanged();
+					// 下拉刷新完成
 					mPullRefreshScrollView.onRefreshComplete();
 
 				} catch (JSONException e) {
@@ -229,7 +237,7 @@ public class ActivityCreditZdDetails extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-//		reloadData();
+		reloadData();
 	}
 
 	@Override

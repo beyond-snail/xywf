@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.tool.utils.utils.ScreenUtils;
@@ -120,8 +121,6 @@ public class ActivityBanKTiE extends BaseActivity  {
 					case 14: //华夏银行
 						startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 24));
 						break;
-
-
 				}
 			}
 		});
@@ -133,18 +132,22 @@ public class ActivityBanKTiE extends BaseActivity  {
 		ll_advertis = (LinearLayout) findViewById(R.id.advertis);
 		// 设置宽度高度一致
 		LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) ll_advertis.getLayoutParams();
-		linearParams.height = (int) (ScreenUtils.getScreenWidth(mContext) / 2);// 640-370
+//		linearParams.height = (int) (ScreenUtils.getScreenWidth(mContext) / 2);// 640-370
 		// 750-434
 		ll_advertis.setLayoutParams(linearParams);
 
-		List<AdInfo> infos = new ArrayList<>();
-		for (int i = 0; i < 3; i++) {
-			AdInfo info = new AdInfo();
-			info.setPhoto_url("https://m.tourongjia.com/escrowwap/channelTemplateRed ");
-			infos.add(info);
-		}
-		ADCommonView adCommonView = new ADCommonView(mContext, infos, false);
-		ll_advertis.addView(adCommonView);
+//		List<AdInfo> infos = new ArrayList<>();
+//		for (int i = 0; i < 3; i++) {
+//			AdInfo info = new AdInfo();
+//			info.setPhoto_url("https://m.tourongjia.com/escrowwap/channelTemplateRed ");
+//			infos.add(info);
+//		}
+//		ADCommonView adCommonView = new ADCommonView(mContext, infos, false);
+//		ll_advertis.addView(adCommonView);
+
+		ImageView imageView = new ImageView(mContext);
+		imageView.setImageResource(R.drawable.banner_yijiantie);
+		ll_advertis.addView(imageView);
 
 
 	}
