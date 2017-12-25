@@ -76,19 +76,19 @@ public class ActivityTest extends BaseActivity implements OnClickListener {
 		case R.id.btn_pwd:// 登录
 //			keyboard = new KeyBoardDialog(ActivityTest.this, getDecorViewDialog());
 //			keyboard.show();
-			dialog = DialogUtils.showDialog(mContext, "温馨提示", "您还未成为沃富会员，是否支付199元成为会员", new OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					ToastUtils.CustomShow(mContext, "左边按钮");
-					dialog.dismiss();
-				}
-			}, new OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					ToastUtils.CustomShow(mContext, "右边按钮");
-					dialog.dismiss();
-				}
-			});
+//			dialog = DialogUtils.showDialog(mContext, "温馨提示", "您还未成为沃富会员，是否支付199元成为会员", new OnClickListener() {
+//				@Override
+//				public void onClick(View view) {
+//					ToastUtils.CustomShow(mContext, "左边按钮");
+//					dialog.dismiss();
+//				}
+//			}, new OnClickListener() {
+//				@Override
+//				public void onClick(View view) {
+//					ToastUtils.CustomShow(mContext, "右边按钮");
+//					dialog.dismiss();
+//				}
+//			});
 			break;
 
 		default:

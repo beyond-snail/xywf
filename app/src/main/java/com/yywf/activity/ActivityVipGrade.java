@@ -3,6 +3,8 @@ package com.yywf.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,27 +14,49 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.RequestParams;
+import com.tool.utils.utils.LogUtils;
+import com.tool.utils.utils.StringUtils;
+import com.tool.utils.utils.ToastUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MyGridView;
 import com.yywf.R;
 import com.yywf.adapter.AdapterVipGrade;
+import com.yywf.config.ConfigXy;
+import com.yywf.http.HttpUtil;
+import com.yywf.model.BankCardInfo;
+import com.yywf.model.GradeList;
 import com.yywf.model.VipGrade;
 import com.yywf.util.MyActivityManager;
+import com.yywf.widget.dialog.DialogUtils;
+import com.yywf.widget.dialog.MyCustomDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ActivityVipGrade extends BaseActivity implements OnClickListener {
-
+    private final String TAG = "ActivityVipGrade";
 
     private VipGrade vo;
     private List<VipGrade> list = new ArrayList<VipGrade>();
 
     private AdapterVipGrade adapter;
 
+    private TextView gradedemand;
+    private TextView gradegive;
+    private TextView total;
 
 
     private MyGridView gridview;
+
+
+    MyCustomDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,14 +94,18 @@ public class ActivityVipGrade extends BaseActivity implements OnClickListener {
     private void initView() {
 
 
-        for (int i = 0; i < 10; i++){
-            VipGrade vipGrade = new VipGrade();
-            vipGrade.setGrade(i+1);
-            vipGrade.setDefault(false);
-            vipGrade.setHot(false);
-            list.add(vipGrade);
-        }
+//        for (int i = 0; i < 10; i++){
+//            VipGrade vipGrade = new VipGrade();
+//            vipGrade.setGrade(i+1);
+//            vipGrade.setDefault(false);
+//            vipGrade.setHot(false);
+//            list.add(vipGrade);
+//        }
 
+
+        gradedemand = textView(R.id.gradedemand);
+        gradegive = textView(R.id.gradegive);
+        total = textView(R.id.total);
 
 
         gridview = (MyGridView) findViewById(R.id.id_gridview);
@@ -89,18 +117,38 @@ public class ActivityVipGrade extends BaseActivity implements OnClickListener {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                vo = list.get(position);
+                LogUtils.e(TAG, "position="+position);
+
+
+                //如果大于等于VIP4，限额，线下收款
+                if (position >= 3){
+                    ToastUtils.showShort(mContext, "由于限额，请线下付款");
+                    return;
+                }
+
                 for (int i = 0; i < list.size(); i++) {
                     list.get(i).setDefault(false);
                 }
+
+                vo = list.get(position);
                 vo.setDefault(true);
                 adapter.notifyDataSetChanged();
+
+                setDefault(vo);
 
 
             }
         });
 
+        button(R.id.btn_commit).setOnClickListener(this);
+
         textView(R.id.id_grade_msg).setOnClickListener(this);
+    }
+
+    private void setDefault(VipGrade vo){
+        gradedemand.setText(vo.getGradedemand()+"");
+        gradegive.setText(vo.getGradegive()+"");
+        total.setText((vo.getGradedemand()+vo.getGradegive())+"");
     }
 
 
@@ -111,6 +159,31 @@ public class ActivityVipGrade extends BaseActivity implements OnClickListener {
             case R.id.id_grade_msg:
                 startActivity( new Intent(mContext, ActivityReadWord.class));
                 break;
+            case R.id.btn_commit:
+                if (vo == null){
+                    return;
+                }
+
+
+
+                Spanned str = Html.fromHtml("您将拥有"+"<font color='red' size='20'>"+vo.getGradedemand()+"</font>"+"次"+vo.getGradename()+"等级的会员分润比例, 共"+
+                        "<font color='red' size='20'>"+StringUtils.formatIntMoney(vo.getPurchasePrice())+"</font>"+"元"+"(返利"+"<font color='red' size='20'>"+StringUtils.formatIntMoney(vo.getCashback())+"</font>"+"元,分润"+
+                        "<font color='red' size='20'>"+"万"+vo.getProfitratio()+"</font>"+")"
+                );
+
+                dialog = DialogUtils.showDialog(mContext, "温馨提示", "取消", "确定", str, new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                }, new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(mContext, ActivitySaleVipGrade.class).putExtra("payAmount", vo.getPurchasePrice()).putExtra("gradeId", vo.getId()));
+                        dialog.dismiss();
+                    }
+                });
+                break;
         }
     }
 
@@ -120,19 +193,66 @@ public class ActivityVipGrade extends BaseActivity implements OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-
-
+        loadList();
     }
 
+    private void loadList() {
 
+        showProgress("正在发送");
+        RequestParams params = new RequestParams();
+        params.put("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.put("token", UtilPreference.getStringValue(mContext, "token"));
+        HttpUtil.get(ConfigXy.GRADE_LIST, params, new HttpUtil.RequestListener() {
 
+            @Override
+            public void success(String response) {
+                disShowProgress();
+                try {
+                    JSONObject result = new JSONObject(response);
 
+                    if (!result.optBoolean("status")) {
+                        showErrorMsg(result.getString("message"));
+                        return;
+                    }
 
+                    JSONObject obj = result.getJSONObject("data");
+                    String grade_list = obj.optString("grade_list");
+                    if (!StringUtils.isBlank(grade_list)) {
 
+                        Gson gson = new Gson();
+                        List<VipGrade> vipGradeList = gson.fromJson(grade_list, new TypeToken<List<VipGrade> >() {
+                        }.getType());
+                        if (vipGradeList.size() > 0) {
+                            list.clear();
+                            list.addAll(list.size(), vipGradeList);
 
+                            //设置默认一个
+                            list.get(0).setDefault(true);
+                            vo = list.get(0);
+                            setDefault(vo);
 
+                        } else {
+                           ToastUtils.CustomShow(mContext, "返回套餐为空");
+                        }
+                    }else{
+                        ToastUtils.CustomShow(mContext, "返回数据错误");
+                    }
 
+                    adapter.notifyDataSetChanged();
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void failed(Throwable error) {
+                disShowProgress();
+                showE404();
+            }
+
+        });
+    }
 
 
 }

@@ -95,11 +95,12 @@
                     android:gravity="center"
                     android:orientation="horizontal">
                     <TextView
+                        android:id="@+id/gradedemand"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="30000"
+                        android:text=""
                         android:textColor="@color/text_font"
                         android:textSize="20sp"/>
                     <LinearLayout
@@ -118,11 +119,12 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/gradegive"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="3000"
+                        android:text=""
                         android:textColor="@color/text_font"
                         android:textSize="20sp"/>
                     <LinearLayout
@@ -140,11 +142,12 @@
                             android:textSize="16sp"/>
                     </LinearLayout>
                     <TextView
+                        android:id="@+id/total"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="33000"
+                        android:text=""
                         android:textColor="@color/text_font"
                         android:textSize="20sp"/>
                 </LinearLayout>
@@ -154,6 +157,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:padding="10dp"
+                    android:visibility="gone"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
@@ -188,7 +192,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                android:layout_margin="20dp"
                 android:orientation="vertical">
                 <com.tool.utils.view.MyGridView
@@ -215,6 +220,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="30dp"
+
                 android:background="@drawable/login_bar"
                 android:gravity="center"
                 android:padding="@dimen/padding_normal"
@@ -226,6 +232,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="0dp"
@@ -233,7 +240,7 @@
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="钱包余额"
+                    android:text=""
                     android:textColor="#999999"
                     android:textSize="13sp"/>
                 <View

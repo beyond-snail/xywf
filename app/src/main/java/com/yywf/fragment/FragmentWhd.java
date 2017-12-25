@@ -22,6 +22,8 @@ import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.loopj.android.http.RequestParams;
+import com.tool.utils.utils.StringUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MyListView;
 import com.yywf.R;
 import com.yywf.activity.ActivityChangeDebitInfo;
@@ -88,7 +90,7 @@ public class FragmentWhd extends AbstractFragment implements
 
 
         listview = (PullToRefreshListView)fragment.findViewById(R.id.pull_refresh_listView);
-        bankAdapter = new BankListAdapter((Activity) mContext, bankList, 1);
+        bankAdapter = new BankListAdapter((Activity) mContext, bankList, 4);
         listview.setAdapter(bankAdapter);
 
         // 下拉刷新、上拉加载更多
@@ -154,11 +156,9 @@ public class FragmentWhd extends AbstractFragment implements
         }
         String url = ConfigXy.XY_BANK_INFO_LIST;
         RequestParams params = new RequestParams();
-//        params.add("memberId", UtilPreference.getStringValue(mContext, "zf_member_id"));
-//        params.add("groupId", UtilPreference.getStringValue(mContext, "zf_group_id"));
-//        params.add("pageNo", page + "");
-//        params.add("pageSize", "10");
-//        params.add("token", UtilPreference.getStringValue(mContext, "token"));
+        params.put("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.put("type", "2");
+        params.put("token", UtilPreference.getStringValue(mContext, "token"));
 
         HttpUtil.get(url, params, new HttpUtil.RequestListener() {
 
@@ -177,28 +177,32 @@ public class FragmentWhd extends AbstractFragment implements
                         return;
                     }
 
-                    JSONArray obj = result.getJSONArray("data");
-                    if (obj.length() <= 0){
-                        bankAdapter.notifyDataSetChanged();
-                        listview.onRefreshComplete();
-                        return;
-                    }
+                    JSONObject obj = result.getJSONObject("data");
+                    String bank_list = obj.optString("bank_list");
+                    if (!StringUtils.isBlank(bank_list)) {
 
-                    Gson gson = new Gson();
-                    List<BankCardInfo> bankCardInfoList = gson.fromJson(obj.toString(), new TypeToken<List<BankCardInfo> >() {
-                    }.getType());
+                        Gson gson = new Gson();
+                        List<BankCardInfo> bankCardInfoList = gson.fromJson(bank_list, new TypeToken<List<BankCardInfo> >() {
+                        }.getType());
+                        if (false){//(bankCardInfoList.size() > 0) {
+                            linearLayout(R.id.id_no_data).setVisibility(View.GONE);
+                            bankList.addAll(bankList.size(), bankCardInfoList);
 
-                    if (bankCardInfoList.size() > 0) {
-                        linearLayout(R.id.id_no_data).setVisibility(View.GONE);
-                        bankList.addAll(bankList.size(), bankCardInfoList);
-
-                    } else {
+                        } else {
+                            if (bankList.size() > 0){
+                                linearLayout(R.id.id_no_data).setVisibility(View.GONE);
+                            }else{
+                                linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }else{
                         if (bankList.size() > 0){
                             linearLayout(R.id.id_no_data).setVisibility(View.GONE);
                         }else{
                             linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
                         }
                     }
+
 
 
                     bankAdapter.notifyDataSetChanged();
@@ -223,7 +227,7 @@ public class FragmentWhd extends AbstractFragment implements
     @Override
     public void onResume() {
         super.onResume();
-//        reloadData();
+        reloadData();
 
     }
 

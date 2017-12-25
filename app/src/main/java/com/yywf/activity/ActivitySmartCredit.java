@@ -22,6 +22,7 @@ import com.tool.utils.passwordView.KeyBoardDialog;
 import com.tool.utils.passwordView.PayPasswordView;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.ToastUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MoneyEditText;
 import com.tool.utils.view.RoundImageView;
 import com.yywf.R;
@@ -66,16 +67,16 @@ public class ActivitySmartCredit extends BaseActivity implements OnClickListener
 
     private void initView() {
         //测试数据
-        for (int i =0; i < 2; i++){
-            BankCardInfo info = new BankCardInfo();
-            info.setAmt(222222);
-            info.setBank_name("交通银行");
-            info.setHkDay(6);
-            info.setZdDay(20);
-            info.setCard_num("3333");
-            info.setMember_name("吴从鹏");
-            bankList.add(info);
-        }
+//        for (int i =0; i < 2; i++){
+//            BankCardInfo info = new BankCardInfo();
+//            info.setAmt(222222);
+//            info.setBank_name("交通银行");
+//            info.setHkDay(6);
+//            info.setZdDay(20);
+//            info.setCard_num("3333");
+//            info.setMember_name("吴从鹏");
+//            bankList.add(info);
+//        }
 
 
 
@@ -178,11 +179,9 @@ public class ActivitySmartCredit extends BaseActivity implements OnClickListener
         }
         String url = ConfigXy.XY_BANK_INFO_LIST;
         RequestParams params = new RequestParams();
-//        params.add("memberId", UtilPreference.getStringValue(mContext, "zf_member_id"));
-//        params.add("groupId", UtilPreference.getStringValue(mContext, "zf_group_id"));
-//        params.add("pageNo", page + "");
-//        params.add("pageSize", "10");
-//        params.add("token", UtilPreference.getStringValue(mContext, "token"));
+        params.put("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.put("type", "2");
+        params.put("token", UtilPreference.getStringValue(mContext, "token"));
 
         HttpUtil.get(url, params, new HttpUtil.RequestListener() {
 
@@ -201,28 +200,32 @@ public class ActivitySmartCredit extends BaseActivity implements OnClickListener
                         return;
                     }
 
-                    JSONArray obj = result.getJSONArray("data");
-                    if (obj.length() <= 0){
-                        bankAdapter.notifyDataSetChanged();
-                        listview.onRefreshComplete();
-                        return;
-                    }
+                    JSONObject obj = result.getJSONObject("data");
+                    String bank_list = obj.optString("bank_list");
+                    if (!StringUtils.isBlank(bank_list)) {
 
-                    Gson gson = new Gson();
-                    List<BankCardInfo> bankCardInfoList = gson.fromJson(obj.toString(), new TypeToken<List<BankCardInfo> >() {
-                    }.getType());
+                        Gson gson = new Gson();
+                        List<BankCardInfo> bankCardInfoList = gson.fromJson(bank_list, new TypeToken<List<BankCardInfo> >() {
+                        }.getType());
+                        if (bankCardInfoList.size() > 0) {
+                            linearLayout(R.id.id_no_data).setVisibility(View.GONE);
+                            bankList.addAll(bankList.size(), bankCardInfoList);
 
-                    if (bankCardInfoList.size() > 0) {
-                        linearLayout(R.id.id_no_data).setVisibility(View.GONE);
-                        bankList.addAll(bankList.size(), bankCardInfoList);
-
-                    } else {
+                        } else {
+                            if (bankList.size() > 0){
+                                linearLayout(R.id.id_no_data).setVisibility(View.GONE);
+                            }else{
+                                linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }else{
                         if (bankList.size() > 0){
                             linearLayout(R.id.id_no_data).setVisibility(View.GONE);
                         }else{
                             linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
                         }
                     }
+
 
 
                     bankAdapter.notifyDataSetChanged();

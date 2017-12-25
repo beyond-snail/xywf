@@ -117,4 +117,18 @@ public class ConfigXy {
     public static final String PLAN_LIST = "";
 
 
+
+    //获取支付宝RSA秘钥
+    public static final String GET_RSA_STORE = "";
+
+    //支付宝支付
+    public static final String ALY_PAY = "";
+
+    //会员等级列表
+    public static final String GRADE_LIST = ZF_SERVER_API+"app/member/queryXyMemberGrade";
+
+    //生成订单
+    public static final String GET_ORDER_ID = ZF_SERVER_API + "/api/pay/submitOrder";
+
+
 }

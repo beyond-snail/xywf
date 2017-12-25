@@ -39,16 +39,71 @@ public class VipGrade implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int grade;
+	private int id;
+	private String gradename;
+	private int purchasePrice;
+	private int gradegive;
+	private int gradedemand;
+	private String profitratio;
+	private int cashback;
+
 	private boolean isDefault;
 	private boolean isHot;
 
-	public int getGrade() {
-		return grade;
+	public int getId() {
+		return id;
 	}
 
-	public void setGrade(int grade) {
-		this.grade = grade;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getGradename() {
+		return gradename;
+	}
+
+	public void setGradename(String gradename) {
+		this.gradename = gradename;
+	}
+
+	public int getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public void setPurchasePrice(int purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+
+	public int getGradegive() {
+		return gradegive;
+	}
+
+	public void setGradegive(int gradegive) {
+		this.gradegive = gradegive;
+	}
+
+	public int getGradedemand() {
+		return gradedemand;
+	}
+
+	public void setGradedemand(int gradedemand) {
+		this.gradedemand = gradedemand;
+	}
+
+	public String getProfitratio() {
+		return profitratio;
+	}
+
+	public void setProfitratio(String profitratio) {
+		this.profitratio = profitratio;
+	}
+
+	public int getCashback() {
+		return cashback;
+	}
+
+	public void setCashback(int cashback) {
+		this.cashback = cashback;
 	}
 
 	public boolean isDefault() {

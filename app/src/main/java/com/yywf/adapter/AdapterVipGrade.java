@@ -70,7 +70,7 @@ public class AdapterVipGrade extends AdapterBase<VipGrade> {
             }
         }
 
-        holder.id_vip.setText("VIP"+vo.getGrade());
+        holder.id_vip.setText(vo.getGradename());
 
 
         

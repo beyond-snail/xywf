@@ -27,7 +27,7 @@ public class BankListAdapter extends BaseAdapter{
 	private Activity activity;// 上下文
 	private List<BankCardInfo> list;
 	private LayoutInflater inflater = null;// 导入布局
-	private int UiType = 0; //1：普通， 2：智能还款 , 3:隐藏
+	private int UiType = 0; //1：普通， 2：智能还款 , 3:隐藏，4：微代还
 
 	public BankListAdapter(Activity context, List<BankCardInfo> list, int UiType) {
 		this.activity = context;
@@ -88,6 +88,10 @@ public class BankListAdapter extends BaseAdapter{
 			holder.tvHk.setText("智能还款");
 		} else if (UiType == 3){
 			holder.tvHk.setVisibility(View.GONE);
+		} else if (UiType == 4){
+			holder.tvHk.setText("微代还");
+		} else if (UiType == 1){
+			holder.tvHk.setText("立即还款");
 		}
 		holder.tvHk.setOnClickListener(new View.OnClickListener() {
 			@Override

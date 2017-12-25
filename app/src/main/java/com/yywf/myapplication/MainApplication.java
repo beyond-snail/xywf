@@ -4,6 +4,8 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
+
+import com.moxie.client.manager.MoxieSDK;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -55,6 +57,8 @@ public class MainApplication extends Application {
         // 在使用 SDK 各组间之前初始化 context 信息，传入 ApplicationContext
         // 如果没有，进入地图会跳出来
 //        SDKInitializer.initialize(this);
+
+        MoxieSDK.init(this);
 
         // 图片加载工具初始化
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()

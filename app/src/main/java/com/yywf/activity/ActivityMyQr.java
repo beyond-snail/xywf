@@ -274,7 +274,7 @@ public class ActivityMyQr extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		loadData();
+//		loadData();
 		startTimer();
 		startTimer2();
 		// 创建一个定时器

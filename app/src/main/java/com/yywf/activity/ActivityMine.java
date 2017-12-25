@@ -33,6 +33,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tool.utils.http.HttpUtilKey;
 import com.tool.utils.utils.AlertUtils;
 import com.tool.utils.utils.FileUtils;
@@ -101,6 +102,7 @@ public class ActivityMine extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		getMemberInfo();
 	}
 
 	@Override
@@ -289,6 +291,55 @@ public class ActivityMine extends BaseActivity implements OnClickListener {
 		});
 
 	}
+
+
+
+	private void getMemberInfo() {
+
+		showProgress("加载中...");
+		RequestParams params = new RequestParams();
+		params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+		params.add("token", UtilPreference.getStringValue(mContext, "token"));
+		HttpUtil.get(ConfigXy.XY_GET_MEMBER_INFO, params, requestListener);
+	}
+
+	private HttpUtil.RequestListener requestListener = new HttpUtil.RequestListener() {
+
+		@Override
+		public void success(String response) {
+			disShowProgress();
+			try {
+				JSONObject result = new JSONObject(response);
+				if (!result.optBoolean("status")) {
+					showErrorMsg(result.getString("message"));
+					return;
+				}
+
+				JSONObject dataStr = result.getJSONObject("data");
+
+				String icon = dataStr.optString("icon");
+
+
+				if (!StringUtils.isBlank(icon)){
+					ImageLoader.getInstance().displayImage(icon, iv_avatar);
+				}
+
+
+
+
+
+
+			} catch (Exception e) {
+				Log.e(TAG, "doCommit() Exception: " + e.getMessage());
+			}
+		}
+
+		@Override
+		public void failed(Throwable error) {
+			disShowProgress();
+			showE404();
+		}
+	};
 
 
 	
