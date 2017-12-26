@@ -2,6 +2,20 @@ package com.yywf.config;
 
 public class ConfigXy {
 
+
+    /**
+     * 您当前登录账号对应的的ApiKey、Token和Secret(回调验签):
+     ApiKey:ac8c5018733142a0a66eff8666df550b
+     Token:0462a54463cc4eeba97dafab7af6bea8
+     Secret(回调验签):27c7e4bc518c48d095d9caf544771876
+
+     魔杖产品对应的CustomerId和Secret:
+     CustomerId:1260
+     Secret:e795112b552943e799d657af200cc9a9
+     */
+
+
+
     public static final String SERVER_API = "http://app.yunl7.com";
     public static final String SERVER_API_NEW = "http://app.yunl7.com";
     public static final String SERVER_API_IAPP = SERVER_API;
@@ -116,19 +130,20 @@ public class ConfigXy {
     //还款计划列表
     public static final String PLAN_LIST = "";
 
-
+    public static final String HC_GET_RSA_STORE = SERVER_API_STORE
+            + "/shopapp/alipay/getPayAccount";
 
     //获取支付宝RSA秘钥
     public static final String GET_RSA_STORE = "";
 
     //支付宝支付
-    public static final String ALY_PAY = "";
+    public static final String ALY_PAY = ZF_SERVER_API+"/app/pay/aliPreOrder";
 
     //会员等级列表
     public static final String GRADE_LIST = ZF_SERVER_API+"app/member/queryXyMemberGrade";
 
     //生成订单
-    public static final String GET_ORDER_ID = ZF_SERVER_API + "/api/pay/submitOrder";
+    public static final String GET_ORDER_ID = ZF_SERVER_API + "/app/pay/submitOrder";
 
 
 }

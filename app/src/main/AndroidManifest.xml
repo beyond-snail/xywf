@@ -270,6 +270,12 @@
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>
         <activity
+            android:name=".activity.ActivityEmailImport"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+        <activity
             android:name=".activity.ActivityBanKa"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
             android:screenOrientation="portrait"
@@ -381,6 +387,11 @@
             android:name=".activity.ActivitySaleVipGrade"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+
+        <activity
+            android:name="com.moxie.client.MainActivity"
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>
     </application>

@@ -53,7 +53,7 @@ public class AdapterVipGrade extends AdapterBase<VipGrade> {
             holder.id_vip.setTextColor(mContext.getResources().getColor(R.color.text_font));
             holder.ll_bg.setBackgroundResource(R.drawable.common_radius_rect_red_text_font);
             holder.id_choose.setVisibility(View.VISIBLE);
-            if (vo.isHot()){
+            if (vo.getIshot() == 1){
                 holder.id_hot.setVisibility(View.VISIBLE);
             }else{
                 holder.id_hot.setVisibility(View.GONE);
@@ -63,7 +63,7 @@ public class AdapterVipGrade extends AdapterBase<VipGrade> {
             holder.id_vip.setTextColor(mContext.getResources().getColor(R.color.gray));
             holder.ll_bg.setBackgroundResource(R.drawable.common_radius_rect_gray);
             holder.id_choose.setVisibility(View.GONE);
-            if (vo.isHot()){
+            if (vo.getIshot() == 1){
                 holder.id_hot.setVisibility(View.VISIBLE);
             }else{
                 holder.id_hot.setVisibility(View.GONE);

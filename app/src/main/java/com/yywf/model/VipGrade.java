@@ -48,7 +48,7 @@ public class VipGrade implements Serializable {
 	private int cashback;
 
 	private boolean isDefault;
-	private boolean isHot;
+	private int ishot;
 
 	public int getId() {
 		return id;
@@ -114,11 +114,11 @@ public class VipGrade implements Serializable {
 		isDefault = aDefault;
 	}
 
-	public boolean isHot() {
-		return isHot;
+	public int getIshot() {
+		return ishot;
 	}
 
-	public void setHot(boolean hot) {
-		isHot = hot;
+	public void setIshot(int ishot) {
+		this.ishot = ishot;
 	}
 }

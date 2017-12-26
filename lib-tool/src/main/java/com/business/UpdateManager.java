@@ -311,12 +311,12 @@ public class UpdateManager {
 		@Override
 		public void run() {
 			try {
-				String apkName = "HeicheApp_" + mUpdate.getVersionName() + ".apk";
-				String tmpApk = "HeicheApp_" + mUpdate.getVersionName() + ".tmp";
+				String apkName = "XyWfApp_" + mUpdate.getVersionName() + ".apk";
+				String tmpApk = "XyWfApp_" + mUpdate.getVersionName() + ".tmp";
 				// 判断是否挂载了SD卡
 				String storageState = Environment.getExternalStorageState();
 				if (storageState.equals(Environment.MEDIA_MOUNTED)) {
-					savePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/heiche/Update/";
+					savePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/xywf/Update/";
 					File file = new File(savePath);
 					if (!file.exists()) {
 						file.mkdirs();

@@ -42,6 +42,7 @@ public class MainApplication extends Application {
         super.onCreate();
         context = this;
         applicationContext = this;
+
         instance = this;
         // CrashHandler.getInstance().init(this);// 初始化全局异常管理
         /*

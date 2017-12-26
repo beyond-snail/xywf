@@ -92,7 +92,7 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
         
         //生成订单
         loadOrderId();
-
+//        loadRSAKeys();
     }
 
     private void loadOrderId() {
@@ -111,7 +111,8 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
                     if (!result.optBoolean("status")) {
                         ToastUtils.CustomShow(mContext, result.optString("message"));
                     }else{
-                        orderId = result.optString("data");
+                        JSONObject dataStr = result.getJSONObject("data");
+                        orderId = dataStr.optString("orderId");
                     }
 
 
@@ -137,7 +138,7 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
         RequestParams params = new RequestParams();
         params.put("memberId", UtilPreference.getStringValue(mContext, "memberId"));
         params.put("token", UtilPreference.getStringValue(mContext, "token"));
-        HttpUtil.get(ConfigXy.GET_RSA_STORE, params, new HttpUtil.RequestListener() {
+        HttpUtil.get(ConfigXy.HC_GET_RSA_STORE, params, new HttpUtil.RequestListener() {
 
             @Override
             public void success(String response) {
@@ -231,6 +232,11 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
                     break;
                 }
 
+                if (payType == 3){
+                    doZfbPay(orderId, payAmount);
+                    break;
+                }
+
 
                 try {
                     doCommit();
@@ -303,10 +309,9 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
         RequestParams params = new RequestParams();
         // params.add("type", "1");
         params.add("orderId", orderid);
-        params.add("price", orderAmount + "");
+        params.add("orderAmount", orderAmount + "");
         params.put("memberId", UtilPreference.getStringValue(mContext, "memberId"));
         params.put("token", UtilPreference.getStringValue(mContext, "token"));
-//        params.add("businessCode", ConfigApp.ZF_MID);
         HttpUtil.get(ConfigXy.ALY_PAY, params, new HttpUtil.RequestListener() {
 
             @Override
@@ -349,12 +354,12 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
     private void doAliPay(String notifyUrl) {
         Log.d(TAG, "======= 进入支付宝快捷支付 ========");
         // 从服务器生成订单
-//        Log.i(TAG, "支付生成orderId：" + oilcardOrderId);
-//        String body = "用户充值：" + StringUtils.formatIntMoney(oldmoney) + "元，实付" + StringUtils.formatIntMoney(orderAmount)
-//                + "元。";
-//        String appname = getResources().getString(R.string.app_name);
-//        MyAlipayClient.pay(this, oilcardOrderId, appname + "账户余额充值服务", body, StringUtils.formatIntMoney(orderAmount),
-//                mHandler, notifyUrl);
+        Log.i(TAG, "支付生成orderId：" + orderId);
+        String body = "用户充值：" + StringUtils.formatIntMoney(payAmount) + "元，实付" + StringUtils.formatIntMoney(payAmount)
+                + "元。";
+        String appname = getResources().getString(R.string.app_name);
+        MyAlipayClient.pay(this, orderId, appname + "消费服务", body, StringUtils.formatIntMoney(payAmount),
+                mHandler, notifyUrl);
 
     }
 
