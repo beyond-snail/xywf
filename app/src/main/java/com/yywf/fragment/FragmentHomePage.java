@@ -51,6 +51,7 @@ import com.yywf.model.AdInfo;
 import com.yywf.model.BankCardInfo;
 import com.yywf.model.Menu;
 import com.yywf.widget.ADCommonView;
+import com.yywf.widget.dialog.DialogUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -126,27 +127,51 @@ public class FragmentHomePage extends AbstractFragment implements
                 int index = EnumConsts.MenuType.getCodeByName(list.get(position).getName());
                 switch (index){
                     case 1: //快捷收钱
+                        if (DialogUtils.checkApproveStatus(mContext)){
+                            return;
+                        }
                         startActivity(new Intent(mContext, ActivityKjsk.class));
                         break;
                     case 2: //智能还款
+                        if (DialogUtils.checkApproveStatus(mContext)){
+                            return;
+                        }
                         startActivity(new Intent(mContext, ActivitySmartCredit.class));
                         break;
                     case 3: //还信用卡
+                        if (DialogUtils.checkApproveStatus(mContext)){
+                            return;
+                        }
                         startActivity(new Intent(mContext, ActivityCredit.class));
                         break;
                     case 4: //一键提额
+                        if (DialogUtils.checkApproveStatus(mContext)){
+                            return;
+                        }
                         startActivity(new Intent(mContext, ActivityBanKTiE.class));
                         break;
                     case 5: //待办事项
+                        if (DialogUtils.checkApproveStatus(mContext)){
+                            return;
+                        }
                         startActivity(new Intent(mContext, ActivityDaiBanShiXiang.class));
                         break;
                     case 6: //一键办卡
+                        if (DialogUtils.checkApproveStatus(mContext)){
+                            return;
+                        }
                         startActivity(new Intent(mContext, ActivityBanKa.class));
                         break;
                     case 7: //我的账单
+                        if (DialogUtils.checkApproveStatus(mContext)){
+                            return;
+                        }
                         startActivity(new Intent(mContext, ActivityMyZhangDan.class));
                         break;
                     case 8: //购买等级
+                        if (DialogUtils.checkApproveStatus(mContext)){
+                            return;
+                        }
                         startActivity(new Intent(mContext, ActivityVipGrade.class));
                         break;
                 }

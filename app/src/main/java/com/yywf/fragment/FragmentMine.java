@@ -1,7 +1,9 @@
 package com.yywf.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tool.utils.utils.AlertUtils;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.ToastUtils;
 import com.tool.utils.utils.UtilPreference;
@@ -43,6 +46,7 @@ import com.yywf.config.EnumConsts;
 import com.yywf.http.HttpUtil;
 import com.yywf.model.Menu;
 import com.yywf.util.MyActivityManager;
+import com.yywf.widget.dialog.DialogUtils;
 
 import org.json.JSONObject;
 
@@ -102,6 +106,7 @@ public class FragmentMine extends AbstractFragment implements
         tvRz = fragment.findViewById(R.id.tv_rz);
 //        tvBalanceAmt = fragment.findViewById(R.id.tv_balance_amt);
         tvLxwmTel = fragment.findViewById(R.id.tv_lxwm_tel);
+        tvLxwmTel.setOnClickListener(this);
 
         rl_smrz = fragment.findViewById(R.id.rl_smrz);
         rl_smrz.setOnClickListener(this);
@@ -147,12 +152,21 @@ public class FragmentMine extends AbstractFragment implements
                 int index = EnumConsts.MineMenuType.getCodeByName(list.get(position).getName());
                 switch (index){
                     case 1: //我的钱包
+                        if (DialogUtils.checkApproveStatus(mContext)){
+                            return;
+                        }
                         startActivity(new Intent(mContext, ActivityMyWallet.class));
                         break;
                     case 2: //我的团队
+                        if (DialogUtils.checkApproveStatus(mContext)){
+                            return;
+                        }
                         startActivity(new Intent(mContext, ActivityMyTeam.class));
                         break;
                     case 3: //推广二维码
+                        if (DialogUtils.checkApproveStatus(mContext)){
+                            return;
+                        }
                         startActivity(new Intent(mContext, ActivityMyQr.class));
                         break;
                     case 4: //抵用券
@@ -174,6 +188,9 @@ public class FragmentMine extends AbstractFragment implements
                 startActivity(new Intent(mContext, ActivitySmrz.class));
                 break;
             case R.id.rl_bank_manager: //银行卡管理
+                if (DialogUtils.checkApproveStatus(mContext)){
+                    return;
+                }
                 startActivity(new Intent(mContext, ActivityBankCardManager.class));
                 break;
             case R.id.rl_smsq: //扫码收钱
@@ -185,7 +202,26 @@ public class FragmentMine extends AbstractFragment implements
             case R.id.rl_setting: //设置
                 startActivity(new Intent(mContext, ActivitySetting.class));
                 break;
+            case R.id.tv_lxwm_tel:
+                final String phone = tvLxwmTel.getText().toString().trim();
+                DialogUtils.alert("拨打 " + phone, null, mContext, new DialogInterface.OnClickListener() {
 
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+                        // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                }, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                    }
+                });
+                break;
 
         }
 
@@ -241,9 +277,9 @@ public class FragmentMine extends AbstractFragment implements
                     tvGradeName.setText(grade_name);
                 }
 
-                if (!StringUtils.isBlank(service_phone)){
-                    tvLxwmTel.setText(service_phone);
-                }
+//                if (!StringUtils.isBlank(service_phone)){
+//                    tvLxwmTel.setText(service_phone);
+//                }
 
                 if (!StringUtils.isBlank(phone)){
                     tvPhone.setText(phone);

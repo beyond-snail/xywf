@@ -28,6 +28,7 @@ import com.yywf.fragment.FragmentWhd;
 import com.yywf.fragmenttab.FragmentTab;
 import com.yywf.fragmenttab.TabItemImpl;
 import com.yywf.util.MyActivityManager;
+import com.yywf.widget.dialog.DialogUtils;
 import com.yywf.widget.dialog.MyCustomDialog;
 
 import java.util.Timer;
@@ -62,56 +63,50 @@ public class ActivityHome extends FragmentActivity implements OnClickListener{
 //
 //        //判断是否实名认证
 //        checkApproveStatus();
+        DialogUtils.checkApproveStatus(mContext);
 
     }
 
-    private void checkApproveStatus(){
-        //判断是否实名认证
-        int approve_status = UtilPreference.getIntValue(mContext, "approve_status");
-        if (approve_status == 0){
-            showRegisterSuccess();
-        }
-    }
 
 
-    public void showRegisterSuccess(){
-        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.dialog_register_success, null);
-        final MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(mContext,
-                R.style.MyDialogStyleBottom);
-        customBuilder.setCancelable(true);
-        customBuilder.setCanceledOnTouchOutside(false);
-        customBuilder.setLine(0);// 分割横线所处位置 在自定义布局上下或隐藏 0隐藏 1线在上方
-        customBuilder.setContentView(view);
-        // 2线在下方
-        customBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog,
-                                int which) {
-                dialog.dismiss();
-                startActivity(new Intent(mContext, ActivitySmrz.class));
-            }
-        });
-        customBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog,
-                                int which) {
+
+//    public void showRegisterSuccess(){
+//        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View view = inflater.inflate(R.layout.dialog_register_success, null);
+//        final MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(mContext,
+//                R.style.MyDialogStyleBottom);
+//        customBuilder.setCancelable(true);
+//        customBuilder.setCanceledOnTouchOutside(false);
+//        customBuilder.setLine(0);// 分割横线所处位置 在自定义布局上下或隐藏 0隐藏 1线在上方
+//        customBuilder.setContentView(view);
+//        // 2线在下方
+//        customBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog,
+//                                int which) {
 //                dialog.dismiss();
-                dialog.dismiss();
-                finish();
-            }
-        });
-        final MyCustomDialog dialog = customBuilder.create();
-        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialogInterface) {
-                //直接退出应用
-                dialog.dismiss();
-                finish();
-            }
-        });
-        dialog.show();
-    }
+//                startActivity(new Intent(mContext, ActivitySmrz.class));
+//            }
+//        });
+//        customBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog,
+//                                int which) {
+//                dialog.dismiss();
+////                finish();
+//            }
+//        });
+//        final MyCustomDialog dialog = customBuilder.create();
+//        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+//            @Override
+//            public void onCancel(DialogInterface dialogInterface) {
+//                //直接退出应用
+//                dialog.dismiss();
+////                finish();
+//            }
+//        });
+//        dialog.show();
+//    }
 
 
 
@@ -142,14 +137,23 @@ public class ActivityHome extends FragmentActivity implements OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rl_home_1://
+//                if (DialogUtils.checkApproveStatus(mContext)){
+//                    return;
+//                }
                 mFragmentTab.selectTab("FragmentHomePage");
                 doSelect(0);
                 break;
             case R.id.rl_home_2://
+                if (DialogUtils.checkApproveStatus(mContext)){
+                    return;
+                }
                 mFragmentTab.selectTab("FragmentWhd");
                 doSelect(1);
                 break;
             case R.id.rl_home_3://
+//                if (DialogUtils.checkApproveStatus(mContext)){
+//                    return;
+//                }
                 mFragmentTab.selectTab("FragmentMine");
                 doSelect(2);
                 break;
@@ -262,7 +266,7 @@ public class ActivityHome extends FragmentActivity implements OnClickListener{
     @Override
     protected void onResume() {
         super.onResume();
-        checkApproveStatus();
+
 
     }
 

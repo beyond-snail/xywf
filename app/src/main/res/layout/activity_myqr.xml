@@ -76,10 +76,11 @@
             android:gravity="center"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/two_qr_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="推荐人：我富哥"
+                android:text=""
                 android:textColor="@color/text_font"
                 android:textSize="18sp"
                 />

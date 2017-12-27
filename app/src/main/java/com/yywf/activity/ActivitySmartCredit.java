@@ -115,20 +115,14 @@ public class ActivitySmartCredit extends BaseActivity implements OnClickListener
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
                 refreshView.getLoadingLayoutProxy(false, true).setLastUpdatedLabel("更新于：" + label);
 
-                if (bankList.size() == 0) {
-                    handler.postDelayed(new Runnable() {
+                handler.postDelayed(new Runnable() {
 
-                        @Override
-                        public void run() {
-                            showErrorMsg("没有更多了");
-                            listview.onRefreshComplete();
-                        }
-                    }, 1000);
-
-                } else {
-                    page++;
-                    loadData(false);
-                }
+                    @Override
+                    public void run() {
+                        showErrorMsg("没有更多了");
+                        listview.onRefreshComplete();
+                    }
+                }, 1000);
             }
         });
 
@@ -143,6 +137,7 @@ public class ActivitySmartCredit extends BaseActivity implements OnClickListener
     @Override
     protected void onResume() {
         super.onResume();
+        reloadData();
     }
 
     @Override

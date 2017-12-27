@@ -1,12 +1,17 @@
 package com.yywf.widget.dialog;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tool.utils.dialog.CustomDialog;
+import com.tool.utils.utils.UtilPreference;
 import com.yywf.R;
+import com.yywf.activity.ActivitySmrz;
 
 /**
  * Created by Administrator on 2017/12/14 0014.
@@ -48,5 +53,106 @@ public class DialogUtils {
         MyCustomDialog dialog = customBuilder.create();
         dialog.show();
         return dialog;
+    }
+
+
+    /**
+     * 显示消息 按钮为 确定 取消
+     */
+    public static void alert(String title, String hint, Context ctx, DialogInterface.OnClickListener positive,
+                             DialogInterface.OnClickListener negative) {
+        if (negative == null) {
+            negative = new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+
+                }
+            };
+        }
+        alert(title, hint, ctx, "确定", "取消", positive, negative, null, true, true, 1);
+
+    }
+
+    private static MyCustomDialog Dialog;
+
+    // 最全的
+    public static void alert(String title, String hint, Context ctx, String positiveText, String negativeText,
+                             DialogInterface.OnClickListener positive, DialogInterface.OnClickListener negative, View view, boolean a,
+                             boolean b, int line) {
+
+        if (Dialog != null) {
+            Dialog.dismiss();
+            Dialog = null;
+        }
+
+        MyCustomDialog.Builder builder = new MyCustomDialog.Builder(ctx, com.tool.R.style.MyDialogStyleBottom);
+        builder.setTitle(title);// 消息内容
+        builder.setMessage(hint);// 提示补充
+        builder.setContentView(view);// 自定义布局
+        builder.setCancelable(a);
+        builder.setCanceledOnTouchOutside(b);
+        builder.setLine(line);// 分割横线所处位置 在自定义布局上下或隐藏 0隐藏 1线在上方 2线在下方
+
+        builder.setPositiveButton(positiveText, positive);
+        builder.setNegativeButton(negativeText, negative);
+        Dialog = builder.create();
+
+        Dialog.show();
+
+    }
+
+
+
+
+    public static boolean checkApproveStatus(final Context mContext){
+        //判断是否实名认证
+        int approve_status = UtilPreference.getIntValue(mContext, "approve_status");
+        if (approve_status == 0){
+            showRegisterSuccess(mContext);
+            return true;
+        }
+        return false;
+    }
+
+
+
+    private static void showRegisterSuccess(final Context mContext){
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.dialog_register_success, null);
+        final MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(mContext,
+                R.style.MyDialogStyleBottom);
+        customBuilder.setCancelable(true);
+        customBuilder.setCanceledOnTouchOutside(false);
+        customBuilder.setLine(0);// 分割横线所处位置 在自定义布局上下或隐藏 0隐藏 1线在上方
+        customBuilder.setContentView(view);
+        // 2线在下方
+        customBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog,
+                                int which) {
+                dialog.dismiss();
+                mContext.startActivity(new Intent(mContext, ActivitySmrz.class));
+            }
+        });
+        customBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog,
+                                int which) {
+                dialog.dismiss();
+//                finish();
+            }
+        });
+        final MyCustomDialog dialog = customBuilder.create();
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                //直接退出应用
+                dialog.dismiss();
+//                finish();
+            }
+        });
+        dialog.show();
     }
 }

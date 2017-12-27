@@ -53,10 +53,22 @@ public class ActivityBankCardList extends BaseActivity implements OnClickListene
 		mContext = this;
 		setContentView(R.layout.activity_bankcard_list);
 		MyActivityManager.getInstance().addActivity(this);
-		initTitle("银行卡列表");
-		if (findViewById(R.id.backBtn) != null) {
-			findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
-		}
+        if (textView(R.id.tv_header) != null) {
+            textView(R.id.tv_header).setText("银行卡列表");
+        }
+        if (findViewById(R.id.backBtn) != null) {
+            findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
+            findViewById(R.id.backBtn).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Intent mIntent = new Intent();
+                    // 设置结果，并进行传送
+                    ActivityBankCardList.this.setResult(4, mIntent);
+                    finish();
+                }
+            });
+        }
         if (findViewById(R.id.img_right_add) != null) {
             findViewById(R.id.img_right_add).setVisibility(View.VISIBLE);
             findViewById(R.id.img_right_add).setOnClickListener(this);
@@ -76,7 +88,7 @@ public class ActivityBankCardList extends BaseActivity implements OnClickListene
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.e(TAG, "onItemClick: "+i);
                 Intent mIntent = new Intent();
-                mIntent.putExtra("bankInfo", bankList.get(i));
+                mIntent.putExtra("bankInfo", bankList.get(i-1));
                 // 设置结果，并进行传送
                 ActivityBankCardList.this.setResult(2, mIntent);
                 finish();
@@ -224,6 +236,7 @@ public class ActivityBankCardList extends BaseActivity implements OnClickListene
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+
             case R.id.img_right_add:
                 startActivity(new Intent(mContext, ActivityCreditAdd.class));
                 break;

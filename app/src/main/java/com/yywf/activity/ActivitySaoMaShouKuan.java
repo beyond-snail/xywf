@@ -82,7 +82,7 @@ public class ActivitySaoMaShouKuan extends BaseActivity implements OnClickListen
 
 		Log.e(TAG, "ActivityQbPay onCreate");
 
-		twoCode("12333333");
+//		twoCode("12333333");
 
 	}
 
@@ -116,6 +116,7 @@ public class ActivitySaoMaShouKuan extends BaseActivity implements OnClickListen
 	private void initView() {
 
 		twoImg = (ImageView) findViewById(R.id.two_qr);
+		twoImg.setImageResource(R.drawable.sk);
 
 	}
 
@@ -290,37 +291,37 @@ public class ActivitySaoMaShouKuan extends BaseActivity implements OnClickListen
 	@Override
 	protected void onResume() {
 		super.onResume();
-		loadData();
-		startTimer();
-		startTimer2();
-		// 创建一个定时器
-		timer.schedule(task, TIME, TIME); // 1s后执行task,经过1s再次执行
-
-		//创建第二个定时器
-		timer2.schedule(task2, TIME2, TIME2);
+//		loadData();
+//		startTimer();
+//		startTimer2();
+//		// 创建一个定时器
+//		timer.schedule(task, TIME, TIME); // 1s后执行task,经过1s再次执行
+//
+//		//创建第二个定时器
+//		timer2.schedule(task2, TIME2, TIME2);
 	}
 
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		stopTimer();
-		stopTimer2();
+//		stopTimer();
+//		stopTimer2();
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		stopTimer();
-		stopTimer2();
+//		stopTimer();
+//		stopTimer2();
 	}
 
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		stopTimer();
-		stopTimer2();
+//		stopTimer();
+//		stopTimer2();
 	}
 
 	/**

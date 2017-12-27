@@ -124,7 +124,7 @@ public class ActivityForgotPayPwd extends BaseActivity implements OnClickListene
         countDowntimer.start();
 
         RequestParams params = new RequestParams();
-        params.add("phone",  UtilPreference.getStringValue(mContext, "username"));
+        params.add("phone",  UtilPreference.getStringValue(mContext, "userName"));
         showProgress("正在发送");
         HttpUtil.get(ConfigXy.XY_SMSVALDATE, params, new HttpUtil.RequestListener() {
 

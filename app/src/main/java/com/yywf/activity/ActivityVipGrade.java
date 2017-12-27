@@ -51,12 +51,15 @@ public class ActivityVipGrade extends BaseActivity implements OnClickListener {
     private TextView gradedemand;
     private TextView gradegive;
     private TextView total;
+    private TextView totalBetter;
 
 
     private MyGridView gridview;
 
 
-    MyCustomDialog dialog;
+    private MyCustomDialog dialog;
+
+    private int baseAmount = 19900;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +109,7 @@ public class ActivityVipGrade extends BaseActivity implements OnClickListener {
         gradedemand = textView(R.id.gradedemand);
         gradegive = textView(R.id.gradegive);
         total = textView(R.id.total);
+        totalBetter = textView(R.id.id_count_amt);
 
 
         gridview = (MyGridView) findViewById(R.id.id_gridview);
@@ -149,6 +153,8 @@ public class ActivityVipGrade extends BaseActivity implements OnClickListener {
         gradedemand.setText(vo.getGradedemand()+"");
         gradegive.setText(vo.getGradegive()+"");
         total.setText((vo.getGradedemand()+vo.getGradegive())+"");
+        int amount = vo.getGradegive()*baseAmount;
+        totalBetter.setText(StringUtils.formatIntMoney(amount));
     }
 
 

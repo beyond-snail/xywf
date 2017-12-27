@@ -82,6 +82,7 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
             });
         }
         initView();
+        loadData();
     }
 
 
@@ -110,7 +111,7 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        loadData();
+
         loadfeeDecriptionData();
     }
 
@@ -340,6 +341,11 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
                 if (!StringUtils.isBlank(vo.getCard_num())){
                     bankCarkNo.setText(vo.getCard_num());
                 }
+            }
+        }else if (requestCode == 1 && resultCode == 4){
+            if (vo == null){
+
+                finish();
             }
         }
     }

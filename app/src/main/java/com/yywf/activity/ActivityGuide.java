@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.RequestParams;
@@ -46,6 +47,8 @@ public class ActivityGuide extends Activity implements OnClickListener {
 	private int currentPosititon;
 	private GestureDetector mGestureDetector;
 	private int sizeType = 3;// 图片尺寸大小类型
+
+	private TextView id_click;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -98,6 +101,8 @@ public class ActivityGuide extends Activity implements OnClickListener {
 		adapter = new MyPagerAdapter();
 		viewPager.setAdapter(adapter);
 		viewPager.setOnPageChangeListener(new MyOnPageChangeListener());
+		id_click = findViewById(R.id.id_click);
+		id_click.setOnClickListener(this);
 	}
 	
 	/**
@@ -244,9 +249,12 @@ public class ActivityGuide extends Activity implements OnClickListener {
 
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.imagebtn:
-			goLoginPager();
-			break;
+			case R.id.imagebtn:
+				goLoginPager();
+				break;
+			case R.id.id_click:
+				goLoginPager();
+				break;
 		}
 	}
 

@@ -5,5 +5,5 @@ package com.config;
  */
 
 public class ConfingApp {
-    public static final String APPNAME = "yYwf";
+    public static final String APPNAME = "xywf";
 }

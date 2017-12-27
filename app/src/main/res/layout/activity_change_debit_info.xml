@@ -108,7 +108,7 @@
                 android:layout_gravity="center_vertical"
                 android:ems="5"
                 android:gravity="center_vertical"
-                android:text="银行卡号"
+                android:text="储蓄卡号"
                 android:textColor="#333333"
                 android:textSize="@dimen/text_size_hdpi" />
 
@@ -119,7 +119,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="@null"
                 android:gravity="center_vertical"
-                android:hint="请输入银行卡号"
+                android:hint="请输入储蓄卡号"
                 android:inputType="number"
                 android:maxLength="30"
                 android:singleLine="true"

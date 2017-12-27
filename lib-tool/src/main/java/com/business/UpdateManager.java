@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.config.ConfingApp;
 import com.loopj.android.http.RequestParams;
 import com.tool.R;
 import com.tool.utils.utils.GsonUtil;
@@ -156,12 +157,12 @@ public class UpdateManager {
 				if (msg.what == 1) {
 					mUpdate = (Update) msg.obj;
 					if (mUpdate != null) {
-						String versionCode = mUpdate.getVersionCode();
+						String versionCode = mUpdate.getVersions()+"";
 
 						if (curVersionCode < StringUtils.getInt(versionCode)) {
-							apkUrl = mUpdate.getDownloadUrl();
-							isNeedUpdate = mUpdate.getIsNeedUpdate();
-							updateMsg = mUpdate.getUpdateLog();
+							apkUrl = mUpdate.getDown_url();
+							isNeedUpdate = mUpdate.getMustUpdate()+"";
+							updateMsg = mUpdate.getMessage();
 
 							showNoticeDialog();
 						} else if (isShowMsg) {
@@ -311,8 +312,8 @@ public class UpdateManager {
 		@Override
 		public void run() {
 			try {
-				String apkName = "XyWfApp_" + mUpdate.getVersionName() + ".apk";
-				String tmpApk = "XyWfApp_" + mUpdate.getVersionName() + ".tmp";
+				String apkName = "XyWfApp_" + ConfingApp.APPNAME + ".apk";
+				String tmpApk = "XyWfApp_" + ConfingApp.APPNAME + ".tmp";
 				// 判断是否挂载了SD卡
 				String storageState = Environment.getExternalStorageState();
 				if (storageState.equals(Environment.MEDIA_MOUNTED)) {

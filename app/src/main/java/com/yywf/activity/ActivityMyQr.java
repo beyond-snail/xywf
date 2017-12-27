@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -47,7 +48,7 @@ public class ActivityMyQr extends BaseActivity implements OnClickListener {
 
 	private static final String TAG = "ActivityMyQr";
 	private ImageView twoImg;
-
+	private TextView two_qr_name;
 	private String checkQrStr;
 
 	@Override
@@ -66,7 +67,7 @@ public class ActivityMyQr extends BaseActivity implements OnClickListener {
 		initView();
 
 
-		twoCode("12333333");
+//		twoCode("12333333");
 
 	}
 
@@ -75,31 +76,18 @@ public class ActivityMyQr extends BaseActivity implements OnClickListener {
 	private void loadData() {
 		showProgress("加载中...");
 		RequestParams params = new RequestParams();
-		String id = UtilPreference.getStringValue(mContext, "zf_member_id");
-		params.add("memberId", id);
+		params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
 		params.add("token", UtilPreference.getStringValue(mContext, "token"));
-		HttpUtil.get(ConfigXy.GET_CODE_API, params, requestListener);
+		HttpUtil.get(ConfigXy.GET_QR, params, requestListener);
 
 	}
 
-	private void checkQrTask(){
-		if (StringUtils.isBlank(checkQrStr)){
-			Log.e(TAG, "回调参数为空");
-			return;
-		}
-		showProgress("加载中...");
-		RequestParams params = new RequestParams();
-		String id = UtilPreference.getStringValue(mContext, "zf_member_id");
-		params.add("memberId", id);
-		params.add("token", UtilPreference.getStringValue(mContext, "token"));
-		params.add("marked", checkQrStr);
-		HttpUtil.get(ConfigXy.GET_CHECK_QR_CODE_API, params, requestListener1);
-	}
 
 	@SuppressLint("NewApi")
 	private void initView() {
 
 		twoImg = (ImageView) findViewById(R.id.two_qr);
+		two_qr_name = findViewById(R.id.two_qr_name);
 
 	}
 
@@ -123,15 +111,19 @@ public class ActivityMyQr extends BaseActivity implements OnClickListener {
 					return;
 				}
 
-				String codeStr = result.optString("data");
+				JSONObject dataStr = result.getJSONObject("data");
 
-				String code[] = codeStr.split("&");
+				String invite_url = dataStr.optString("invite_url");
+				String member_name = dataStr.optString("member_name");
 
-				checkQrStr = result.optString("data_extend");
 
-				if (!StringUtils.isEmpty(codeStr)) {
 
-					twoCode(codeStr);
+				if (!StringUtils.isEmpty(invite_url)) {
+
+					twoCode(invite_url);
+				}
+				if(!StringUtils.isBlank(member_name)){
+					two_qr_name.setText("推荐人: "+member_name);
 				}
 
 			}
@@ -148,163 +140,33 @@ public class ActivityMyQr extends BaseActivity implements OnClickListener {
 		}
 	};
 
-	private HttpUtil.RequestListener requestListener1 = new HttpUtil.RequestListener() {
 
-		@SuppressLint("NewApi")
-		@Override
-		public void success(String response) {
-			disShowProgress();
 
-			try {
-				JSONObject result = new JSONObject(response);
 
-				if (!result.optBoolean("status")) {
-//                    showErrorMsg(result.getString("message"));
-                    return;
-                }
-				Gson gson = new Gson();
 
-				QbQrResult datas = gson.fromJson(result.getString("data"), new TypeToken<QbQrResult>() {
-				}.getType());
-//				startActivity(new Intent(mContext, ActivityQBQrResult.class).putExtra("data", datas));
-//				finish();
-			}
-
-			catch (Exception e) {
-				Log.e(TAG, "doLogin() Exception: " + e.getMessage());
-			}
-		}
-
-		@Override
-		public void failed(Throwable error) {
-			disShowProgress();
-			showE404();
-		}
-	};
-
-	Handler handler = new Handler() {
-		public void handleMessage(Message msg) {
-			if (msg.what == 1) {
-				Log.e(TAG, "time task......" + Integer.toString(i++));
-				loadData();
-			}else if(msg.what == 2){
-				checkQrTask();
-			}
-			super.handleMessage(msg);
-		};
-	};
-
-	private int i = 0;
-	private int TIME = 60 * 1000; // 一分钟
-	private int TIME2 = 10 * 1000; //30秒
-	Timer timer = new Timer();
-	Timer timer2 = new Timer();
-	TimerTask task = new TimerTask() {
-
-		@Override
-		public void run() {
-			// 需要做的事:发送消息
-			Message message = new Message();
-			message.what = 1;
-			handler.sendMessage(message);
-		}
-	};
-	TimerTask task2 = new TimerTask() {
-
-		@Override
-		public void run() {
-			// 需要做的事:发送消息
-			Message message = new Message();
-			message.what = 2;
-			handler.sendMessage(message);
-		}
-	};
-
-	// 关闭定时器
-	private void stopTimer() {
-		if (timer != null) {
-			timer.cancel();
-			timer = null;
-		}
-		if (task != null) {
-			task.cancel();
-			task = null;
-		}
-	}
-
-	private void startTimer(){
-		timer = new Timer();
-		task = new TimerTask() {
-
-			@Override
-			public void run() {
-				// 需要做的事:发送消息
-				Message message = new Message();
-				message.what = 1;
-				handler.sendMessage(message);
-			}
-		};
-	}
-
-	private void stopTimer2() {
-		if (timer2 != null) {
-			timer2.cancel();
-			timer2 = null;
-		}
-		if (task2 != null) {
-			task2.cancel();
-			task2 = null;
-		}
-	}
-
-	private void startTimer2(){
-		timer2 = new Timer();
-		task2 = new TimerTask() {
-
-			@Override
-			public void run() {
-				// 需要做的事:发送消息
-				Message message = new Message();
-				message.what = 2;
-				handler.sendMessage(message);
-			}
-		};
-	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-//		loadData();
-		startTimer();
-		startTimer2();
-		// 创建一个定时器
-		timer.schedule(task, TIME, TIME); // 1s后执行task,经过1s再次执行
+		loadData();
 
-		//创建第二个定时器
-		timer2.schedule(task2, TIME2, TIME2);
 	}
 
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		stopTimer();
-		stopTimer2();
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		stopTimer();
-		stopTimer2();
 	}
 
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		stopTimer();
-		stopTimer2();
 	}
 
 	/**

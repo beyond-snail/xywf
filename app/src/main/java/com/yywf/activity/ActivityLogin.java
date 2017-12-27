@@ -95,7 +95,8 @@ public class ActivityLogin extends BaseActivity implements OnClickListener, OnCh
 			public void doAction(final Handler handler) {
 				String url = ConfigXy.XY_VERSION_CHECK;
 				RequestParams params = new RequestParams();
-				HttpUtil.get(url, params, new HttpUtil.RequestListener() {
+				params.put("types", ConfigXy.UPGRADE_CODE);
+				HttpUtil.post(url, params, new HttpUtil.RequestListener() {
 
 					@Override
 					public void success(String response) {

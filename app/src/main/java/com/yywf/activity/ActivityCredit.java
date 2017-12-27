@@ -78,6 +78,7 @@ public class ActivityCredit extends BaseActivity implements OnClickListener {
             });
         }
         initView();
+        loadData();
     }
 
 
@@ -103,7 +104,7 @@ public class ActivityCredit extends BaseActivity implements OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        loadData();
+
     }
 
     @Override

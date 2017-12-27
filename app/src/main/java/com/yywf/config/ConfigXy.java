@@ -16,10 +16,13 @@ public class ConfigXy {
 
 
 
-    public static final String SERVER_API = "http://app.yunl7.com";
-    public static final String SERVER_API_NEW = "http://app.yunl7.com";
-    public static final String SERVER_API_IAPP = SERVER_API;
-    public static final String SERVER_API_STORE = SERVER_API;
+//    public static final String SERVER_API = "http://app.yunl7.com";
+//    public static final String SERVER_API_NEW = "http://app.yunl7.com";
+//    public static final String SERVER_API_IAPP = SERVER_API;
+//    public static final String SERVER_API_STORE = SERVER_API;
+
+    public static final int UPGRADE_CODE = 11;			//商博士Android_9 商博士IOS_10
+    public static final String DOWNLOAD_APK_FILENAME = "xywf.apk";	//
 
     // 应用包名
     public static final String PACKAGE = "com.yywf";
@@ -41,7 +44,7 @@ public class ConfigXy {
 
 
     //版本检测
-    public static final String XY_VERSION_CHECK = "";
+    public static final String XY_VERSION_CHECK = "http://agent.ebank007.com/api/index/getVersion";
 
     //引导页
     public static final String XY_LOAD_SERVER_IMG = "";
@@ -126,12 +129,15 @@ public class ConfigXy {
     //查询收款二维码
     public static final String GET_CHECK_QR_CODE_API = "";
 
+    //推广二维码
+    public static final String GET_QR = ZF_SERVER_API+"app/member/inviteMember";
+
 
     //还款计划列表
     public static final String PLAN_LIST = "";
 
-    public static final String HC_GET_RSA_STORE = SERVER_API_STORE
-            + "/shopapp/alipay/getPayAccount";
+    public static final String HC_GET_RSA_STORE =
+            "/shopapp/alipay/getPayAccount";
 
     //获取支付宝RSA秘钥
     public static final String GET_RSA_STORE = "";

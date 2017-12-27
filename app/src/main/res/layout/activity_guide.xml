@@ -20,4 +20,10 @@
         android:src="@drawable/start_experience_bg"
         android:visibility="invisible" />
 
+    <TextView
+        android:id="@+id/id_click"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"/>
+
 </RelativeLayout>

@@ -8,5 +8,5 @@ public class ConstApp {
 
     //设置验证码的秒数
     public static final int VOLID_CODE_SECONDS = 120000;
-    public static final int VOLID_CODE_SECONDS2 = 10000;
+    public static final int VOLID_CODE_SECONDS2 = 60000;
 }

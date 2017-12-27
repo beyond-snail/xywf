@@ -17,6 +17,7 @@ import com.tool.utils.utils.ToastUtils;
 import com.yywf.R;
 import com.yywf.activity.ActivitySecuritySetting;
 import com.yywf.activity.ActivitySmartCreditNow;
+import com.yywf.activity.ActivitySmartCreditPlan;
 import com.yywf.config.EnumConsts;
 import com.yywf.model.BankCardInfo;
 
@@ -96,8 +97,10 @@ public class BankListAdapter extends BaseAdapter{
 		holder.tvHk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				ToastUtils.showShort(activity, position+"");
+//				ToastUtils.showShort(activity, position+"");
 				if (UiType == 2){
+					activity.startActivity(new Intent(activity, ActivitySmartCreditPlan.class));
+				}else if (UiType == 1){
 					activity.startActivity(new Intent(activity, ActivitySmartCreditNow.class));
 				}
 			}

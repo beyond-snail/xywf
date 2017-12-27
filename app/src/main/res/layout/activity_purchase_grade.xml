@@ -157,7 +157,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:orientation="horizontal">
                     <TextView
                         android:layout_width="wrap_content"
@@ -243,10 +243,10 @@
                     android:text=""
                     android:textColor="#999999"
                     android:textSize="13sp"/>
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="#999999"/>
+                <!--<View-->
+                    <!--android:layout_width="1dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="#999999"/>-->
                 <TextView
                     android:id="@+id/id_grade_msg"
                     android:layout_width="0dp"
