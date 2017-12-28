@@ -13,8 +13,11 @@ import com.tool.utils.utils.UtilPreference;
 import com.yywf.myapplication.MainApplication;
 
 import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 
 public class HttpUtil {
@@ -141,6 +144,42 @@ public class HttpUtil {
 			}
 		});
 	}
+
+	/**
+	 * url里面带参数
+	 *
+	 * @param url
+	 * @param params
+	 * @param res
+	 */
+	public static void postJson(Context mContext, String url, Map<String, Object> params, final RequestListener res) {
+		JSONObject jsonParams = new JSONObject(params);
+		StringEntity entity;
+		Log.e("HttpUtil",  jsonParams.toString());
+		client.addHeader("User-Agent", "Java");
+		try {
+			entity = new StringEntity(jsonParams.toString(), "UTF-8");
+			entity.setContentType("application/json;charset=UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return;
+		}
+
+		client.post(mContext, url, entity, null,  new AsyncHttpResponseHandler() {
+
+			@Override
+			public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+				response(statusCode, responseBody, res);
+			}
+
+			@Override
+			public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+				res.failed(error);
+			}
+		});
+	}
+
+
 
 	public static AsyncHttpClient getClient() {
 		return client;

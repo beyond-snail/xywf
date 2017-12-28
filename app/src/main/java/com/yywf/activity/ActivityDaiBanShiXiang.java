@@ -203,6 +203,7 @@ public class ActivityDaiBanShiXiang extends BaseActivity {
 					JSONObject result = new JSONObject(response);
 					if (!result.optBoolean("status")) {
 						// showErrorMsg(result.getString("message"));
+						mPullRefreshScrollView.onRefreshComplete();
 						return;
 					}
 					if (result.getString("data") != null) {

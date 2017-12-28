@@ -193,7 +193,7 @@ public class ActivityAddZhangDan extends BaseActivity implements View.OnClickLis
 				});
 				break;
 			case R.id.ll_hand:
-				startActivity(new Intent(mContext, ActivityHandCredit.class));
+				startActivity(new Intent(mContext, ActivityCreditAdd.class).putExtra("type", 2));
 				break;
 		}
 	}

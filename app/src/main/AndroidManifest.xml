@@ -248,6 +248,7 @@
         <activity
             android:name=".activity.ActivitySmartCreditPlan"
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>

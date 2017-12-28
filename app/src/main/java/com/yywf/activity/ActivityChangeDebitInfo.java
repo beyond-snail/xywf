@@ -60,7 +60,7 @@ public class ActivityChangeDebitInfo extends BaseActivity implements OnClickList
         mContext = this;
         setContentView(R.layout.activity_change_debit_info);
         MyActivityManager.getInstance().addActivity(this);
-        initTitle("绑定银行卡");
+        initTitle("绑定储蓄卡");
         if (findViewById(R.id.backBtn) != null) {
             findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
         }

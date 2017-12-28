@@ -12,9 +12,11 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -411,10 +413,26 @@ public class UpdateManager {
 			return;
 		}
 //		UtilPreference.clearLocalValues(mContext);// 清除所有本地缓存
-		Intent i = new Intent(Intent.ACTION_VIEW);
-		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//安装后打开
-		i.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");
-		mContext.startActivity(i);
+//		Intent i = new Intent(Intent.ACTION_VIEW);
+//		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//安装后打开
+//		i.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");
+//		mContext.startActivity(i);
+
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			//参数1 上下文, 参数2 Provider主机地址 和配置文件中保持一致   参数3  共享的文件
+			Uri apkUri =
+					FileProvider.getUriForFile(mContext, "com.yywf.fileprovider", apkfile);
+			//添加这一句表示对目标应用临时授权该Uri所代表的文件
+			intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+			intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+		} else {
+			intent.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");
+		}
+		mContext.startActivity(intent);
+
+
 	}
 
 	/**

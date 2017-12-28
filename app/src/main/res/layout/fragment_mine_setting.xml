@@ -100,9 +100,10 @@
                             android:id="@+id/grade_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
                             android:text=""
                             android:textColor="#1b82d2"
-                            android:textSize="14sp" />
+                            android:textSize="15sp" />
                     </LinearLayout>
 
                     <LinearLayout

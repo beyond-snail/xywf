@@ -61,6 +61,8 @@ public class ActivityVipGrade extends BaseActivity implements OnClickListener {
 
     private int baseAmount = 19900;
 
+    private int currIndex = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,15 +99,6 @@ public class ActivityVipGrade extends BaseActivity implements OnClickListener {
     private void initView() {
 
 
-//        for (int i = 0; i < 10; i++){
-//            VipGrade vipGrade = new VipGrade();
-//            vipGrade.setGrade(i+1);
-//            vipGrade.setDefault(false);
-//            vipGrade.setHot(false);
-//            list.add(vipGrade);
-//        }
-
-
         gradedemand = textView(R.id.gradedemand);
         gradegive = textView(R.id.gradegive);
         total = textView(R.id.total);
@@ -124,11 +117,7 @@ public class ActivityVipGrade extends BaseActivity implements OnClickListener {
                 LogUtils.e(TAG, "position="+position);
 
 
-                //如果大于等于VIP4，限额，线下收款
-                if (position >= 3){
-                    ToastUtils.showShort(mContext, "由于限额，请线下付款");
-                    return;
-                }
+                currIndex = position;
 
                 for (int i = 0; i < list.size(); i++) {
                     list.get(i).setDefault(false);
@@ -140,6 +129,13 @@ public class ActivityVipGrade extends BaseActivity implements OnClickListener {
 
                 setDefault(vo);
 
+                //如果大于等于VIP4，限额，线下收款
+                if (position >= 3){
+                    ToastUtils.showShort(mContext, "由于限额，请线下付款");
+//                    VipGrade vipGrade = list.get(position);
+                    ShowAccount(vo);
+//                    return;
+                }
 
             }
         });
@@ -170,6 +166,12 @@ public class ActivityVipGrade extends BaseActivity implements OnClickListener {
                     return;
                 }
 
+                if (currIndex >= 3){
+                    ToastUtils.showShort(mContext, "由于限额，请线下付款");
+                    ShowAccount(vo);
+                    return;
+                }
+
 
 
                 Spanned str = Html.fromHtml("您将拥有"+"<font color='red' size='20'>"+vo.getGradedemand()+"</font>"+"次"+vo.getGradename()+"等级的会员分润比例, 共"+
@@ -191,6 +193,22 @@ public class ActivityVipGrade extends BaseActivity implements OnClickListener {
                 });
                 break;
         }
+    }
+
+
+    private void ShowAccount(final VipGrade vo){
+
+        dialog = DialogUtils.showDialog2(mContext, "温馨提示", "取消", "确定", "您将付款"+StringUtils.formatIntMoney(vo.getPurchasePrice())+"元", null, new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        }, new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
     }
 
 

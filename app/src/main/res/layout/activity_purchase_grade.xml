@@ -240,13 +240,13 @@
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text=""
+                    android:text="钱包余额0元"
                     android:textColor="#999999"
                     android:textSize="13sp"/>
-                <!--<View-->
-                    <!--android:layout_width="1dp"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:background="#999999"/>-->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#999999"/>
                 <TextView
                     android:id="@+id/id_grade_msg"
                     android:layout_width="0dp"

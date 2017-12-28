@@ -259,6 +259,7 @@ public class FragmentMine extends AbstractFragment implements
                 JSONObject dataStr = result.getJSONObject("data");
                 String name = dataStr.optString("name");
                 String grade_name = dataStr.optString("grade_name");
+                String grade_count = dataStr.optString("grade_count");
                 String icon = dataStr.optString("icon");
                 String service_phone = dataStr.optString("service_phone");
                 String phone = dataStr.optString("phone");
@@ -274,12 +275,12 @@ public class FragmentMine extends AbstractFragment implements
                 }
 
                 if (!StringUtils.isBlank(grade_name)){
-                    tvGradeName.setText(grade_name);
+                    tvGradeName.setText(grade_name + " - "+ grade_count+"次");
                 }
 
-//                if (!StringUtils.isBlank(service_phone)){
-//                    tvLxwmTel.setText(service_phone);
-//                }
+                if (!StringUtils.isBlank(service_phone)){
+                    tvLxwmTel.setText(service_phone);
+                }
 
                 if (!StringUtils.isBlank(phone)){
                     tvPhone.setText(phone);

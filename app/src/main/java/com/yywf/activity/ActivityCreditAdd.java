@@ -46,6 +46,7 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
     private TextView tv_getcode;
 
 
+    private String userId;
 
 
     @Override
@@ -54,7 +55,12 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
         mContext = this;
         setContentView(R.layout.activity_add_credit);
         MyActivityManager.getInstance().addActivity(this);
-        initTitle("添加信用卡");
+        int type = getIntent().getIntExtra("type", 0);
+        if (type != 2) {
+            initTitle("添加信用卡");
+        }else{
+            initTitle("手动输入");
+        }
         if (findViewById(R.id.backBtn) != null) {
             findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
         }
@@ -101,9 +107,59 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
 
 
 
-
+        doGetApproveInfo();
 
     }
+
+
+    private void doGetApproveInfo() {
+        showProgress("加载中...");
+        RequestParams params = new RequestParams();
+        params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.add("token", UtilPreference.getStringValue(mContext, "token"));
+        HttpUtil.get(ConfigXy.XY_GET_SMRZ_INFO, params, requestListener1);
+    }
+
+
+    private HttpUtil.RequestListener requestListener1 = new HttpUtil.RequestListener() {
+
+        @Override
+        public void success(String response) {
+            disShowProgress();
+            try {
+
+                JSONObject result = new JSONObject(response);
+                if (!result.optBoolean("status")) {
+                    ToastUtils.CustomShow(mContext, result.optString("message"));
+                }else{
+                    JSONObject dataStr = result.getJSONObject("data");
+                    String id_no = dataStr.optString("id_no");
+                    String member_name = dataStr.optString("member_name");
+
+                    if (!StringUtils.isBlank(member_name)) {
+                        et_user_name.setEnabled(false);
+                        et_user_name.setText(member_name);
+                    }
+                    if (!StringUtils.isBlank(id_no)) {
+                        et_user_id.setEnabled(false);
+                        et_user_id.setText(StringUtils.formatCardNo(id_no));
+                        userId = id_no;
+                    }
+                }
+
+
+
+            } catch (Exception e) {
+                Log.e(TAG, "doCommit() Exception: " + e.getMessage());
+            }
+        }
+
+        @Override
+        public void failed(Throwable error) {
+            disShowProgress();
+            showE404();
+        }
+    };
 
 
     @Override
@@ -194,6 +250,8 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
     private void doCommit() throws ParseException {
 
 
+
+
         String bandCard = StringUtils.replaceBlank(et_card_no.getText().toString().trim());
 
 
@@ -208,12 +266,20 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
             et_user_id.requestFocus();
             return;
         }
-
-        if (!ValidateUtil.IDCardValidate(et_user_id.getText().toString().trim())) {
-            ToastUtils.showShort(this, "身份证号格式不正确");
-            et_user_id.requestFocus();
-            return;
+        if (!StringUtils.isBlank(userId)){
+            if (!ValidateUtil.IDCardValidate(userId)) {
+                ToastUtils.showShort(this, "身份证号格式不正确");
+                et_user_id.requestFocus();
+                return;
+            }
+        }else{
+            if (!ValidateUtil.IDCardValidate(et_user_id.getText().toString().trim())) {
+                ToastUtils.showShort(this, "身份证号格式不正确");
+                et_user_id.requestFocus();
+                return;
+            }
         }
+
 
         if (StringUtils.isBlank(bandCard)) {
             ToastUtils.showShort(this, "银行卡号不能为空");
@@ -286,7 +352,11 @@ public class ActivityCreditAdd extends BaseActivity implements OnClickListener {
         params.add("token", UtilPreference.getStringValue(mContext, "token"));
         params.add("cardNum",bandCard);
         params.add("idName", et_user_name.getText().toString().trim());
-        params.add("idNo", et_user_id.getText().toString().trim());
+        if (StringUtils.isBlank(userId)) {
+            params.add("idNo", et_user_id.getText().toString().trim());
+        }else{
+            params.add("idNo", userId.trim());
+        }
         params.add("phone", et_phone.getText().toString().trim());
         params.add("cardCvn", et_cvv2.getText().toString().trim());
         params.add("cardExpdate", et_date.getText().toString().trim());

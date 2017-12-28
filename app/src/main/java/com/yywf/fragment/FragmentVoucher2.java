@@ -20,6 +20,7 @@ import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.loopj.android.http.RequestParams;
+import com.tool.utils.utils.StringUtils;
 import com.tool.utils.view.MyGridView;
 import com.tool.utils.view.MyListView;
 import com.tool.utils.view.RoundImageView;
@@ -103,14 +104,14 @@ public class FragmentVoucher2 extends AbstractFragment{
 
     private void initData() {
 
-        for (int i = 0; i < 3; i++){
-            VoucherInfo info = new VoucherInfo();
-            info.setAmt(1000);
-            info.setUseStatus(2);
-            info.setUseTime("2017-12-15 18:03:12");
-            info.setUseText("VIP购买");
-            voucherList.add(info);
-        }
+//        for (int i = 0; i < 3; i++){
+//            VoucherInfo info = new VoucherInfo();
+//            info.setAmt(1000);
+//            info.setUseStatus(2);
+//            info.setUseTime("2017-12-15 18:03:12");
+//            info.setUseText("VIP购买");
+//            voucherList.add(info);
+//        }
 
 
         myListView = fragment.findViewById(R.id.listview);
@@ -217,9 +218,11 @@ public class FragmentVoucher2 extends AbstractFragment{
                     JSONObject result = new JSONObject(response);
                     if (!result.optBoolean("status")) {
                         // showErrorMsg(result.getString("message"));
+                        // 刷新完成
+                        mPullRefreshScrollView.onRefreshComplete();
                         return;
                     }
-                    if (result.getString("data") != null) {
+                    if (!StringUtils.isBlank(result.getString("data"))) {
                         String str = result.getString("data");
 
                         Gson gson = new Gson();

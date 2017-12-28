@@ -53,7 +53,7 @@ public class ActivityMyJlj extends BaseActivity implements OnClickListener {
 		mContext = this;
 		setContentView(R.layout.activity_my_jlj);
 		MyActivityManager.getInstance().addActivity(this);
-		initTitle("我的分红");
+		initTitle("我的奖励金");
 		if (findViewById(R.id.backBtn) != null) {
 			findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
 		}
@@ -80,13 +80,13 @@ public class ActivityMyJlj extends BaseActivity implements OnClickListener {
 
 
         //测试数据
-        for (int i =0; i < 2; i++){
-            WalletListInfo info = new WalletListInfo();
-            info.setAmt(222222);
-            info.setTime("2018-1-1 12:12:22");
-            info.setName("吴从鹏");
-            walletInfos.add(info);
-        }
+//        for (int i =0; i < 2; i++){
+//            WalletListInfo info = new WalletListInfo();
+//            info.setAmt(222222);
+//            info.setTime("2018-1-1 12:12:22");
+//            info.setName("吴从鹏");
+//            walletInfos.add(info);
+//        }
 
 
 

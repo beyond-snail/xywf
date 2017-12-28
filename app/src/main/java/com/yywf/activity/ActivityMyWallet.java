@@ -88,6 +88,7 @@ public class ActivityMyWallet extends BaseActivity implements View.OnClickListen
 				startActivity(new Intent(mContext, ActivityMyTx.class).putExtra("balance", tv_balance_amt.getText().toString().trim()));
 				break;
 			case R.id.btn_sale:
+				startActivity(new Intent(mContext, ActivityVipGrade.class));
 				break;
 
 		}

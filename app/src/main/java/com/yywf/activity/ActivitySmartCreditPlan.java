@@ -25,6 +25,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.loopj.android.http.RequestParams;
 import com.tool.utils.passwordView.KeyBoardDialog;
 import com.tool.utils.passwordView.PayPasswordView;
+import com.tool.utils.utils.KeyBoardUtils;
 import com.tool.utils.utils.ToastUtils;
 import com.tool.utils.view.MoneyEditText;
 import com.tool.utils.view.MyListView;
@@ -91,14 +92,14 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 	private void initListPlan() {
 
-		for (int i = 0; i < 12; i++){
-			PlanList planList = new PlanList();
-			planList.setAmt(500);
-			planList.setFeeAmt(21);
-			planList.setTime1("2017-12-15 13:59:00");
-			planList.setTime2("2017-12-15 13:59:00");
-			list.add(planList);
-		}
+//		for (int i = 0; i < 12; i++){
+//			PlanList planList = new PlanList();
+//			planList.setAmt(500);
+//			planList.setFeeAmt(21);
+//			planList.setTime1("2017-12-15 13:59:00");
+//			planList.setTime2("2017-12-15 13:59:00");
+//			list.add(planList);
+//		}
 
 
 //		linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
@@ -169,6 +170,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 	private void initView() {
 
 		et_amt = (MoneyEditText) editText(R.id.et_amt);
+//		KeyBoardUtils.closeKeybord(et_amt, mContext);
 
 		tv_do_text = textView(R.id.tv_do_text);
 

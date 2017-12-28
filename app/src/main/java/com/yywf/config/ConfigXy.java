@@ -108,6 +108,9 @@ public class ConfigXy {
     //信用卡列表
     public static final String XY_BANK_INFO_LIST = ZF_SERVER_API+"app/member/queryCardList";
 
+    //解绑
+    public static final String XY_BANK_INFO_REMOVE = ZF_SERVER_API+"app/member/unbindBinkCard";
+
     //添加信用卡
     public static final String XY_CREDIT_ADD =  ZF_SERVER_API+"/app/member/bindCreditCard";
 
@@ -122,6 +125,8 @@ public class ConfigXy {
 
     //费率说明
     public static final String FEE_DESCRIPTION = ZF_SERVER_API + "app/member/feeDescription";
+
+    public static final String FEE_DESCRIPTION1 = ZF_SERVER_API + "app/member/actualMoney";
 
     //获取收款二维码
     public static final String GET_CODE_API = "";

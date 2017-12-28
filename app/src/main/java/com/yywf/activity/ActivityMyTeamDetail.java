@@ -75,15 +75,15 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
 
 
 
-        //测试数据
-        for (int i =0; i < 2; i++){
-            TeamInfo info = new TeamInfo();
-            info.setAmt(222222);
-            info.setActivate(true);
-            info.setPhone("14782108169");
-            info.setName("吴从鹏");
-            teamInfos.add(info);
-        }
+//        //测试数据
+//        for (int i =0; i < 2; i++){
+//            TeamInfo info = new TeamInfo();
+//            info.setAmt(222222);
+//            info.setActivate(true);
+//            info.setPhone("14782108169");
+//            info.setName("吴从鹏");
+//            teamInfos.add(info);
+//        }
 
 
 
@@ -191,6 +191,7 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
                     JSONObject result = new JSONObject(response);
                     if (!result.optBoolean("status")) {
                         // showErrorMsg(result.getString("message"));
+                        mPullRefreshScrollView.onRefreshComplete();
                         return;
                     }
                     if (result.getString("data") != null) {

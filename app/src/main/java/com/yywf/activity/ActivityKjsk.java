@@ -3,6 +3,9 @@ package com.yywf.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -83,7 +86,22 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
         }
         initView();
         loadData();
+        loadfeeDecriptionData();
     }
+
+    private Handler handler = new Handler();
+
+    /**
+     * 延迟线程，看是否还有下一个字符输入
+     */
+    private Runnable delayRun = new Runnable() {
+
+        @Override
+        public void run() {
+            //在这里调用服务器的接口，获取数据
+            loadfeeDecriptionData();
+        }
+    };
 
 
     private void initView() {
@@ -103,6 +121,30 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
 
         et_amt = (MoneyEditText) editText(R.id.et_amt);
 
+        et_amt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(delayRun!=null){
+                    //每次editText有变化的时候，则移除上次发出的延迟线程
+                    handler.removeCallbacks(delayRun);
+                }
+
+
+                //延迟800ms，如果不再输入字符，则执行该线程的run方法
+                handler.postDelayed(delayRun, 500);
+            }
+        });
+
         button(R.id.btn_commit).setOnClickListener(this);
 
     }
@@ -112,7 +154,7 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
     protected void onResume() {
         super.onResume();
 
-        loadfeeDecriptionData();
+
     }
 
 
@@ -354,13 +396,13 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
 
     private void loadfeeDecriptionData() {
 
-        showProgress("加载中...");
+//        showProgress("加载中...");
 
-        String url = ConfigXy.FEE_DESCRIPTION;
+        String url = ConfigXy.FEE_DESCRIPTION1;
         RequestParams params = new RequestParams();
         params.put("memberId", UtilPreference.getStringValue(mContext, "memberId"));
         params.put("token", UtilPreference.getStringValue(mContext, "token"));
-
+        params.add("tranAmt", StringUtils.changeY2F(et_amt.getText().toString().trim()));
         HttpUtil.get(url, params, new HttpUtil.RequestListener() {
 
             @SuppressWarnings("unchecked")

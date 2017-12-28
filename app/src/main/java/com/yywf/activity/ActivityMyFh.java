@@ -79,14 +79,14 @@ public class ActivityMyFh extends BaseActivity implements OnClickListener {
 
 
 
-        //测试数据
-        for (int i =0; i < 2; i++){
-            WalletListInfo info = new WalletListInfo();
-            info.setAmt(222222);
-            info.setTime("2018-1-1 12:12:22");
-            info.setName("吴从鹏");
-            walletInfos.add(info);
-        }
+//        //测试数据
+//        for (int i =0; i < 2; i++){
+//            WalletListInfo info = new WalletListInfo();
+//            info.setAmt(222222);
+//            info.setTime("2018-1-1 12:12:22");
+//            info.setName("吴从鹏");
+//            walletInfos.add(info);
+//        }
 
 
 

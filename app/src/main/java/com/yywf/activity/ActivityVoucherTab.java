@@ -144,37 +144,6 @@ public class ActivityVoucherTab extends FragmentActivity {
             @Override
             public void onPageScrolled(int position, float offset,
                                        int offsetPixels) {
-//                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) tablineIv.getLayoutParams();
-//                Log.i("mOffset", "offset:" + offset + ",position:" + position);
-//                /**
-//                 * 利用currentIndex(当前所在页面)和position(下一个页面)以及offset来
-//                 * 设置mTabLineIv的左边距 滑动场景：
-//                 * 记3个页面,
-//                 * 从左到右分别为0,1,2
-//                 * 0->1; 1->2; 2->1; 1->0
-//                 */
-//                if (currentIndex == 0 && position == 0)// 0->1
-//                {
-//                    lp.leftMargin = (int) (offset * (screenWidth * 1.0 / 3) + currentIndex
-//                            * (screenWidth / 3));
-//
-//                } else if (currentIndex == 1 && position == 0) // 1->0
-//                {
-//                    lp.leftMargin = (int) (-(1 - offset)
-//                            * (screenWidth * 1.0 / 3) + currentIndex
-//                            * (screenWidth / 3));
-//
-//                } else if (currentIndex == 1 && position == 1) // 1->2
-//                {
-//                    lp.leftMargin = (int) (offset * (screenWidth * 1.0 / 3) + currentIndex
-//                            * (screenWidth / 3));
-//                } else if (currentIndex == 2 && position == 1) // 2->1
-//                {
-//                    lp.leftMargin = (int) (-(1 - offset)
-//                            * (screenWidth * 1.0 / 3) + currentIndex
-//                            * (screenWidth / 3));
-//                }
-//                tablineIv.setLayoutParams(lp);
             }
 
             /**
@@ -183,18 +152,6 @@ public class ActivityVoucherTab extends FragmentActivity {
             @Override
             public void onPageSelected(int position) {
                 Log.i("PageScroll：", "onPageSelected" + ":" + position);
-//                resetTextView();
-//                switch (position) {
-//                    case 0:
-//                        mainTv.setTextColor(Color.BLUE);
-//                        break;
-//                    case 1:
-//                        momentTv.setTextColor(Color.BLUE);
-//                        break;
-//                    case 2:
-//                        settingTv.setTextColor(Color.BLUE);
-//                        break;
-//                }
                 currentIndex = position;
             }
         });

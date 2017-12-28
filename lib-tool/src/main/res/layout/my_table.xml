@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/layout_header_with_transparent1" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#f5f5f5" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <HorizontalScrollView
+                android:id="@+id/scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbarAlwaysDrawHorizontalTrack="false"
+                android:visibility="gone"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/MyTable"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="9dp"
+
+                    android:orientation="vertical"
+                    >
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="1.普通会员：当注册用户在沃富APP里充值199元即成为普通会员，推荐新用户成为普通会员，将享受信易沃富“推荐返现”、“激活送券”权益；"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="2.VIP"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="①VIP定义：当普通会员选择购买相应次数成为VIP1及以上等级VIP时，信易沃富将冻结充值款项。当VIP推荐新用户成为普通会员时，除了已有的“推荐返现”、“激活送券”权益，还将激活信易沃富“推荐享分润”，最高享受万20分润，VIP8及以上还能同时享受平台分红。"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="②次数充值：充值按照市场价199元对应数量充值。充值VIP1以上次数时将享受折扣，折扣以次数赠送形式返还。"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="③VIP冻结金退还：VIP购买的推荐次数每次成功推荐后，T+1日后信易沃富即退还冻结的充值价 199元*对应折扣 至钱包账户（如VIP2每次成功推荐一位新会员，返还199元*9折=179.1元。当首次成功推荐用户时，客户需在30天后方可完成提现。之后将不受限制，冻结金实时提现T+1到账，遇节假日顺延）"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="④冻结金提现申请时间：9:00-21:00（遇节假日顺延）；
+于9:00-17:00期间提交申请，T+1（10:00-12:00；14:00-16:30到账
+于17:00-21:00期间提交申请，T+2（10:00-12:00；14:00-16:30）到账。
+"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="⑤VIP身份恢复：VIP推荐次数消耗完毕后，即恢复至普通会员身份，如该客户想要继续享受原VIP级别推荐返现、激活送券、分润待遇则需要继续充值次数。"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

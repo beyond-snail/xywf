@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,19 +20,30 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.business.Update;
+import com.business.UpdateManager;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tool.utils.utils.GsonUtil;
 import com.tool.utils.utils.StatusBarUtil;
+import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.UtilPreference;
 import com.yywf.R;
+import com.yywf.config.ConfigXy;
 import com.yywf.fragment.FragmentHomePage;
 import com.yywf.fragment.FragmentMine;
 import com.yywf.fragment.FragmentWhd;
 import com.yywf.fragmenttab.FragmentTab;
 import com.yywf.fragmenttab.TabItemImpl;
+import com.yywf.http.HttpUtil;
 import com.yywf.util.MyActivityManager;
 import com.yywf.widget.dialog.DialogUtils;
 import com.yywf.widget.dialog.MyCustomDialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -65,10 +78,65 @@ public class ActivityHome extends FragmentActivity implements OnClickListener{
 //        checkApproveStatus();
         DialogUtils.checkApproveStatus(mContext);
 
+
+        //版本检测
+        versionUpdate();
+
     }
 
 
 
+
+    /**
+     * 版本检测
+     */
+    private void versionUpdate() {
+        UpdateManager.getUpdateManager().setCallBack(new UpdateManager.OnCheckFinished() {
+
+            @Override
+            public void onNeedToUpdate() {
+                // 必须更新，否则退出
+                finish();
+            }
+        });
+        UpdateManager.getUpdateManager().checkAppUpdate(mContext, false, new UpdateManager.ListenerCallBack() {
+            @Override
+            public void doAction(final Handler handler) {
+                String url = ConfigXy.XY_VERSION_CHECK;
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put("types", ConfigXy.UPGRADE_CODE+"");
+                HttpUtil.postJson(mContext, url, params, new HttpUtil.RequestListener() {
+
+                    @Override
+                    public void success(String response) {
+                        try {
+                            JSONObject result = new JSONObject(response);
+
+                            String data = result.optString("result");
+
+                            if (StringUtils.isBlank(data)){
+                                return;
+                            }
+
+                            Update update = (Update) GsonUtil.getInstance().convertJsonStringToObject(data, Update.class);
+                            Message msg = new Message();
+                            msg.what = 1;
+                            msg.obj = update;
+                            handler.sendMessage(msg);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void failed(Throwable error) {
+//				Log.e(TAG, error.getMessage());
+                    }
+                });
+            }
+        });
+    }
 
 //    public void showRegisterSuccess(){
 //        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -46,7 +46,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import me.weyye.hipermission.HiPermission;
 import me.weyye.hipermission.PermissionCallback;
@@ -71,51 +73,13 @@ public class ActivityLogin extends BaseActivity implements OnClickListener, OnCh
 		initTitle("登录");
 		initView();
 
-		//版本检测
-		versionUpdate();
+
 
 		//权限检测
 		checkPermission();
 	}
 
-	/**
-	  * 版本检测
-     */
-	private void versionUpdate() {
-		UpdateManager.getUpdateManager().setCallBack(new UpdateManager.OnCheckFinished() {
 
-			@Override
-			public void onNeedToUpdate() {
-				// 必须更新，否则退出
-				finish();
-			}
-		});
-		UpdateManager.getUpdateManager().checkAppUpdate(mContext, false, new UpdateManager.ListenerCallBack() {
-			@Override
-			public void doAction(final Handler handler) {
-				String url = ConfigXy.XY_VERSION_CHECK;
-				RequestParams params = new RequestParams();
-				params.put("types", ConfigXy.UPGRADE_CODE);
-				HttpUtil.post(url, params, new HttpUtil.RequestListener() {
-
-					@Override
-					public void success(String response) {
-						Message msg = new Message();
-						Update update = (Update) GsonUtil.getInstance().convertJsonStringToObject(response, Update.class);
-
-						msg.what = 1;
-						msg.obj = update;
-						handler.sendMessage(msg);
-					}
-
-					@Override
-					public void failed(Throwable error) {
-//				Log.e(TAG, error.getMessage());
-					}
-				});
-			}
-		});
-	}
 
 
 

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.tool.utils.dialog.CustomDialog;
+import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.UtilPreference;
 import com.yywf.R;
 import com.yywf.activity.ActivitySmrz;
@@ -54,6 +55,50 @@ public class DialogUtils {
         dialog.show();
         return dialog;
     }
+
+
+    public static MyCustomDialog showDialog2(final Context mContext, String title, String leftText, String rightText, String content, String content2, View.OnClickListener leftClick, View.OnClickListener rightClick){
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.alert_dialog, null);
+        TextView tv_title = view.findViewById(R.id.tv_alert_dialog_title);
+        tv_title.setText(title);
+        tv_title.setBackgroundResource(R.drawable.bar_top_tips);
+        tv_title.setTextColor(mContext.getResources().getColor(com.tool.R.color.white));
+
+        TextView tv_content = view.findViewById(R.id.tv_alert_dialog_message);
+        tv_content.setText(content);
+        tv_content.setTextSize(18f);
+
+        if (!StringUtils.isBlank(content2)) {
+            TextView tv_content2 = view.findViewById(R.id.tv_alert_dialog_message2);
+            tv_content2.setVisibility(View.VISIBLE);
+            tv_content2.setText("信易（杭州）互联网科技有限公司\r\n账号: 19020101040041032\r\n开户行: 中国农业银行杭州市城西支行");
+        }
+
+
+        TextView btn_left = view.findViewById(R.id.btn_alert_dialog_btn_left);
+        btn_left.setText(leftText);
+        btn_left.setTextColor(mContext.getResources().getColorStateList(R.color.btn_left_selector));
+        btn_left.setOnClickListener(leftClick);
+
+        TextView btn_right = view.findViewById(R.id.btn_alert_dialog_btn_right);
+        btn_right.setText(rightText);
+        btn_right.setTextColor(mContext.getResources().getColorStateList(R.color.btn_right_selector));
+        btn_right.setOnClickListener(rightClick);
+
+        final MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(mContext,
+                R.style.MyDialogStyleBottom);
+//        customBuilder.setCancelable(false);
+        customBuilder.setCanceledOnTouchOutside(false);
+        customBuilder.setLine(0);// 分割横线所处位置 在自定义布局上下或隐藏 0隐藏 1线在上方
+        customBuilder.setContentView(view);
+        customBuilder.setDisBottomButton(true);
+        // 2线在下方
+        MyCustomDialog dialog = customBuilder.create();
+        dialog.show();
+        return dialog;
+    }
+
 
 
     /**

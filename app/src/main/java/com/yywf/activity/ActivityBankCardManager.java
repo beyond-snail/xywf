@@ -8,6 +8,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -35,6 +36,8 @@ import com.yywf.model.BankCardInfo;
 import com.yywf.model.BankUserInfo;
 import com.yywf.model.UserInfo;
 import com.yywf.util.MyActivityManager;
+import com.yywf.widget.dialog.DialogUtils;
+import com.yywf.widget.dialog.MyCustomDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,6 +68,8 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
     private Button btnChange;
 
     private int page = 1;
+
+    private MyCustomDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,21 +106,6 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
         userName = textView(R.id.id_username);
         bankCarkNo = textView(R.id.id_bank_card);
         button(R.id.btn_change_card).setOnClickListener(this);
-
-
-
-//        //测试数据
-//        for (int i =0; i < 2; i++){
-//            BankCardInfo info = new BankCardInfo();
-//            info.setAmt(222222);
-//            info.setBankName("交通银行");
-//            info.setHkDay(6);
-//            info.setZdDay(20);
-//            info.setwH("3333");
-//            info.setName("吴从鹏");
-//            bankList.add(info);
-//        }
-
 
 
         listview = (PullToRefreshListView)findViewById(R.id.pull_refresh_listView);
@@ -164,8 +154,83 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
 
             }
         });
+        listview.getRefreshableView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                final int local = i;
+                Log.e(TAG, ""+local);
+
+                dialog = DialogUtils.showDialog2(mContext, "温馨提示", "取消", "确定", "是否删除该卡", null, new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                }, new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                        delCard(bankList.get(local-1));
+                    }
+                });
+
+                return false;
+            }
+        });
 
 	}
+
+    private void delCard(BankCardInfo bankCardInfo) {
+
+
+        showProgress("加载中...");
+
+        String url = ConfigXy.XY_BANK_INFO_REMOVE;
+        RequestParams params = new RequestParams();
+        params.put("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.put("bankId", bankCardInfo.getId());
+        params.put("token", UtilPreference.getStringValue(mContext, "token"));
+
+        HttpUtil.get(url, params, new HttpUtil.RequestListener() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public void success(String response) {
+                disShowProgress();
+                try {
+
+                    JSONObject result = new JSONObject(response);
+
+                    if (!result.optBoolean("status")) {
+                        showErrorMsg(result.getString("message"));
+                        // 下拉刷新完成
+//                        listview.onRefreshComplete();
+                        return;
+                    }
+
+
+                    showErrorMsg(result.getString("message"));
+                    reloadData();
+
+//                    bankAdapter.notifyDataSetChanged();
+//                    // 下拉刷新完成
+//                    listview.onRefreshComplete();
+                } catch (Exception e) {
+                    e.getMessage();
+                    // 下拉刷新完成
+//                    listview.onRefreshComplete();
+                }
+            }
+
+            @Override
+            public void failed(Throwable error) {
+                disShowProgress();
+                showE404();
+                // 下拉刷新完成
+//                listview.onRefreshComplete();
+            }
+        });
+
+    }
 
     private void reloadData() {
         page = 1;
