@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.loopj.android.http.RequestParams;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.ToastUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.utils.ValidateUtil;
 import com.tool.utils.view.MyCountDownTimer;
 import com.tool.utils.view.Split4EditTextWatcher;
@@ -288,8 +289,13 @@ public class ActivityHandCredit extends BaseActivity implements OnClickListener 
         public void success(String response) {
             disShowProgress();
             try {
-                JSONObject obj = new JSONObject(response);
-
+                JSONObject result = new JSONObject(response);
+                if (result.optInt("code") == -2){
+                    UtilPreference.clearNotKeyValues(mContext);
+                    // 退出账号 返回到登录页面
+                    MyActivityManager.getInstance().logout(mContext);
+                    return;
+                }
 
             } catch (Exception e) {
                 Log.e(TAG, "doCommit() Exception: " + e.getMessage());

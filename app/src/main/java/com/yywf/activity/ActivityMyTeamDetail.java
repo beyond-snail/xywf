@@ -20,6 +20,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.loopj.android.http.RequestParams;
 import com.tool.utils.utils.ToastUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MyListView;
 import com.yywf.R;
 import com.yywf.adapter.AdapterTeamDetal;
@@ -189,6 +190,12 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
                 try {
 
                     JSONObject result = new JSONObject(response);
+                    if (result.optInt("code") == -2){
+                        UtilPreference.clearNotKeyValues(mContext);
+                        // 退出账号 返回到登录页面
+                        MyActivityManager.getInstance().logout(mContext);
+                        return;
+                    }
                     if (!result.optBoolean("status")) {
                         // showErrorMsg(result.getString("message"));
                         mPullRefreshScrollView.onRefreshComplete();

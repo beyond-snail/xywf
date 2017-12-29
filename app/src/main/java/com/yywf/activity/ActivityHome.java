@@ -82,6 +82,8 @@ public class ActivityHome extends FragmentActivity implements OnClickListener{
         //版本检测
         versionUpdate();
 
+
+
     }
 
 
@@ -213,6 +215,9 @@ public class ActivityHome extends FragmentActivity implements OnClickListener{
                 break;
             case R.id.rl_home_2://
                 if (DialogUtils.checkApproveStatus(mContext)){
+                    return;
+                }
+                if (!DialogUtils.checkGradeStatus(mContext)){
                     return;
                 }
                 mFragmentTab.selectTab("FragmentWhd");

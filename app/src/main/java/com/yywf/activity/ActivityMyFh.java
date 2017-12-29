@@ -15,6 +15,7 @@ import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.loopj.android.http.RequestParams;
+import com.tool.utils.utils.UtilPreference;
 import com.yywf.R;
 import com.yywf.adapter.AdapterWallet;
 import com.yywf.config.ConfigXy;
@@ -172,7 +173,12 @@ public class ActivityMyFh extends BaseActivity implements OnClickListener {
                 try {
 
                     JSONObject result = new JSONObject(response);
-
+                    if (result.optInt("code") == -2){
+                        UtilPreference.clearNotKeyValues(mContext);
+                        // 退出账号 返回到登录页面
+                        MyActivityManager.getInstance().logout(mContext);
+                        return;
+                    }
                     if (!result.optBoolean("status")) {
                         showErrorMsg(result.getString("message"));
                         // 下拉刷新完成

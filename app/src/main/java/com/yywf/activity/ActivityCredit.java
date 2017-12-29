@@ -182,8 +182,13 @@ public class ActivityCredit extends BaseActivity implements OnClickListener {
         public void success(String response) {
             disShowProgress();
             try {
-                JSONObject obj = new JSONObject(response);
-
+                JSONObject result = new JSONObject(response);
+                if (result.optInt("code") == -2){
+                    UtilPreference.clearNotKeyValues(mContext);
+                    // 退出账号 返回到登录页面
+                    MyActivityManager.getInstance().logout(mContext);
+                    return;
+                }
 
             } catch (Exception e) {
                 Log.e(TAG, "doCommit() Exception: " + e.getMessage());
@@ -219,7 +224,12 @@ public class ActivityCredit extends BaseActivity implements OnClickListener {
                 try {
 
                     JSONObject result = new JSONObject(response);
-
+                    if (result.optInt("code") == -2){
+                        UtilPreference.clearNotKeyValues(mContext);
+                        // 退出账号 返回到登录页面
+                        MyActivityManager.getInstance().logout(mContext);
+                        return;
+                    }
                     if (!result.optBoolean("status")) {
                         showErrorMsg(result.getString("message"));
                         return;

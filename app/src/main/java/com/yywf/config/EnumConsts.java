@@ -1,5 +1,6 @@
 package com.yywf.config;
 
+import com.tool.utils.utils.StringUtils;
 import com.yywf.R;
 
 
@@ -106,6 +107,9 @@ public class EnumConsts {
 		}
 
 		public static int getCodeByName(String name) {
+			if (StringUtils.isBlank(name)){
+				return -1;
+			}
 			MineMenuType[] timeZoneTypes = MineMenuType.values();
 			for (MineMenuType timeZoneType : timeZoneTypes) {
 				if (timeZoneType.getName() == name) {
@@ -168,6 +172,9 @@ public class EnumConsts {
 		}
 
 		public static int getCodeByName(String name) {
+			if (StringUtils.isBlank(name)){
+				return -1;
+			}
 			BankMenuType[] timeZoneTypes = BankMenuType.values();
 			for (BankMenuType timeZoneType : timeZoneTypes) {
 				if (timeZoneType.getName() == name) {
@@ -245,6 +252,9 @@ public class EnumConsts {
 		}
 
 		public static BankUi getTypeByName(String name) {
+			if (StringUtils.isBlank(name)){
+				return null;
+			}
 			BankUi[] bankUis = BankUi.values();
 			for (BankUi bankUi : bankUis) {
 				// if (bankUi.getShowName().equals(name)) {

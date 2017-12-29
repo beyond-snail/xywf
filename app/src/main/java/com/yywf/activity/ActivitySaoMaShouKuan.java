@@ -136,7 +136,12 @@ public class ActivitySaoMaShouKuan extends BaseActivity implements OnClickListen
 
 			try {
 				JSONObject result = new JSONObject(response);
-
+				if (result.optInt("code") == -2){
+					UtilPreference.clearNotKeyValues(mContext);
+					// 退出账号 返回到登录页面
+					MyActivityManager.getInstance().logout(mContext);
+					return;
+				}
 				if (!result.optBoolean("status")) {
                     showErrorMsg(result.getString("message"));
                     return;
@@ -181,7 +186,12 @@ public class ActivitySaoMaShouKuan extends BaseActivity implements OnClickListen
 
 			try {
 				JSONObject result = new JSONObject(response);
-
+				if (result.optInt("code") == -2){
+					UtilPreference.clearNotKeyValues(mContext);
+					// 退出账号 返回到登录页面
+					MyActivityManager.getInstance().logout(mContext);
+					return;
+				}
 				if (!result.optBoolean("status")) {
 //                    showErrorMsg(result.getString("message"));
                     return;

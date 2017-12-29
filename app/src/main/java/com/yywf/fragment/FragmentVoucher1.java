@@ -22,6 +22,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.loopj.android.http.RequestParams;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.ToastUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MyListView;
 import com.yywf.R;
 import com.yywf.adapter.AdapterVoucher;
@@ -33,6 +34,7 @@ import com.yywf.http.HttpUtil;
 import com.yywf.model.Menu;
 import com.yywf.model.VoucherInfo;
 import com.yywf.model.ZhangDan;
+import com.yywf.util.MyActivityManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -209,6 +211,12 @@ public class FragmentVoucher1 extends AbstractFragment{
                 try {
 
                     JSONObject result = new JSONObject(response);
+                    if (result.optInt("code") == -2){
+                        UtilPreference.clearNotKeyValues(mContext);
+                        // 退出账号 返回到登录页面
+                        MyActivityManager.getInstance().logout(mContext);
+                        return;
+                    }
                     if (!result.optBoolean("status")) {
                         // showErrorMsg(result.getString("message"));
                         // 刷新完成

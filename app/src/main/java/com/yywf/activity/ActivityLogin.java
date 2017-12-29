@@ -194,6 +194,13 @@ public class ActivityLogin extends BaseActivity implements OnClickListener, OnCh
 			disShowProgress();
 			try {
 				JSONObject result = new JSONObject(response);
+
+				if (result.optInt("code") == -2){
+					UtilPreference.clearNotKeyValues(mContext);
+					// 退出账号 返回到登录页面
+					MyActivityManager.getInstance().logout(mContext);
+					return;
+				}
 				if (!result.optBoolean("status")) {
 					showErrorMsg(result.getString("message"));
 					return;
@@ -209,12 +216,14 @@ public class ActivityLogin extends BaseActivity implements OnClickListener, OnCh
 				String token = dataStr.optString("token");
 				String memberId = dataStr.optString("memberId");
 				int approve_status = dataStr.optInt("approve_status");
+				int isGrade = dataStr.optInt("is_getGrade");
 				UtilPreference.saveString(mContext, "token", token);
 				UtilPreference.saveString(mContext, "userName", username);
 				UtilPreference.saveString(mContext, "password", password);
 				UtilPreference.saveString(mContext, "memberId", memberId);
 				UtilPreference.saveInt(mContext, "approve_status", approve_status);
-				
+				UtilPreference.saveInt(mContext, "isGrade", isGrade);
+
 
 				startActivity(new Intent(mContext, ActivityHome.class));
 				finish();

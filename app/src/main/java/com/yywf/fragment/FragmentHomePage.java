@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tool.utils.utils.DialogUtil;
 import com.tool.utils.utils.ScreenUtils;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.UtilPreference;
@@ -50,6 +51,7 @@ import com.yywf.http.HttpUtil;
 import com.yywf.model.AdInfo;
 import com.yywf.model.BankCardInfo;
 import com.yywf.model.Menu;
+import com.yywf.util.MyActivityManager;
 import com.yywf.widget.ADCommonView;
 import com.yywf.widget.dialog.DialogUtils;
 
@@ -130,10 +132,16 @@ public class FragmentHomePage extends AbstractFragment implements
                         if (DialogUtils.checkApproveStatus(mContext)){
                             return;
                         }
+                        if (!DialogUtils.checkGradeStatus(mContext)){
+                            return;
+                        }
                         startActivity(new Intent(mContext, ActivityKjsk.class));
                         break;
                     case 2: //智能还款
                         if (DialogUtils.checkApproveStatus(mContext)){
+                            return;
+                        }
+                        if (!DialogUtils.checkGradeStatus(mContext)){
                             return;
                         }
                         startActivity(new Intent(mContext, ActivitySmartCredit.class));
@@ -154,6 +162,9 @@ public class FragmentHomePage extends AbstractFragment implements
                         if (DialogUtils.checkApproveStatus(mContext)){
                             return;
                         }
+                        if (!DialogUtils.checkGradeStatus(mContext)){
+                            return;
+                        }
                         startActivity(new Intent(mContext, ActivityDaiBanShiXiang.class));
                         break;
                     case 6: //一键办卡
@@ -166,10 +177,16 @@ public class FragmentHomePage extends AbstractFragment implements
                         if (DialogUtils.checkApproveStatus(mContext)){
                             return;
                         }
+                        if (!DialogUtils.checkGradeStatus(mContext)){
+                            return;
+                        }
                         startActivity(new Intent(mContext, ActivityMyZhangDan.class));
                         break;
                     case 8: //购买等级
                         if (DialogUtils.checkApproveStatus(mContext)){
+                            return;
+                        }
+                        if (!DialogUtils.checkGradeStatus(mContext)){
                             return;
                         }
                         startActivity(new Intent(mContext, ActivityVipGrade.class));
@@ -198,7 +215,9 @@ public class FragmentHomePage extends AbstractFragment implements
     }
 
     private void getAds() {
-        HttpUtil.get(ConfigXy.ZF_GET_ADS_API, requestListener);
+        RequestParams params = new RequestParams();
+        params.add("type", "3");
+        HttpUtil.get(ConfigXy.ZF_GET_ADS_API, params,requestListener);
     }
 
 
@@ -210,7 +229,12 @@ public class FragmentHomePage extends AbstractFragment implements
             try {
 
                 JSONObject result = new JSONObject(response);
-
+                if (result.optInt("code") == -2){
+                    UtilPreference.clearNotKeyValues(mContext);
+                    // 退出账号 返回到登录页面
+                    MyActivityManager.getInstance().logout(mContext);
+                    return;
+                }
                 if (!result.optBoolean("status")) {
 //					showErrorMsg(result.getString("message"));
                     return;
@@ -294,7 +318,12 @@ public class FragmentHomePage extends AbstractFragment implements
                 try {
 
                     JSONObject result = new JSONObject(response);
-
+                    if (result.optInt("code") == -2){
+                        UtilPreference.clearNotKeyValues(mContext);
+                        // 退出账号 返回到登录页面
+                        MyActivityManager.getInstance().logout(mContext);
+                        return;
+                    }
                     if (!result.optBoolean("status")) {
                         showErrorMsg(result.getString("message"));
                         return;

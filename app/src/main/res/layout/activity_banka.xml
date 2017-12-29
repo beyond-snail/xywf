@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#f5f5f5"
     android:fillViewport="true"
     android:orientation="vertical">
@@ -35,7 +36,13 @@
             android:id="@+id/advertis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical">
+            <!--<com.panxw.android.imageindicator.ImageIndicatorView-->
+                <!--android:id="@+id/indicate_view"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+            <!--</com.panxw.android.imageindicator.ImageIndicatorView>-->
+        </LinearLayout>
 
         <!--<View-->
             <!--android:layout_width="match_parent"-->

@@ -135,6 +135,12 @@ public class ActivityEditPayPwd extends BaseActivity implements OnClickListener 
             disShowProgress();
             try {
                 JSONObject result = new JSONObject(response);
+                if (result.optInt("code") == -2){
+                    UtilPreference.clearNotKeyValues(mContext);
+                    // 退出账号 返回到登录页面
+                    MyActivityManager.getInstance().logout(mContext);
+                    return;
+                }
                 if (!result.optBoolean("status")) {
                     ToastUtils.CustomShow(mContext, result.optString("message"));
                 }else{

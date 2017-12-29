@@ -38,7 +38,8 @@ public class ConfigXy {
     public static final String HC_DOWNLOAD_APP = "http://app.yunl7.com/static/base/html/downapp.html";
 
 	// 正式 2.0
-	public static final String ZF_SERVER_API = "http://121.40.64.167:9094/xinyiwofu/";
+//	public static final String ZF_SERVER_API = "http://121.40.64.167:9094/xinyiwofu/";
+	public static final String ZF_SERVER_API = "http://sbs.eboss007.com/xinyiwofu/";
 	public static final String ZF_SERVER_API2 = "http://sbs.eboss007.com/EBosService/";
 	public static final String ZF_MID = "103387170609001"; // 正式(云流正式)
 
@@ -155,6 +156,9 @@ public class ConfigXy {
 
     //生成订单
     public static final String GET_ORDER_ID = ZF_SERVER_API + "/app/pay/submitOrder";
+
+    //会员等级是否购买
+    public static final String IS_GRADE = ZF_SERVER_API+"app/member/isHasGrade";
 
 
 }

@@ -199,25 +199,23 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
                 try {
 
                     JSONObject result = new JSONObject(response);
+                    if (result.optInt("code") == -2){
+                        UtilPreference.clearNotKeyValues(mContext);
+                        // 退出账号 返回到登录页面
+                        MyActivityManager.getInstance().logout(mContext);
+                        return;
+                    }
 
                     if (!result.optBoolean("status")) {
                         showErrorMsg(result.getString("message"));
-                        // 下拉刷新完成
-//                        listview.onRefreshComplete();
                         return;
                     }
 
 
                     showErrorMsg(result.getString("message"));
                     reloadData();
-
-//                    bankAdapter.notifyDataSetChanged();
-//                    // 下拉刷新完成
-//                    listview.onRefreshComplete();
                 } catch (Exception e) {
                     e.getMessage();
-                    // 下拉刷新完成
-//                    listview.onRefreshComplete();
                 }
             }
 
@@ -225,8 +223,6 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
             public void failed(Throwable error) {
                 disShowProgress();
                 showE404();
-                // 下拉刷新完成
-//                listview.onRefreshComplete();
             }
         });
 
@@ -258,6 +254,13 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
                 try {
 
                     JSONObject result = new JSONObject(response);
+
+                    if (result.optInt("code") == -2){
+                        UtilPreference.clearNotKeyValues(mContext);
+                        // 退出账号 返回到登录页面
+                        MyActivityManager.getInstance().logout(mContext);
+                        return;
+                    }
 
                     if (!result.optBoolean("status")) {
                         showErrorMsg(result.getString("message"));
@@ -405,6 +408,13 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
                 disShowProgress();
                 try {
                     JSONObject result = new JSONObject(response);
+
+                    if (result.optInt("code") == -2){
+                        UtilPreference.clearNotKeyValues(mContext);
+                        // 退出账号 返回到登录页面
+                        MyActivityManager.getInstance().logout(mContext);
+                        return;
+                    }
                     if (!result.optBoolean("status")) {
                         showErrorMsg(result.getString("message"));
                         return;

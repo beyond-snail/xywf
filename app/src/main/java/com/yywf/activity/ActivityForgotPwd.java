@@ -24,6 +24,7 @@ import com.yywf.R;
 import com.yywf.config.ConfigXy;
 import com.yywf.config.ConstApp;
 import com.yywf.http.HttpUtil;
+import com.yywf.util.MyActivityManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -121,6 +122,12 @@ public class ActivityForgotPwd extends BaseActivity implements OnClickListener, 
 				disShowProgress();
 				try {
 					JSONObject result = new JSONObject(response);
+					if (result.optInt("code") == -2){
+						UtilPreference.clearNotKeyValues(mContext);
+						// 退出账号 返回到登录页面
+						MyActivityManager.getInstance().logout(mContext);
+						return;
+					}
 					if (!result.optBoolean("status")) {
 						ToastUtils.CustomShow(mContext, result.optString("message"));
 					}
@@ -186,6 +193,12 @@ public class ActivityForgotPwd extends BaseActivity implements OnClickListener, 
 				disShowProgress();
 				try {
 					JSONObject result = new JSONObject(response);
+					if (result.optInt("code") == -2){
+						UtilPreference.clearNotKeyValues(mContext);
+						// 退出账号 返回到登录页面
+						MyActivityManager.getInstance().logout(mContext);
+						return;
+					}
 					if (!result.optBoolean("status")) {
 						ToastUtils.CustomShow(mContext, result.optString("message"));
 					}else{

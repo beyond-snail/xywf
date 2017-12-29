@@ -8,6 +8,8 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.tool.utils.banner.AutoPlayManager;
+import com.tool.utils.banner.ImageIndicatorView;
 import com.tool.utils.utils.ScreenUtils;
 import com.tool.utils.view.MyGridView;
 import com.yywf.R;
@@ -132,7 +134,7 @@ public class ActivityBanKTiE extends BaseActivity  {
 		ll_advertis = (LinearLayout) findViewById(R.id.advertis);
 		// 设置宽度高度一致
 		LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) ll_advertis.getLayoutParams();
-//		linearParams.height = (int) (ScreenUtils.getScreenWidth(mContext) / 2);// 640-370
+		linearParams.height = (int) (ScreenUtils.getScreenWidth(mContext) / 2);// 640-370
 		// 750-434
 		ll_advertis.setLayoutParams(linearParams);
 
@@ -145,11 +147,37 @@ public class ActivityBanKTiE extends BaseActivity  {
 //		ADCommonView adCommonView = new ADCommonView(mContext, infos, false);
 //		ll_advertis.addView(adCommonView);
 
-		ImageView imageView = new ImageView(mContext);
-		imageView.setImageResource(R.drawable.banner_yijiantie);
-		ll_advertis.addView(imageView);
+//		ImageView imageView = new ImageView(mContext);
+//		imageView.setImageResource(R.drawable.banner_yijiantie);
+//		ll_advertis.addView(imageView);
 
 
+		local();
+	}
+
+
+	//系统本地图片加载
+	public void local() {
+		// 声明一个数组, 指定图片的ID
+		final Integer[] resArray = new Integer[] {R.drawable.card_banner2
+		};
+		ImageIndicatorView indicate_view = new ImageIndicatorView(mContext);
+		// 把数组交给图片展播组件
+		indicate_view.setupLayoutByDrawable(resArray);
+		// 展播的风格
+//        indicate_view.setIndicateStyle(ImageIndicatorView.INDICATE_ARROW_ROUND_STYLE);
+		indicate_view.setIndicateStyle(ImageIndicatorView.INDICATE_USERGUIDE_STYLE);
+		// 显示组件
+		indicate_view.show();
+		final AutoPlayManager autoBrocastManager = new AutoPlayManager(indicate_view);
+		//设置开启自动广播
+		autoBrocastManager.setBroadcastEnable(true);
+		//autoBrocastManager.setBroadCastTimes(5);//loop times
+		//设置开始时间和间隔时间
+		autoBrocastManager.setBroadcastTimeIntevel(3000, 3000);
+		//设置循环播放
+		autoBrocastManager.loop();
+		ll_advertis.addView(indicate_view);
 	}
 
 

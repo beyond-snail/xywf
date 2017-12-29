@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tool.utils.utils.StringUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.yywf.R;
 import com.yywf.config.ConfigXy;
 import com.yywf.http.HttpUtil;
@@ -63,6 +64,14 @@ public class ActivityAboutUs extends BaseActivity  {
 			try {
 
 				JSONObject result = new JSONObject(response);
+
+				//判断登录是否失效
+				if (result.optInt("code") == -2){
+					UtilPreference.clearNotKeyValues(mContext);
+					// 退出账号 返回到登录页面
+					MyActivityManager.getInstance().logout(mContext);
+					return;
+				}
 
 				if (!result.optBoolean("status")) {
 					showErrorMsg(result.getString("message"));

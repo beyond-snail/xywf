@@ -28,6 +28,7 @@ import com.yywf.R;
 import com.yywf.config.ConfigXy;
 import com.yywf.config.ConstApp;
 import com.yywf.http.HttpUtil;
+import com.yywf.util.MyActivityManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -117,6 +118,12 @@ public class ActivityRegister extends BaseActivity implements OnClickListener, O
 			public void success(String response) {
 				try {
 					JSONObject result = new JSONObject(response);
+					if (result.optInt("code") == -2){
+						UtilPreference.clearNotKeyValues(mContext);
+						// 退出账号 返回到登录页面
+						MyActivityManager.getInstance().logout(mContext);
+						return;
+					}
 					// 提示账号已经存在不能再注册
 					if (!result.getString("status").equals("success")) {
 						et_telephone.requestFocus();
@@ -244,6 +251,12 @@ public class ActivityRegister extends BaseActivity implements OnClickListener, O
 				try {
 
 					JSONObject result = new JSONObject(response);
+					if (result.optInt("code") == -2){
+						UtilPreference.clearNotKeyValues(mContext);
+						// 退出账号 返回到登录页面
+						MyActivityManager.getInstance().logout(mContext);
+						return;
+					}
 					if (!result.optBoolean("status")) {
 						ToastUtils.CustomShow(mContext, result.optString("message"));
 					}else {
@@ -251,9 +264,12 @@ public class ActivityRegister extends BaseActivity implements OnClickListener, O
 						String token = dataStr.optString("token");
 						String memberId = dataStr.optString("memberId");
 						int approve_status = dataStr.optInt("approve_status");
+						int isGrade = dataStr.optInt("is_getGrade");
 						UtilPreference.saveString(mContext, "token", token);
+						UtilPreference.saveString(mContext, "userName", et_telephone.getText().toString().trim());
 						UtilPreference.saveString(mContext, "memberId", memberId);
 						UtilPreference.saveInt(mContext, "approve_status", approve_status);
+						UtilPreference.saveInt(mContext, "isGrade", isGrade);
 						startActivity(new Intent(mContext, ActivityHome.class));
 						finish();
 					}

@@ -54,16 +54,6 @@ public class ActivityBankList extends BaseActivity{
 		setContentView(R.layout.activity_bank_list);
 		MyActivityManager.getInstance().addActivity(this);
 		initTitle("发卡银行列表");
-//		((TextView) findViewById(R.id.tv_header)).setText("开户行列表");
-//
-//		// 返回
-//		findViewById(R.id.backBtn).setOnClickListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				finish();
-//			}
-//		});
 		if (findViewById(R.id.backBtn) != null) {
 			findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
 		}

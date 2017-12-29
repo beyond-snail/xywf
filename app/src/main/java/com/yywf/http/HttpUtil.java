@@ -11,9 +11,11 @@ import com.loopj.android.http.RequestParams;
 import com.tool.utils.utils.ALog;
 import com.tool.utils.utils.UtilPreference;
 import com.yywf.myapplication.MainApplication;
+import com.yywf.util.MyActivityManager;
 
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -196,6 +198,7 @@ public class HttpUtil {
 //					Log.e("HttpUtil", "appid失效");
 //				}
 				ALog.json("HttpUtil", result);
+
 				res.success(result);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();

@@ -108,6 +108,12 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
                 disShowProgress();
                 try {
                     JSONObject result = new JSONObject(response);
+                    if (result.optInt("code") == -2){
+                        UtilPreference.clearNotKeyValues(mContext);
+                        // 退出账号 返回到登录页面
+                        MyActivityManager.getInstance().logout(mContext);
+                        return;
+                    }
                     if (!result.optBoolean("status")) {
                         ToastUtils.CustomShow(mContext, result.optString("message"));
                     }else{
@@ -145,6 +151,12 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
                 disShowProgress();
                 try {
                     JSONObject rsa = new JSONObject(response);
+                    if (rsa.optInt("code") == -2){
+                        UtilPreference.clearNotKeyValues(mContext);
+                        // 退出账号 返回到登录页面
+                        MyActivityManager.getInstance().logout(mContext);
+                        return;
+                    }
                     if ("success".equals(rsa.optString("status"))) {
                         // 获取成功
                         JSONObject obj = rsa.getJSONObject("obj");
@@ -282,6 +294,12 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
             try {
 
                 JSONObject result = new JSONObject(response);
+                if (result.optInt("code") == -2){
+                    UtilPreference.clearNotKeyValues(mContext);
+                    // 退出账号 返回到登录页面
+                    MyActivityManager.getInstance().logout(mContext);
+                    return;
+                }
                 if (!result.optBoolean("status")) {
                     ToastUtils.CustomShow(mContext, result.optString("message"));
                 }else{
@@ -319,7 +337,12 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
                 disShowProgress();
                 try {
                     JSONObject result = new JSONObject(response);
-
+                    if (result.optInt("code") == -2){
+                        UtilPreference.clearNotKeyValues(mContext);
+                        // 退出账号 返回到登录页面
+                        MyActivityManager.getInstance().logout(mContext);
+                        return;
+                    }
                     if (!result.optBoolean("status")) {
                         showErrorMsg(result.getString("message"));
                         return;

@@ -162,8 +162,36 @@ public class DialogUtils {
     }
 
 
+    private static MyCustomDialog myCustomDialog;
+
+    public static boolean checkGradeStatus(final Context mContext){
+        int isGrade = UtilPreference.getIntValue(mContext, "isGrade");
+
+//        if (isGrade == 0){
+//            myCustomDialog = showGradeDialog(mContext, new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    myCustomDialog.dismiss();
+//                }
+//            }, new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    myCustomDialog.dismiss();
+//                }
+//            });
+//            return false;
+//        }
+        return true;
+    }
+
+    private static MyCustomDialog showGradeDialog(Context mContext, View.OnClickListener leftClick, View.OnClickListener rightClick) {
+
+        return showDialog2(mContext, "温馨提示", "取消", "确定", "您还未成为沃富正式会员是否支付199元成为会员", null, leftClick, rightClick);
+    }
+
 
     private static void showRegisterSuccess(final Context mContext){
+
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.dialog_register_success, null);
         final MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(mContext,

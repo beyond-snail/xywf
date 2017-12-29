@@ -32,6 +32,7 @@ import com.yywf.adapter.BankListAdapter;
 import com.yywf.config.ConfigXy;
 import com.yywf.http.HttpUtil;
 import com.yywf.model.BankCardInfo;
+import com.yywf.util.MyActivityManager;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -169,7 +170,12 @@ public class FragmentWhd extends AbstractFragment implements
                 try {
 
                     JSONObject result = new JSONObject(response);
-
+                    if (result.optInt("code") == -2){
+                        UtilPreference.clearNotKeyValues(mContext);
+                        // 退出账号 返回到登录页面
+                        MyActivityManager.getInstance().logout(mContext);
+                        return;
+                    }
                     if (!result.optBoolean("status")) {
                         showErrorMsg(result.getString("message"));
                         // 下拉刷新完成
