@@ -130,12 +130,12 @@ public class ActivityVipGrade extends BaseActivity implements OnClickListener {
                 setDefault(vo);
 
                 //如果大于等于VIP4，限额，线下收款
-                if (position >= 3){
-                    ToastUtils.showShort(mContext, "由于限额，请线下付款");
-//                    VipGrade vipGrade = list.get(position);
-                    ShowAccount(vo);
-//                    return;
-                }
+//                if (position >= 3){
+//                    ToastUtils.showShort(mContext, "由于限额，请线下付款");
+////                    VipGrade vipGrade = list.get(position);
+//                    ShowAccount(vo);
+////                    return;
+//                }
 
             }
         });
@@ -198,7 +198,7 @@ public class ActivityVipGrade extends BaseActivity implements OnClickListener {
 
     private void ShowAccount(final VipGrade vo){
 
-        dialog = DialogUtils.showDialog2(mContext, "温馨提示", "取消", "确定", "您将付款"+StringUtils.formatIntMoney(vo.getPurchasePrice())+"元", null, new OnClickListener() {
+        dialog = DialogUtils.showDialog2(mContext, "温馨提示", "取消", "确定", "您将付款"+StringUtils.formatIntMoney(vo.getPurchasePrice())+"元", "信易（杭州）互联网科技有限公司\r\n账号: 19020101040041032\r\n开户行: 中国农业银行杭州市城西支行", new OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();

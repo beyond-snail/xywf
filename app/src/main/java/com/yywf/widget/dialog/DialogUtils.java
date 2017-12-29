@@ -72,7 +72,7 @@ public class DialogUtils {
         if (!StringUtils.isBlank(content2)) {
             TextView tv_content2 = view.findViewById(R.id.tv_alert_dialog_message2);
             tv_content2.setVisibility(View.VISIBLE);
-            tv_content2.setText("信易（杭州）互联网科技有限公司\r\n账号: 19020101040041032\r\n开户行: 中国农业银行杭州市城西支行");
+            tv_content2.setText(content2);
         }
 
 

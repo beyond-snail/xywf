@@ -66,7 +66,7 @@
             android:textColor="#999999"
             android:textSize="14sp"
             android:ems="5"
-            android:text="账号余额"/>
+            android:text="钱包余额"/>
 
         <TextView
             android:id="@+id/tv_tx_balance_amt"

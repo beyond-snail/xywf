@@ -95,6 +95,8 @@ public class ActivityMine extends BaseActivity implements OnClickListener {
 		// 登录
 		button(R.id.btn_save).setOnClickListener(this);
 
+
+		getMemberInfo();
 	}
 
 
@@ -102,7 +104,7 @@ public class ActivityMine extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		getMemberInfo();
+
 	}
 
 	@Override

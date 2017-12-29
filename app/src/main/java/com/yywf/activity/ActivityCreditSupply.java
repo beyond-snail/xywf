@@ -107,6 +107,9 @@ public class ActivityCreditSupply extends BaseActivity implements OnClickListene
     private void doCommit() throws ParseException {
 
 
+        String bandCard = StringUtils.replaceBlank(et_card_no.getText().toString().trim());
+
+
         if (StringUtils.isBlank(et_user_name.getText().toString().trim())) {
             ToastUtils.showShort(this, "姓名不能为空");
             et_user_name.requestFocus();
@@ -115,13 +118,13 @@ public class ActivityCreditSupply extends BaseActivity implements OnClickListene
 
 
 
-        if (StringUtils.isBlank(et_card_no.getText().toString().trim())) {
+        if (StringUtils.isBlank(bandCard)) {
             ToastUtils.showShort(this, "银行卡号不能为空");
             et_card_no.requestFocus();
             return;
         }
 
-        if (!StringUtils.checkBankCard(et_card_no.getText().toString().trim())) {
+        if (!StringUtils.checkBankCard(bandCard)) {
             ToastUtils.showShort(this, "请输入正确银行卡号");
             et_card_no.requestFocus();
             return;

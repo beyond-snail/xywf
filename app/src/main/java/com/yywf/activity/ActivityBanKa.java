@@ -69,7 +69,7 @@ public class ActivityBanKa extends BaseActivity  {
 				case 0:
 				case 1:
 				case 2:
-				case 3:
+//				case 3:
 					Menu menu = new Menu();
 					menu.setBg(EnumConsts.BankMenuType.values()[i].getBg());
 					menu.setName(EnumConsts.BankMenuType.values()[i].getName());

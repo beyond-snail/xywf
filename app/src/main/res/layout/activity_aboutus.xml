@@ -38,8 +38,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
+            android:text="信易(杭州)互联网科技有限公司"
+            android:textColor="#c9c9c9"
+            android:textSize="12sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="40dp"
-            android:text="©2017 All right reserved 信易(杭州)互联网科技有限公司"
+            android:text="©2017 All right reserved "
             android:textColor="#c9c9c9"
             android:textSize="12sp" />
 

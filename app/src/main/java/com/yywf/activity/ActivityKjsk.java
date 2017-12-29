@@ -420,7 +420,7 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
 
                     String feeDescription = result.getString("message");
                     if (!StringUtils.isBlank(feeDescription)){
-                        id_fee_description.setText(feeDescription);
+                        id_fee_description.setText("实际到账金额: "+feeDescription+"元");
                     }
 
 
