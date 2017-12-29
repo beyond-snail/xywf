@@ -269,8 +269,10 @@ public class FragmentMine extends AbstractFragment implements
                 String icon = dataStr.optString("icon");
                 String service_phone = dataStr.optString("service_phone");
                 String phone = dataStr.optString("phone");
+                int isGrade = dataStr.optInt("is_getGrade");
                 int status = dataStr.optInt("status");
 
+                UtilPreference.saveInt(mContext, "isGrade", isGrade);
 
                 if (!StringUtils.isBlank(icon)){
                     ImageLoader.getInstance().displayImage(icon, roundImageView);
