@@ -132,9 +132,9 @@ public class FragmentHomePage extends AbstractFragment implements
                         if (DialogUtils.checkApproveStatus(mContext)){
                             return;
                         }
-                        if (!DialogUtils.checkGradeStatus(mContext)){
-                            return;
-                        }
+//                        if (!DialogUtils.checkGradeStatus(mContext)){
+//                            return;
+//                        }
                         startActivity(new Intent(mContext, ActivityKjsk.class));
                         break;
                     case 2: //智能还款

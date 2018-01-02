@@ -1,1 +1,1 @@
-include ':app', ':lib-zxing', ':lib-tool', ':pulltorefresh', ':magicindicator'
+include ':app', ':lib-zxing', ':lib-tool', ':pulltorefresh', ':magicindicator', ':shareLibrary'

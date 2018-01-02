@@ -64,4 +64,5 @@ dependencies {
     compile project(':lib-zxing')
     compile files('src/main/libs/poi-3.15.jar')
     compile files('src/main/libs/poi-scratchpad-3.15.jar')
+    compile project(':shareLibrary')
 }

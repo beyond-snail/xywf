@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/lib-zxing" />
             <option value="$PROJECT_DIR$/magicindicator" />
             <option value="$PROJECT_DIR$/pulltorefresh" />
+            <option value="$PROJECT_DIR$/shareLibrary" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

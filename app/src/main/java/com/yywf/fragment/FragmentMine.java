@@ -18,6 +18,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.loopj.android.http.RequestParams;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tool.utils.utils.AlertUtils;
 import com.tool.utils.utils.StringUtils;
@@ -77,7 +78,7 @@ public class FragmentMine extends AbstractFragment implements
     private MyGridView gridView;
     private MyMenuAdapter adapter;
 
-
+    DisplayImageOptions options;
 
 
     @Override
@@ -125,6 +126,17 @@ public class FragmentMine extends AbstractFragment implements
 
         ll_user_info = fragment.findViewById(R.id.ll_user_info);
         ll_user_info.setOnClickListener(this);
+
+        //自定义配置
+        options = new DisplayImageOptions.Builder()
+                .cacheInMemory(true)//让图片进行内存缓存
+                .cacheOnDisk(true)//让图片进行sdcard缓存
+                .showImageForEmptyUri(R.drawable.mapage_head)
+                .showImageOnFail(R.drawable.mapage_head)
+                        /*.showImageForEmptyUri(R.mipmap.ic_empty)//图片地址有误
+                        .showImageOnFail(R.mipmap.ic_error)//当图片加载出现错误的时候显示的图片
+                        .showImageOnLoading(R.mipmap.loading)//图片正在加载的时候显示的图片*/
+                .build();
 
 
     }
@@ -275,7 +287,8 @@ public class FragmentMine extends AbstractFragment implements
                 UtilPreference.saveInt(mContext, "isGrade", isGrade);
 
                 if (!StringUtils.isBlank(icon)){
-                    ImageLoader.getInstance().displayImage(icon, roundImageView);
+
+                    ImageLoader.getInstance().displayImage(icon, roundImageView, options);
                 }
 
                 if (!StringUtils.isBlank(name)){
