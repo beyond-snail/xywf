@@ -218,7 +218,7 @@ public class ShareByWeixin extends ShareBase {
                     if (null != listener) {
                         listener.onShare(channel, ShareConstant.SHARE_STATUS_FAILED);
                     }
-                    // ToastUtil.showToast(context, R.string.share_failed, true);
+                     ToastUtil.showToast(context, R.string.share_failed, true);
                 }
             }
         }

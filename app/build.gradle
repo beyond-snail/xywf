@@ -1,6 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    signingConfigs {
+        release {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storePassword 'android'
+            storeFile file('G:/work_project/sbs/JFK.jks')
+        }
+    }
+
+
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
     useLibrary 'org.apache.http.legacy'
@@ -20,6 +31,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            debuggable true
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            signingConfig signingConfigs.release
         }
     }
     lintOptions {
@@ -61,7 +79,6 @@ dependencies {
     compile project(':pulltorefresh')
     compile files('libs/alipaySdk-20160111.jar')
     //加上这句话
-    compile 'com.android.support:multidex:1.0.0'
     compile files('libs/x5_webview_v3.5.0.jar')
     compile 'org.greenrobot:eventbus:3.0.0'
     compile(name:'moxie-client-1.3.6.3', ext:'aar')
