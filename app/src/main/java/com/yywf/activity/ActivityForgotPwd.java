@@ -184,7 +184,7 @@ public class ActivityForgotPwd extends BaseActivity implements OnClickListener, 
 		params.add("phone", phone);
 		params.add("password", et_comfirm_pwd.getText().toString().trim());
 		params.add("code", validCode);
-		params.add("type", "1");
+		params.add("type", "3");
 
 		HttpUtil.get(ConfigXy.XY_FORGOT_PAY_PWD, params, new HttpUtil.RequestListener() {
 
