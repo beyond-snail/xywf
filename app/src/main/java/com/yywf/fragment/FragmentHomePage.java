@@ -35,6 +35,7 @@ import com.yywf.R;
 import com.yywf.activity.ActivityAddZhangDan;
 import com.yywf.activity.ActivityBanKTiE;
 import com.yywf.activity.ActivityBanKa;
+import com.yywf.activity.ActivityBankCardList;
 import com.yywf.activity.ActivityCredit;
 import com.yywf.activity.ActivityDaiBanShiXiang;
 import com.yywf.activity.ActivityKjsk;
@@ -135,7 +136,11 @@ public class FragmentHomePage extends AbstractFragment implements
 //                        if (!DialogUtils.checkGradeStatus(mContext)){
 //                            return;
 //                        }
-                        startActivity(new Intent(mContext, ActivityKjsk.class));
+                        if (bankList.size() != 0) {
+                            startActivity(new Intent(mContext, ActivityKjsk.class));
+                        }else{
+                            startActivity(new Intent(mContext, ActivityBankCardList.class));
+                        }
                         break;
                     case 2: //智能还款
                         if (DialogUtils.checkApproveStatus(mContext)){

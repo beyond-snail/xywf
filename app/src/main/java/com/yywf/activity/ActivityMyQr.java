@@ -110,7 +110,7 @@ public class ActivityMyQr extends BaseActivity implements OnClickListener {
 		two_qr_name = findViewById(R.id.two_qr_name);
 
 
-		button(R.id.img_right_add).setOnClickListener(new OnClickListener() {
+		imageView(R.id.img_right_add).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
 
