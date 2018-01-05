@@ -155,7 +155,12 @@ public class FragmentHomePage extends AbstractFragment implements
                         if (DialogUtils.checkApproveStatus(mContext)){
                             return;
                         }
-                        startActivity(new Intent(mContext, ActivityCredit.class));
+                        if (bankList.size() != 0) {
+                            startActivity(new Intent(mContext, ActivityCredit.class));
+                        }else{
+                            startActivity(new Intent(mContext, ActivityBankCardList.class));
+                        }
+
                         break;
                     case 4: //一键提额
                         if (DialogUtils.checkApproveStatus(mContext)){

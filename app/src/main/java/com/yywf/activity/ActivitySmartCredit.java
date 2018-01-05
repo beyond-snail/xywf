@@ -60,6 +60,10 @@ public class ActivitySmartCredit extends BaseActivity implements OnClickListener
         if (findViewById(R.id.backBtn) != null) {
             findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
         }
+        if (findViewById(R.id.img_right_add) != null) {
+            findViewById(R.id.img_right_add).setVisibility(View.VISIBLE);
+            findViewById(R.id.img_right_add).setOnClickListener(this);
+        }
 
         initView();
     }
@@ -148,7 +152,9 @@ public class ActivitySmartCredit extends BaseActivity implements OnClickListener
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
+            case R.id.img_right_add:
+                startActivity(new Intent(mContext, ActivityAddZhangDan.class));
+                break;
             default:
                 break;
         }

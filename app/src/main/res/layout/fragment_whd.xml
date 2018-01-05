@@ -51,19 +51,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <com.handmark.pulltorefresh.library.PullToRefreshListView
 
-        <com.handmark.pulltorefresh.library.PullToRefreshListView
+                android:id="@+id/pull_refresh_listView"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:listSelector="#00000000"
+                android:visibility="visible">
 
-            android:id="@+id/pull_refresh_listView"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:cacheColorHint="@android:color/transparent"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:listSelector="#00000000"
-            android:visibility="visible">
+            </com.handmark.pulltorefresh.library.PullToRefreshListView>
+            <!--<TextView-->
+                <!--android:id="@+id/id_add_zd"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@color/white"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:padding="10dp"-->
+                <!--android:gravity="center"-->
+                <!--android:text="+添加账单"-->
+                <!--android:textSize="20sp"-->
+                <!--android:textColor="#1b82d2"/>-->
+        </LinearLayout>
 
-        </com.handmark.pulltorefresh.library.PullToRefreshListView>
+
 
         <LinearLayout
             android:id="@+id/id_no_data"

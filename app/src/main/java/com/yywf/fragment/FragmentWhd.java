@@ -26,6 +26,7 @@ import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MyListView;
 import com.yywf.R;
+import com.yywf.activity.ActivityAddZhangDan;
 import com.yywf.activity.ActivityChangeDebitInfo;
 import com.yywf.activity.ActivityCreditAdd;
 import com.yywf.adapter.BankListAdapter;
@@ -71,7 +72,8 @@ public class FragmentWhd extends AbstractFragment implements
         btn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(mContext, ActivityCreditAdd.class));
+//                startActivity(new Intent(mContext, ActivityCreditAdd.class));
+                startActivity(new Intent(mContext, ActivityAddZhangDan.class));
             }
         });
 
@@ -125,20 +127,16 @@ public class FragmentWhd extends AbstractFragment implements
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
                 refreshView.getLoadingLayoutProxy(false, true).setLastUpdatedLabel("更新于：" + label);
 
-                if (bankList.size() == 0) {
-                    handler.postDelayed(new Runnable() {
+                handler.postDelayed(new Runnable() {
 
-                        @Override
-                        public void run() {
-                            showErrorMsg("没有更多了");
-                            listview.onRefreshComplete();
-                        }
-                    }, 1000);
+                    @Override
+                    public void run() {
+                        showErrorMsg("没有更多了");
+                        listview.onRefreshComplete();
+                    }
+                }, 1000);
 
-                } else {
-                    page++;
-                    loadData(false);
-                }
+
             }
         });
     }
@@ -190,7 +188,7 @@ public class FragmentWhd extends AbstractFragment implements
                         Gson gson = new Gson();
                         List<BankCardInfo> bankCardInfoList = gson.fromJson(bank_list, new TypeToken<List<BankCardInfo> >() {
                         }.getType());
-                        if (false){//(bankCardInfoList.size() > 0) {
+                        if (bankCardInfoList.size() > 0) {
                             linearLayout(R.id.id_no_data).setVisibility(View.GONE);
                             bankList.addAll(bankList.size(), bankCardInfoList);
 

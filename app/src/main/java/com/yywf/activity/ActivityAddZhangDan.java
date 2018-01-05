@@ -13,6 +13,7 @@ import com.moxie.client.manager.MoxieContext;
 import com.moxie.client.manager.MoxieSDK;
 import com.moxie.client.model.MxParam;
 import com.myokhttp.util.LogUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.yywf.R;
 import com.yywf.util.MyActivityManager;
 
@@ -80,7 +81,7 @@ public class ActivityAddZhangDan extends BaseActivity implements View.OnClickLis
 			case R.id.ll_email:
 //				startActivity(new Intent(mContext, ActivityHandCredit.class));
 				MxParam mxParam = new MxParam();
-				mxParam.setUserId(mUserId);   //必传
+				mxParam.setUserId(UtilPreference.getStringValue(mContext, "memberId"));   //必传
 				mxParam.setApiKey(mApiKey);   //必传
 				mxParam.setFunction(MxParam.PARAM_FUNCTION_MAIL);
 

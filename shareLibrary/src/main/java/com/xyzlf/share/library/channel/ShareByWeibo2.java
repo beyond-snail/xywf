@@ -18,6 +18,7 @@ import com.xyzlf.share.library.interfaces.OnShareListener;
 import com.xyzlf.share.library.interfaces.ShareConstant;
 import com.xyzlf.share.library.request.AbstractAsyncTask;
 import com.xyzlf.share.library.request.BitmapAsyncTask;
+import com.xyzlf.share.library.util.BitmapUtil;
 import com.xyzlf.share.library.util.ChannelUtil;
 import com.xyzlf.share.library.util.ShareUtil;
 import com.xyzlf.share.library.util.ToastUtil;
@@ -175,7 +176,8 @@ public class ShareByWeibo2 extends ShareBase {
             return ((BitmapDrawable) icon).getBitmap();
         }
 
-        return BitmapFactory.decodeResource(context.getResources(), R.drawable.share_default);
+//        return BitmapFactory.decodeResource(context.getResources(), R.drawable.layer_icon);
+        return BitmapUtil.drawableToBitamp(context.getResources().getDrawable(R.drawable.layer_icon));
     }
 
 

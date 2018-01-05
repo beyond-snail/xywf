@@ -207,6 +207,21 @@ public class ActivityGuide extends Activity implements OnClickListener {
 		});
 	}
 
+	private Handler handler = new Handler();
+
+	/**
+	 * 延迟线程，看是否还有下一个字符输入
+	 */
+	private Runnable delayRun = new Runnable() {
+
+		@Override
+		public void run() {
+			//在这里调用服务器的接口，获取数据
+//			loadfeeDecriptionData();
+			goLoginPager();
+		}
+	};
+
 	private class MyOnPageChangeListener implements OnPageChangeListener {
 		public void onPageScrollStateChanged(int arg0) {
 			
@@ -217,13 +232,22 @@ public class ActivityGuide extends Activity implements OnClickListener {
 		public void onPageSelected(int position) {
 			currentPosititon = position;
 			if (position == 2) {
-				button.setVisibility(View.VISIBLE);
-				images.get(position-1).setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						goLoginPager();
-					}
-				});
+				button.setVisibility(View.INVISIBLE);
+//				images.get(position-1).setOnClickListener(new OnClickListener() {
+//					@Override
+//					public void onClick(View view) {
+//						goLoginPager();
+//					}
+//				});
+
+				if(delayRun!=null){
+					//每次editText有变化的时候，则移除上次发出的延迟线程
+					handler.removeCallbacks(delayRun);
+				}
+
+
+				//延迟800ms，如果不再输入字符，则执行该线程的run方法
+				handler.postDelayed(delayRun, 1000);
 			} else {
 				button.setVisibility(View.INVISIBLE);
 			}
@@ -262,6 +286,11 @@ public class ActivityGuide extends Activity implements OnClickListener {
 	 * 跳转到登录界面
 	 */
 	private void goLoginPager() {
+
+		if(delayRun!=null){
+			//每次editText有变化的时候，则移除上次发出的延迟线程
+			handler.removeCallbacks(delayRun);
+		}
 		Intent intent = new Intent(getApplicationContext(), ActivityLogin.class);
 		startActivity(intent);
 //		UtilPreference.saveBoolean(getApplicationContext(), "setUpGuide", true);

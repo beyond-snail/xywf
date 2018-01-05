@@ -289,6 +289,8 @@ public class FragmentMine extends AbstractFragment implements
                 if (!StringUtils.isBlank(icon)){
 
                     ImageLoader.getInstance().displayImage(icon, roundImageView, options);
+                }else{
+                    roundImageView.setImageResource(R.drawable.mapage_head);
                 }
 
                 if (!StringUtils.isBlank(name)){

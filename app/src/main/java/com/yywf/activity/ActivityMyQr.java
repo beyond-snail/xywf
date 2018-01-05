@@ -119,9 +119,9 @@ public class ActivityMyQr extends BaseActivity implements OnClickListener {
 					return;
 				}
 
-				ShareEntity testBean = new ShareEntity("推荐人", memberName);
+				ShareEntity testBean = new ShareEntity("信易沃富推荐下载注册", "信用卡快速提额，0元轻松还账单！一款超给力的信用卡app");
 				testBean.setUrl(memberUrl); //分享链接
-				testBean.setImgUrl(memberIcon);
+				testBean.setImgUrl("http://file.ebank007.com/file/ebosmanager/group/addGroup/1514515562648[C@37f7c093.jpg");
 				int channel = ShareConstant.SHARE_CHANNEL_WEIXIN_FRIEND | ShareConstant.SHARE_CHANNEL_WEIXIN_CIRCLE | ShareConstant.SHARE_CHANNEL_SINA_WEIBO | ShareConstant.SHARE_CHANNEL_QQ;
 				ShareUtil.showShareDialog((Activity)mContext, channel,testBean, ShareConstant.REQUEST_CODE);
 			}
@@ -165,7 +165,7 @@ public class ActivityMyQr extends BaseActivity implements OnClickListener {
 					twoCode(memberUrl);
 				}
 				if(!StringUtils.isBlank(memberName)){
-					two_qr_name.setText("推荐人: "+memberName);
+//					two_qr_name.setText("推荐人: "+memberName);
 				}
 
 			}
