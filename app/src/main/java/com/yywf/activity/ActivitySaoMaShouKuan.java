@@ -116,7 +116,7 @@ public class ActivitySaoMaShouKuan extends BaseActivity implements OnClickListen
 	private void initView() {
 
 		twoImg = (ImageView) findViewById(R.id.two_qr);
-		twoImg.setImageResource(R.drawable.sk);
+		twoImg.setImageResource(R.drawable.sweepqr);
 
 		findViewById(R.id.img_right).setOnClickListener(new OnClickListener() {
 			@Override
