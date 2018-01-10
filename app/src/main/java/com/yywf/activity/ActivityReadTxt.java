@@ -56,6 +56,8 @@ public class ActivityReadTxt extends BaseActivity {
 			initTitle("抵用券使用需知");
 		}else if (type == 7){
 			initTitle("扫码收钱使用需知");
+		}else if (type == 8){
+			initTitle("安全保障");
 		}else{
 			initTitle("我要提额");
 		}
@@ -85,6 +87,8 @@ public class ActivityReadTxt extends BaseActivity {
 				is = getAssets().open("dyq.TXT");
 			}else if (type == 7){
 				is = getAssets().open("smsq.TXT");
+			}else if (type == 8){
+				is = getAssets().open("tb.TXT");
 			}else if (type == 11){
 				is = getAssets().open("pfyh.TXT");
 			}else if (type == 12){

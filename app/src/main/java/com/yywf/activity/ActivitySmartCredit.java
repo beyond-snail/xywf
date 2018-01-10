@@ -31,6 +31,8 @@ import com.yywf.config.ConfigXy;
 import com.yywf.http.HttpUtil;
 import com.yywf.model.BankCardInfo;
 import com.yywf.util.MyActivityManager;
+import com.yywf.widget.dialog.DialogUtils;
+import com.yywf.widget.dialog.MyCustomDialog;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -66,7 +68,11 @@ public class ActivitySmartCredit extends BaseActivity implements OnClickListener
         }
 
         initView();
+
+        DialogUtils.showDialogTb(mContext, true);
     }
+
+
 
 
     private void initView() {

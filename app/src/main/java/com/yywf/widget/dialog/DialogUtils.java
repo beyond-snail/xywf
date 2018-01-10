@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tool.utils.dialog.CustomDialog;
@@ -19,6 +20,9 @@ import com.yywf.activity.ActivitySmrz;
  */
 
 public class DialogUtils {
+
+
+    private static MyCustomDialog Dialog;
 
 
     public static MyCustomDialog showDialog(final Context mContext, String title, String leftText, String rightText, Spanned content, View.OnClickListener leftClick, View.OnClickListener rightClick){
@@ -100,6 +104,60 @@ public class DialogUtils {
     }
 
 
+    public static void showDialogTb(final Context mContext, boolean flag){
+
+
+        //只弹一次
+        boolean isFirst = UtilPreference.getBooleanValue(mContext, "tb");
+
+        if (flag) {
+            if (isFirst) {
+                return;
+            }
+            UtilPreference.saveBoolean(mContext, "tb", true);
+        }
+
+
+
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.alert_dialog2, null);
+
+        LinearLayout ll_title = view.findViewById(R.id.ll_title);
+        ll_title.setBackgroundResource(R.drawable.bar_top_tips);
+
+
+
+        TextView btn_left = view.findViewById(R.id.btn_alert_dialog_btn_left);
+        btn_left.setTextColor(mContext.getResources().getColorStateList(R.color.btn_left_selector));
+        btn_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog.dismiss();
+            }
+        });
+
+        TextView btn_right = view.findViewById(R.id.btn_alert_dialog_btn_right);
+        btn_right.setTextColor(mContext.getResources().getColorStateList(R.color.btn_right_selector));
+        btn_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        final MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(mContext,
+                R.style.MyDialogStyleBottom);
+//        customBuilder.setCancelable(false);
+        customBuilder.setCanceledOnTouchOutside(false);
+        customBuilder.setLine(0);// 分割横线所处位置 在自定义布局上下或隐藏 0隐藏 1线在上方
+        customBuilder.setContentView(view);
+        customBuilder.setDisBottomButton(true);
+        // 2线在下方
+        Dialog = customBuilder.create();
+        Dialog.show();
+    }
+
+
 
     /**
      * 显示消息 按钮为 确定 取消
@@ -120,7 +178,7 @@ public class DialogUtils {
 
     }
 
-    private static MyCustomDialog Dialog;
+
 
     // 最全的
     public static void alert(String title, String hint, Context ctx, String positiveText, String negativeText,

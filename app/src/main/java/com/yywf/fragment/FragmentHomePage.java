@@ -136,6 +136,8 @@ public class FragmentHomePage extends AbstractFragment implements
 //                        if (!DialogUtils.checkGradeStatus(mContext)){
 //                            return;
 //                        }
+
+
                         if (bankList.size() != 0) {
                             startActivity(new Intent(mContext, ActivityKjsk.class));
                         }else{

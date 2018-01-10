@@ -33,6 +33,8 @@ import com.yywf.config.EnumConsts;
 import com.yywf.http.HttpUtil;
 import com.yywf.model.BankCardInfo;
 import com.yywf.util.MyActivityManager;
+import com.yywf.widget.dialog.DialogUtils;
+import com.yywf.widget.dialog.MyCustomDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,7 +89,14 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
         initView();
         loadData();
         loadfeeDecriptionData();
+
+        DialogUtils.showDialogTb(mContext, true);
+
     }
+
+
+
+
 
     private Handler handler = new Handler();
 

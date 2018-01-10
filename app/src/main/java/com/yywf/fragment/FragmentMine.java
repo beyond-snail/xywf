@@ -29,6 +29,7 @@ import com.tool.utils.view.MyListView;
 import com.tool.utils.view.RoundImageView;
 import com.yywf.R;
 import com.yywf.activity.ActivityBankCardManager;
+import com.yywf.activity.ActivityBaoDan;
 import com.yywf.activity.ActivityCredit;
 import com.yywf.activity.ActivityFollowUs;
 import com.yywf.activity.ActivityHome;
@@ -71,6 +72,8 @@ public class FragmentMine extends AbstractFragment implements
     private RelativeLayout rl_smsq;
     private RelativeLayout rl_gzwm;
     private RelativeLayout rl_setting;
+    private RelativeLayout rl_safe;
+
     private LinearLayout ll_user_info;
 
 
@@ -126,6 +129,9 @@ public class FragmentMine extends AbstractFragment implements
 
         ll_user_info = fragment.findViewById(R.id.ll_user_info);
         ll_user_info.setOnClickListener(this);
+
+        rl_safe = fragment.findViewById(R.id.rl_safe);
+        rl_safe.setOnClickListener(this);
 
         //自定义配置
         options = new DisplayImageOptions.Builder()
@@ -207,6 +213,9 @@ public class FragmentMine extends AbstractFragment implements
                 break;
             case R.id.rl_smsq: //扫码收钱
                 startActivity(new Intent(mContext, ActivitySaoMaShouKuan.class));
+                break;
+            case R.id.rl_safe:
+                startActivity(new Intent(mContext, ActivityBaoDan.class));
                 break;
             case R.id.rl_gzwm: //关注我们
                 startActivity(new Intent(mContext, ActivityFollowUs.class));
