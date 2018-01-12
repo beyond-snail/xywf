@@ -42,7 +42,7 @@
             android:gravity="right"
             android:hint="请输入还款金额"
             android:inputType="number"
-            android:maxLength="12"
+            android:maxLength="8"
             android:padding="10dp"
             android:textColor="@color/gray"
             android:textSize="@dimen/text_size_normal" />
@@ -227,7 +227,7 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:id="@+id/id_tv_total_amt"
+                        android:id="@+id/id_total_amt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -237,22 +237,24 @@
                         android:textColor="#333333"
                         android:textSize="16sp" />
                     <TextView
+                        android:id="@+id/id_tv_total_amt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/id_tv_total_amt"
+                        android:layout_toRightOf="@id/id_total_amt"
                         android:gravity="center_vertical"
                         android:text=""
                         android:textColor="#333333"
                         android:textSize="16sp" />
 
                     <TextView
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="10dp"
                         android:layout_centerVertical="true"
-                        android:text=""
+                        android:text="共10笔"
                         android:textColor="#999999"
                         android:textSize="13sp"/>
 
@@ -266,7 +268,7 @@
                     android:layout_weight="1">
 
                     <TextView
-                        android:id="@+id/id_tv_total_fee"
+                        android:id="@+id/id_total_fee"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -276,10 +278,11 @@
                         android:textColor="#999999"
                         android:textSize="13sp" />
                     <TextView
+                        android:id="@+id/id_tv_total_fee"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/id_tv_total_fee"
+                        android:layout_toRightOf="@id/id_total_fee"
                         android:gravity="center_vertical"
                         android:text=""
                         android:textColor="#999999"
@@ -296,51 +299,51 @@
                         android:textColor="@color/header_bg_color"
                         android:textSize="13sp" />
                 </RelativeLayout>
-
-            </LinearLayout>
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:background="#f5f5f5" />
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:background="#f5f5f5" />
 
 
-            <com.tool.utils.view.MyListView
-                android:id="@+id/listview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="#f5f5f5"
-                android:dividerHeight="1dp"
-                android:listSelector="@drawable/setting_list_bg" />
-
-
-
-            <LinearLayout
-                android:id="@+id/id_no_data"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="visible">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.tool.utils.view.MyListView
+                    android:id="@+id/listview"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="暂无还款计划"
-                    android:textColor="#999999"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="请填写计划并预览计划"
-                    android:textColor="#999999"
-                    android:textSize="16sp" />
+                    android:divider="#f5f5f5"
+                    android:dividerHeight="1dp"
+                    android:listSelector="@drawable/setting_list_bg" />
 
 
+
+                <LinearLayout
+                    android:id="@+id/id_no_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:text="暂无还款计划"
+                        android:textColor="#999999"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="请填写计划并预览计划"
+                        android:textColor="#999999"
+                        android:textSize="16sp" />
+
+
+                </LinearLayout>
             </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>

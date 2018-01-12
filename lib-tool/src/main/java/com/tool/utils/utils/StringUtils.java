@@ -437,6 +437,86 @@ public class StringUtils {
 		return dateFormat.format(new Date());
 	}
 
+
+	public static String getCurDay() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd");
+		return dateFormat.format(new Date());
+	}
+
+
+	/**
+	 * 字符串转日期
+	 *
+	 * @param str
+	 * @param format
+	 * @return
+	 */
+	public static Date getDate(String str, String format) {
+		try {
+			return new SimpleDateFormat(format, Locale.getDefault()).parse(str.trim());
+		} catch (Exception ex) {
+		}
+		return null;
+	}
+
+	/**
+	 * 日期转字符串
+	 *
+	 * @param str
+	 * @param format
+	 * @return
+	 */
+	public static String getDate(Date str, String format) {
+		try {
+			return new SimpleDateFormat(format, Locale.getDefault()).format(str);
+		} catch (Exception ex) {
+		}
+		return null;
+	}
+
+
+	/**
+	 * 日期（天）相加减
+	 *
+	 * @param current
+	 * @param count
+	 * @return
+	 */
+	public static String dayCalculate(String current, int count) {
+		// 日期字符串转换为date类型
+		Date currentDate = getDate(current, "yyyy-MM-dd");
+
+		// 获取Calendar对象
+		Calendar mCalendar = Calendar.getInstance();
+		// 设置日期为当前已经选择的时间
+		mCalendar.setTime(currentDate);
+		// 进行时间相加减操作
+		mCalendar.add(Calendar.DAY_OF_MONTH, count);
+		String date = StringUtils.getDate(mCalendar.getTime(), "yyyy-MM-dd");
+		return date;
+	}
+
+	/**
+	 * 日期（月份）相加减
+	 *
+	 * @param current
+	 * @param count
+	 * @return
+	 */
+	public static String monthCalculate(String current, int count) {
+		// 日期字符串转换为date类型
+		Date currentDate = getDate(current, "yyyy-MM");
+
+		// 获取Calendar对象
+		Calendar mCalendar = Calendar.getInstance();
+		// 设置日期为当前已经选择的时间
+		mCalendar.setTime(currentDate);
+		// 进行时间相加减操作
+		mCalendar.add(Calendar.MONTH, count);
+		String date = StringUtils.getDate(mCalendar.getTime(), "yyyy-MM");
+		return date;
+	}
+
 	/***
 	 * 得到标准格式当前时间
 	 * 
@@ -991,5 +1071,9 @@ public class StringUtils {
 		return amLong.toString();
 	}
 
+
+	public static void main(String[] args) {
+		System.out.println(getCurDay());
+	}
 
 }

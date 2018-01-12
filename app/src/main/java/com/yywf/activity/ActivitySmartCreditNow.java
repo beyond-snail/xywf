@@ -5,13 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.tool.utils.utils.ToastUtils;
 import com.yywf.R;
+import com.yywf.model.BankCardInfo;
 import com.yywf.util.MyActivityManager;
 
 public class ActivitySmartCreditNow extends BaseActivity implements View.OnClickListener {
 
 	private final String TAG = "ActivitySmartCreditNow";
-
+	private BankCardInfo vo;
 
 
 	@Override
@@ -23,6 +25,13 @@ public class ActivitySmartCreditNow extends BaseActivity implements View.OnClick
 		initTitle("立即还款");
 		if (findViewById(R.id.backBtn) != null) {
 			findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
+		}
+
+		vo = (BankCardInfo) getIntent().getSerializableExtra("BankCardInfo");
+		if (vo == null){
+			ToastUtils.CustomShow(mContext, "数据错误");
+			onBackPressed();
+			return;
 		}
 
 		initView();
@@ -59,7 +68,7 @@ public class ActivitySmartCreditNow extends BaseActivity implements View.OnClick
 //				startActivity(new Intent(mContext, ActivitySecuritySetting.class));
 				break;
 			case R.id.ll_smart_credit:
-				startActivity(new Intent(mContext, ActivitySmartCreditPlan.class));
+				startActivity(new Intent(mContext, ActivitySmartCreditPlan.class).putExtra("BankCardInfo", vo));
 				break;
 			case R.id.ll_credit:
 				startActivity(new Intent(mContext, ActivityCredit.class));

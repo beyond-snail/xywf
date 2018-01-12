@@ -38,8 +38,8 @@ public class ConfigXy {
     public static final String HC_DOWNLOAD_APP = "http://app.yunl7.com/static/base/html/downapp.html";
 
 	// 正式 2.0
-//	public static final String ZF_SERVER_API = "http://121.40.64.167:9094/xinyiwofu/";
-	public static final String ZF_SERVER_API = "http://sbs.eboss007.com/xinyiwofu/";
+	public static final String ZF_SERVER_API = "http://121.40.64.167:9094/xinyiwofu/";
+//	public static final String ZF_SERVER_API = "http://sbs.eboss007.com/xinyiwofu/";
 	public static final String ZF_SERVER_API2 = "http://sbs.eboss007.com/EBosService/";
 	public static final String ZF_MID = "103387170609001"; // 正式(云流正式)
 
@@ -141,6 +141,9 @@ public class ConfigXy {
 
     //还款计划列表
     public static final String PLAN_LIST = "";
+
+    //补全信息
+    public static final String CREDIT_SUPPLY = ZF_SERVER_API+"app/member/bindCardPerfect";
 
     public static final String HC_GET_RSA_STORE =
             "/shopapp/alipay/getPayAccount";

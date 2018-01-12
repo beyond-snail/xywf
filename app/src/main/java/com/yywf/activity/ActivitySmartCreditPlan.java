@@ -4,13 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.IdRes;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
@@ -23,14 +27,18 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.loopj.android.http.RequestParams;
+import com.nostra13.universalimageloader.utils.L;
 import com.tool.utils.passwordView.KeyBoardDialog;
 import com.tool.utils.passwordView.PayPasswordView;
+import com.tool.utils.utils.ArithUtil;
 import com.tool.utils.utils.KeyBoardUtils;
+import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.ToastUtils;
 import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MoneyEditText;
 import com.tool.utils.view.MyListView;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
+import com.xyzlf.share.library.util.ToastUtil;
 import com.yywf.R;
 import com.yywf.adapter.AdapterPlanList;
 import com.yywf.adapter.BankListAdapter;
@@ -44,6 +52,7 @@ import com.yywf.widget.dialog.MyCustomDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +63,12 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 	private MoneyEditText et_amt;
 
 	private TextView tv_do_text;
+	private TextView tv_total_amt;
+	private TextView tv_total_fee;
+	private TextView tv_sigle_amt;
+
+	private LinearLayout ll_plan_amt;
+
 
 	private Button btn;
 
@@ -74,6 +89,10 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 	private KeyBoardDialog keyboard;
 
+	private BankCardInfo vo;
+
+	private boolean isAction = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -83,6 +102,13 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 		initTitle("设置还款计划");
 		if (findViewById(R.id.backBtn) != null) {
 			findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
+		}
+
+		vo = (BankCardInfo) getIntent().getSerializableExtra("BankCardInfo");
+		if (vo == null){
+			ToastUtils.CustomShow(mContext, "数据错误");
+			onBackPressed();
+			return;
 		}
 
 		initView();
@@ -106,15 +132,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 //		linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
 
 
-		myListView = findViewById(R.id.listview);
-		adapter = new AdapterPlanList(mContext, list);
-		myListView.setAdapter(adapter);
-		myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-			}
-		});
 
 
 //		mPullRefreshScrollView =  findViewById(R.id.pull_refresh_scrollview);
@@ -168,12 +186,63 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 	}
 
 
+	private Handler handler = new Handler();
+	/**
+	 * 延迟线程，看是否还有下一个字符输入
+	 */
+	private Runnable delayRun = new Runnable() {
+
+		@Override
+		public void run() {
+			//总金额 转成分
+			int amount = Integer.valueOf(StringUtils.changeY2F(et_amt.getMoneyText().trim()));
+			//手续费
+			int feeAmt = (amount * 85)/10000;
+			textView(R.id.tv_tx_balance_amt).setText(StringUtils.formatIntMoney(feeAmt));
+		}
+	};
+
 	private void initView() {
 
+		tv_do_text = textView(R.id.tv_do_text);
+		tv_total_amt = textView(R.id.id_tv_total_amt);
+		tv_total_fee = textView(R.id.id_tv_total_fee);
+		tv_sigle_amt = textView(R.id.id_tv_sigle_amt);
+
+
 		et_amt = (MoneyEditText) editText(R.id.et_amt);
+		et_amt.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				if(delayRun!=null){
+					//每次editText有变化的时候，则移除上次发出的延迟线程
+					handler.removeCallbacks(delayRun);
+				}
+
+
+				if (linearLayout(R.id.ll_plan_amt).getVisibility() == View.VISIBLE){
+					linearLayout(R.id.ll_plan_amt).setVisibility(View.GONE);
+				}
+
+				//延迟800ms，如果不再输入字符，则执行该线程的run方法
+				handler.postDelayed(delayRun, 500);
+			}
+		});
 //		KeyBoardUtils.closeKeybord(et_amt, mContext);
 
-		tv_do_text = textView(R.id.tv_do_text);
+
+
+
 
 		relativeLayout(R.id.ll_do_model).setOnClickListener(this);
 		btn = button(R.id.btn_commit);
@@ -189,8 +258,8 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 		btn2 = view.findViewById(R.id.button2);
 
 		//默认手动还款
-		btn1.setChecked(true);
-		tv_do_text.setText(btn1.getText().toString());
+//		btn1.setChecked(true);
+//		tv_do_text.setText(btn1.getText().toString());
 
 		final MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(mContext,
 				R.style.MyDialogStyleBottom);
@@ -215,7 +284,17 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 			}
 		});
 
+		myListView = findViewById(R.id.listview);
+		adapter = new AdapterPlanList(mContext, list);
+		myListView.setAdapter(adapter);
+		myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+			}
+		});
+
+		isAction = false;
 	}
 
 
@@ -340,18 +419,105 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 	public void onClick(View view) {
 		switch (view.getId()){
 			case R.id.btn_commit:
-//				reloadData();
-				startActivityForResult(new Intent(mContext, ActivityCreditSupply.class), 0);
+
+				if (!isAction) {
+					if (StringUtils.isBlank(vo.getId())) {
+						//补全信息
+						startActivityForResult(new Intent(mContext, ActivityCreditSupply.class).putExtra("bankbillId", vo.getBankbillId()), 0);
+						return;
+					}
+
+					//预览计划
+					if (StringUtils.isBlank(et_amt.getText().toString().trim())) {
+						ToastUtils.CustomShow(mContext, "请输入金额");
+						return;
+					}
+
+					//设置模式
+					if (StringUtils.isBlank(tv_do_text.getText().toString().trim())) {
+						ToastUtils.CustomShow(mContext, "请设置模式");
+						return;
+					}
+
+					//预览计划
+					setPlanList(et_amt.getMoneyText());
+					isAction = true;
+				}else {
+
+					//执行计划
+					ToastUtils.CustomShow(mContext, "执行计划");
+
+				}
+
+
+
 				break;
 			case R.id.ll_do_model:
 				myCustomDialog.show();
 				break;
-			case R.id.ll_credit:
 
-				break;
 		}
 	}
 
+	private void setPlanList(String moneyText) {
+
+		//账单日 10天内设置计划
+		int zdDay = Integer.valueOf(vo.getZdDay());
+		int hkDay = Integer.valueOf(vo.getHkDay());
+		int curDay = Integer.valueOf(StringUtils.getCurDay());
+		String dateDay="";
+		String dateMonth="";
+
+
+		//当前天数 小于账单日，那么设置后在账单日后一天开始执行计划
+		if (curDay < zdDay){
+			dateDay = StringUtils.getCurrentDate("yyyy-MM") + "-" + vo.getZdDay();
+		}else{
+			//从当前天数开始往后 10天，大于还款日则到下一个月的账单日后一天执行
+			if (curDay + 10 > hkDay){
+//				ToastUtils.CustomShow(mContext, "无法设置计划");
+//				return;
+				dateDay = StringUtils.monthCalculate(StringUtils.getCurrentDate("yyyy-MM"), 1) + "-" + vo.getZdDay();
+			}else{
+				DecimalFormat df = new DecimalFormat("00");
+				String str_m = df.format(curDay);
+				dateDay = StringUtils.getCurrentDate("yyyy-MM") + "-" + str_m;
+			}
+		}
+
+
+		linearLayout(R.id.ll_plan_amt).setVisibility(View.VISIBLE);
+
+		//总金额 转成分
+		int amount = Integer.valueOf(StringUtils.changeY2F(moneyText.trim()));
+		tv_total_amt.setText(StringUtils.formatIntMoney(amount));
+
+		//手续费
+		int feeAmt = (amount * 85)/10000;
+		tv_total_fee.setText(StringUtils.formatIntMoney(feeAmt));
+
+		//卡内最低余额(还款总额*10% + 手续费)
+		int minBalanceAmt = (amount*10)/100 + feeAmt;
+		tv_sigle_amt.setText("执行计划需要"+StringUtils.formatIntMoney(minBalanceAmt)+"元");
+
+		//分10期，前9次一样
+		list.clear();
+		for (int i = 0; i < 10; i++){
+			PlanList planList = new PlanList();
+			planList.setAmt(amount/10);
+			planList.setFeeAmt(amount/10);
+			planList.setTime1(StringUtils.dayCalculate(dateDay, i+1)+" "+"09:30:00");
+			planList.setTime2(StringUtils.dayCalculate(dateDay, i+1)+" "+"14:59:00");
+			list.add(planList);
+		}
+
+		adapter.notifyDataSetChanged();
+
+		btn.setText("执行计划");
+
+
+
+	}
 
 
 	private void doCommit(){

@@ -11,10 +11,11 @@ public class BankCardInfo implements Serializable{
     private int bankIcon;
     private String bank_name;
     private int amt;
-    private int zdDay;
-    private int HkDay;
+    private String zdDay;
+    private String HkDay;
     private String card_num;
     private String member_name;
+    private Long bankbillId;
 
     public String getId() {
         return id;
@@ -48,19 +49,19 @@ public class BankCardInfo implements Serializable{
         this.amt = amt;
     }
 
-    public int getZdDay() {
+    public String getZdDay() {
         return zdDay;
     }
 
-    public void setZdDay(int zdDay) {
+    public void setZdDay(String zdDay) {
         this.zdDay = zdDay;
     }
 
-    public int getHkDay() {
+    public String getHkDay() {
         return HkDay;
     }
 
-    public void setHkDay(int hkDay) {
+    public void setHkDay(String hkDay) {
         HkDay = hkDay;
     }
 
@@ -78,6 +79,14 @@ public class BankCardInfo implements Serializable{
 
     public void setMember_name(String member_name) {
         this.member_name = member_name;
+    }
+
+    public Long getBankbillId() {
+        return bankbillId;
+    }
+
+    public void setBankbillId(Long bankbillId) {
+        this.bankbillId = bankbillId;
     }
 
     @Override

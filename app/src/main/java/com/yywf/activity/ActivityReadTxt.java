@@ -57,7 +57,7 @@ public class ActivityReadTxt extends BaseActivity {
 		}else if (type == 7){
 			initTitle("扫码收钱使用需知");
 		}else if (type == 8){
-			initTitle("安全保障");
+			initTitle("银行卡资金损失保险条款");
 		}else{
 			initTitle("我要提额");
 		}

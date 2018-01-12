@@ -36,6 +36,9 @@ public class ActivityCreditSupply extends BaseActivity implements OnClickListene
 
     private EditText et_cvv2;
     private EditText et_date;
+    private EditText et_phone;
+
+    private Long bankbillId;
 
 
 
@@ -49,6 +52,8 @@ public class ActivityCreditSupply extends BaseActivity implements OnClickListene
         if (findViewById(R.id.backBtn) != null) {
             findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
         }
+
+        bankbillId = getIntent().getLongExtra("bankbillId", 0);
         initView();
     }
 
@@ -60,6 +65,7 @@ public class ActivityCreditSupply extends BaseActivity implements OnClickListene
         et_iccu = editText(R.id.et_iccu);
         et_cvv2 = editText(R.id.et_cvv2);
         et_date = editText(R.id.et_date);
+        et_phone = editText(R.id.et_phone);
 
 
         button(R.id.btn_commit).setOnClickListener(this);
@@ -133,11 +139,11 @@ public class ActivityCreditSupply extends BaseActivity implements OnClickListene
 
 
 
-        if (StringUtils.isBlank(et_iccu.getText().toString().trim())) {
-            ToastUtils.showShort(this, "发卡行不能为空");
-            et_iccu.requestFocus();
-            return;
-        }
+//        if (StringUtils.isBlank(et_iccu.getText().toString().trim())) {
+//            ToastUtils.showShort(this, "发卡行不能为空");
+//            et_iccu.requestFocus();
+//            return;
+//        }
 
         if (StringUtils.isBlank(et_cvv2.getText().toString().trim())) {
             ToastUtils.showShort(this, "CVV2不能为空");
@@ -151,15 +157,33 @@ public class ActivityCreditSupply extends BaseActivity implements OnClickListene
             return;
         }
 
+        if (StringUtils.isBlank(et_phone.getText().toString().trim())) {
+            ToastUtils.showShort(this, "手机号不能为空");
+            et_phone.requestFocus();
+            return;
+        }
+
+        if (!StringUtils.isCellPhone(et_phone.getText().toString().trim())) {
+            ToastUtils.showShort(this, "手机号码格式不正确");
+            et_phone.requestFocus();
+            return;
+        }
+
 
 
 
 
         showProgress("加载中...");
         RequestParams params = new RequestParams();
-//		params.add("account", username);
-//		params.add("password", password);
-        HttpUtil.get(ConfigXy.XY_CREDIT_ADD, params, requestListener);
+        params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.add("token", UtilPreference.getStringValue(mContext, "token"));
+        params.add("cardNum",bandCard);
+        params.add("idName", et_user_name.getText().toString().trim());
+        params.add("phone", et_phone.getText().toString().trim());
+        params.add("cardCvn", et_cvv2.getText().toString().trim());
+        params.add("cardExpdate", et_date.getText().toString().trim());
+        params.add("bankbillId",bankbillId+"");
+        HttpUtil.get(ConfigXy.CREDIT_SUPPLY, params, requestListener);
 
     }
 
@@ -176,6 +200,13 @@ public class ActivityCreditSupply extends BaseActivity implements OnClickListene
                     MyActivityManager.getInstance().logout(mContext);
                     return;
                 }
+
+
+                if (!result.optBoolean("status")) {
+                     showErrorMsg(result.getString("message"));
+                    return;
+                }
+
 
             } catch (Exception e) {
                 Log.e(TAG, "doCommit() Exception: " + e.getMessage());

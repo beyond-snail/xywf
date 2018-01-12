@@ -73,17 +73,21 @@ public class BankListAdapter extends BaseAdapter{
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		holder.tvBankName.setText(list.get(position).getBank_name());
 
-		holder.tvWh.setText(StringUtils.getEndStr(list.get(position).getCard_num(), 4));
-		holder.tvUserName.setText(list.get(position).getMember_name());
+		final BankCardInfo vo = list.get(position);
 
-		holder.tvAmt.setText(StringUtils.formatIntMoney(list.get(position).getAmt()));
-		holder.tvZdDay.setText(list.get(position).getZdDay()+"日");
-		holder.tvHkDay.setText(list.get(position).getHkDay()+"日");
+		holder.tvBankName.setText(vo.getBank_name());
 
-		if (EnumConsts.BankUi.getTypeByName(list.get(position).getBank_name()) != null){
-			holder.iconBank.setImageResource(EnumConsts.BankUi.getTypeByName(list.get(position).getBank_name()).getIcon_id());
+		holder.tvWh.setText(StringUtils.getEndStr(vo.getCard_num(), 4));
+		holder.tvUserName.setText(vo.getMember_name());
+
+		holder.tvAmt.setText(StringUtils.formatIntMoney(vo.getAmt()));
+
+		holder.tvZdDay.setText(StringUtils.isBlank(vo.getZdDay()) ? "-" : vo.getZdDay()+"日");
+		holder.tvHkDay.setText(StringUtils.isBlank(vo.getHkDay()) ? "-" : vo.getHkDay()+"日");
+
+		if (EnumConsts.BankUi.getTypeByName(vo.getBank_name()) != null){
+			holder.iconBank.setImageResource(EnumConsts.BankUi.getTypeByName(vo.getBank_name()).getIcon_id());
 		}
 		if (UiType == 2){
 			holder.tvHk.setText("智能还款");
@@ -99,9 +103,9 @@ public class BankListAdapter extends BaseAdapter{
 			public void onClick(View view) {
 //				ToastUtils.showShort(activity, position+"");
 				if (UiType == 2){
-					activity.startActivity(new Intent(activity, ActivitySmartCreditPlan.class));
+					activity.startActivity(new Intent(activity, ActivitySmartCreditPlan.class).putExtra("BankCardInfo", vo));
 				}else if (UiType == 1){
-					activity.startActivity(new Intent(activity, ActivitySmartCreditNow.class));
+					activity.startActivity(new Intent(activity, ActivitySmartCreditNow.class).putExtra("BankCardInfo", vo));
 				}
 			}
 		});

@@ -69,19 +69,30 @@ public class ActivityBanKa extends BaseActivity  {
 
 	private void initMenu() {
 		for (int i = 0; i < EnumConsts.BankMenuType.values().length; i++){
-			switch (i){
-				case 0:
-				case 1:
-				case 2:
-//				case 3:
-					Menu menu = new Menu();
-					menu.setBg(EnumConsts.BankMenuType.values()[i].getBg());
-					menu.setName(EnumConsts.BankMenuType.values()[i].getName());
-					list.add(menu);
-					break;
-				default:
-					break;
-			}
+
+			Menu menu = new Menu();
+			menu.setBg(EnumConsts.BankMenuType.values()[i].getBg());
+			menu.setName(EnumConsts.BankMenuType.values()[i].getName());
+			list.add(menu);
+//			switch (i){
+//				case 0:
+//				case 1:
+//				case 2:
+////				case 3:
+//				case 4:
+//				case 5:
+//				case 6:
+//				case 7:
+//				case 9:
+//				case 12:
+//					Menu menu = new Menu();
+//					menu.setBg(EnumConsts.BankMenuType.values()[i].getBg());
+//					menu.setName(EnumConsts.BankMenuType.values()[i].getName());
+//					list.add(menu);
+//					break;
+//				default:
+//					break;
+//			}
 		}
 
 		gridView = (MyGridView) findViewById(R.id.id_gridview);
@@ -114,17 +125,60 @@ public class ActivityBanKa extends BaseActivity  {
 						break;
 					case 4: //平安银行
 
-//						String url_pa = "https://c.pingan.com/apply/mobile/apply/index.html?showt=1&scc=203100001&ccp=3a2a5a4a1a11a8a10a12a13a9a7a15a20&p=sn%3D%25E8%2582%2596%25E9%259B%2584sc%3DE00010242604ro%3DNcl%3D2&bt8=m_Q0Lp4Y911ouA2Img&isApp=true&bt2=E00010242604&bt5=employmee_edm&bt7=V0182&from=timeline&isappinstalled=0";
-//						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_pa).putExtra("title",
-//								list.get(position).getName()));
+						String url_pa = "https://c.pingan.com/apply/mobile/apply/index.html?showt=1&scc=203100001&ccp=3a2a5a4a1a11a8a10a12a13a9a7a15a20&p=sn%3D%25E8%2582%2596%25E9%259B%2584sc%3DE00010242604ro%3DNcl%3D2&bt8=m_Q0Lp4Y911ouA2Img&isApp=true&bt2=E00010242604&bt5=employmee_edm&bt7=V0182&from=timeline&isappinstalled=0";
+						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_pa).putExtra("title",
+								list.get(position).getName()));
 						break;
 					case 5: //招商银行
-
+						String url_zs = "https://xyk.cmbchina.com/card/cardList?WT.mc_id=N17WPGWA055C886100CC";
+						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_zs).putExtra("title",
+								list.get(position).getName()));
 						break;
 					case 6: //交通银行
-
+						String url_jt = "https://creditcardapp.bankcomm.com/applynew/front/apply/new/index.html?trackCode=A032710206072&commercial_id=null&telecom_id=null";
+						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_jt).putExtra("title",
+								list.get(position).getName()));
 						break;
-
+					case 7: //工商银行
+						String url_gs = "http://m.icbc.com.cn/ICBC/%e4%bf%a1%e7%94%a8%e5%8d%a1/%e7%bd%91%e4%b8%8a%e5%8a%9e%e5%8d%a1/bkhq.htm";
+						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_gs).putExtra("title",
+								list.get(position).getName()));
+						break;
+					case 8: //建设银行
+						String url_js = "http://creditcard.ccb.com/cn/creditcard/apply/wechat/apply.html?SID=SNS&wParam=QMerSTmogaHKx%2FJD4S7Cw%2Fz3H6ozDNcQ9YMTDpyWFKLUZH45N2hX7Kr1UGfM%2BWKMIqmDK2CBOqQwghar3PvBfVK0MpSR9vSzJI1g0QXOJzX7jwKqd7s24%2FAq0e7YHoYI%2Bnm%2F9pGoxD52yx0WFyVwGehHB8PDPAwW9t7cdtoc8RY2ZyB%2B0yeFbOvn47dX5iyL1wMw%2BQbcW%2Fo%3D";
+						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_js).putExtra("title",
+								list.get(position).getName()));
+						break;
+					case 9: //农业银行
+						String url_ny = "http://abccc.vfengche.cn/memu/card/page1.html";
+						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_ny).putExtra("title",
+								list.get(position).getName()));
+						break;
+					case 10: //中国银行
+						String url_zg = "https://apply.mcard.boc.cn/apply/mobile/product/familyProductList/family";
+						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_zg).putExtra("title",
+								list.get(position).getName()));
+						break;
+					case 11: //广发银行
+						String url_gf = "http://m.cgbchina.com.cn/subsite/201603/20423588/wx/index.html";
+						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_gf).putExtra("title",
+								list.get(position).getName()));
+						break;
+					case 12: //中信银行
+						String url_zx = "https://creditcard.ecitic.com/h5/shenqing/index.html?sid=SJWXYBK&foot_s=0&llqf=wx";
+						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_zx).putExtra("title",
+								list.get(position).getName()));
+						break;
+					case 13: //光大银行
+						String url_gd = "https://xyk.cebbank.com/cebmms/apply/ps/card-list.htm?pro_code=ZHTG03BKRK0001WXXB";
+						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_gd).putExtra("title",
+								list.get(position).getName()));
+						break;
+					case 14: //华夏银行
+						String url_hx = "https://creditapply.hxb.com.cn/weixin/cardChoice.html";
+						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_hx).putExtra("title",
+								list.get(position).getName()));
+						break;
 				}
 			}
 		});
