@@ -260,7 +260,11 @@ public class ActivityCredit extends BaseActivity implements OnClickListener {
                                     }
                                 }
                                 if (!StringUtils.isBlank(vo.getCard_num())){
-                                    bankCarkNo.setText(vo.getCard_num());
+                                    if (vo.getCard_num().length() > 4) {
+                                        bankCarkNo.setText(vo.getCard_num());
+                                    }else{
+                                        bankCarkNo.setText("************"+vo.getCard_num());
+                                    }
                                 }
                             }
 
@@ -303,7 +307,11 @@ public class ActivityCredit extends BaseActivity implements OnClickListener {
                     }
                 }
                 if (!StringUtils.isBlank(vo.getCard_num())){
-                    bankCarkNo.setText(vo.getCard_num());
+                    if (vo.getCard_num().length() > 4) {
+                        bankCarkNo.setText(vo.getCard_num());
+                    }else{
+                        bankCarkNo.setText("************"+vo.getCard_num());
+                    }
                 }
             }
         }

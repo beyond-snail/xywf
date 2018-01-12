@@ -26,7 +26,9 @@ import com.yywf.aly.MyAlipayClient;
 import com.yywf.aly.PayResult;
 import com.yywf.config.ConfigXy;
 import com.yywf.config.ConstApp;
+import com.yywf.config.EnumConsts;
 import com.yywf.http.HttpUtil;
+import com.yywf.model.BankCardInfo;
 import com.yywf.util.MyActivityManager;
 
 import org.json.JSONException;
@@ -53,7 +55,7 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
     private int gradeId = 0;
 
     private String orderId;
-
+    private BankCardInfo vo;
 
 
     @Override
@@ -73,13 +75,20 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
     private void initView() {
 
         id_wallet = linearLayout(R.id.id_wallet);
+        id_wallet.setVisibility(View.GONE);
         id_wx = linearLayout(R.id.id_wx);
+        id_wx.setVisibility(View.GONE);
         id_aly = linearLayout(R.id.id_aly);
+        id_aly.setVisibility(View.GONE);
         id_card = linearLayout(R.id.id_card);
         id_wallet.setOnClickListener(this);
         id_wx.setOnClickListener(this);
         id_aly.setOnClickListener(this);
         id_card.setOnClickListener(this);
+
+        //默认银行卡
+        setTickSet(4);
+
 
         tv_dk = textView(R.id.tv_dk);
         tv_wh = textView(R.id.tv_wh);
@@ -262,7 +271,22 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
         }
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == 2) {
+            vo = (BankCardInfo) data.getSerializableExtra("bankInfo");
+            if (vo != null){
+                if (!StringUtils.isBlank(vo.getCard_num())){
+                    if (vo.getCard_num().length() > 4) {
+                        tv_wh.setText(StringUtils.getEndStr(vo.getCard_num(), 4));
+                    }else{
+                        tv_wh.setText(vo.getCard_num());
+                    }
+                }
+            }
+        }
+    }
 
 
 
@@ -270,6 +294,12 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
      * 提交
      */
     private void doCommit() throws ParseException {
+
+        if (StringUtils.isBlank(tv_wh.getText().toString().trim())){
+            //更换银行卡
+            startActivityForResult(new Intent(mContext, ActivityBankCardList.class), 1);
+            return;
+        }
 
 
         showProgress("加载中...");

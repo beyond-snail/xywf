@@ -20,7 +20,6 @@
         android:background="@drawable/setting_list_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="gone"
         android:padding="10dp" >
 
 
@@ -82,7 +81,7 @@
             android:id="@+id/iv_wx"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_circle_pre" />
+            android:src="@drawable/icon_circle_unpre" />
     </LinearLayout>
 
     <View
@@ -130,7 +129,7 @@
         android:background="@drawable/setting_list_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:visibility="visible"
         android:padding="10dp" >
 
 
