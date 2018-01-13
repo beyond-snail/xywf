@@ -21,7 +21,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-import com.tool.utils.http.HttpUtilKey;
 import com.tool.utils.utils.NetUtils;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.UtilPreference;
@@ -170,7 +169,7 @@ public class ActivityWelcome extends BaseActivity {
 	 * 加载图片失败时显示本地图片
 	 */
 	private void loadImgFail() {
-		ivWelcome.setImageResource(R.drawable.welcome_bg);
+		ivWelcome.setImageResource(R.drawable.welcome_bg1);
 		ivWelcome.startAnimation(anim);
 	}
 
