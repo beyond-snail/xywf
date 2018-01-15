@@ -16,6 +16,7 @@ import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.utils.ValidateUtil;
 import com.tool.utils.view.MyCountDownTimer;
 import com.tool.utils.view.Split4EditTextWatcher;
+import com.xyzlf.share.library.util.ToastUtil;
 import com.yywf.R;
 import com.yywf.config.ConfigXy;
 import com.yywf.config.ConstApp;
@@ -39,6 +40,8 @@ public class ActivityCreditSupply extends BaseActivity implements OnClickListene
     private EditText et_phone;
 
     private Long bankbillId;
+    private int type;
+    
 
 
 
@@ -54,6 +57,7 @@ public class ActivityCreditSupply extends BaseActivity implements OnClickListene
         }
 
         bankbillId = getIntent().getLongExtra("bankbillId", 0);
+        type = getIntent().getIntExtra("type", 0);
         initView();
     }
 
@@ -207,7 +211,18 @@ public class ActivityCreditSupply extends BaseActivity implements OnClickListene
                     return;
                 }
 
+                String cardId = result.optString("data");
 
+                ToastUtils.CustomShow(mContext, result.getString("message"));
+
+                if (type == 1) {
+                    Intent mIntent = new Intent();
+                    mIntent.putExtra("cardId", cardId);
+                    // 设置结果，并进行传送
+                    ActivityCreditSupply.this.setResult(3, mIntent);
+                }
+
+                finish();
             } catch (Exception e) {
                 Log.e(TAG, "doCommit() Exception: " + e.getMessage());
             }

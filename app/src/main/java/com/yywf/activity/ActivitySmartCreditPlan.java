@@ -466,7 +466,6 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 		int hkDay = Integer.valueOf(vo.getHkDay());
 		int curDay = Integer.valueOf(StringUtils.getCurDay());
 		String dateDay="";
-		String dateMonth="";
 
 
 		//当前天数 小于账单日，那么设置后在账单日后一天开始执行计划

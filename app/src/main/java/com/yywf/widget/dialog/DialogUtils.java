@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tool.utils.dialog.CustomDialog;
 import com.tool.utils.utils.StringUtils;
+import com.tool.utils.utils.ToastUtils;
 import com.tool.utils.utils.UtilPreference;
 import com.yywf.R;
 import com.yywf.activity.ActivitySmrz;
@@ -23,6 +25,12 @@ public class DialogUtils {
 
 
     private static MyCustomDialog Dialog;
+
+    private Callback listener;
+
+    public interface Callback {
+        void getData(String data);
+    }
 
 
     public static MyCustomDialog showDialog(final Context mContext, String title, String leftText, String rightText, Spanned content, View.OnClickListener leftClick, View.OnClickListener rightClick){
@@ -142,6 +150,54 @@ public class DialogUtils {
             @Override
             public void onClick(View view) {
 
+            }
+        });
+
+        final MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(mContext,
+                R.style.MyDialogStyleBottom);
+//        customBuilder.setCancelable(false);
+        customBuilder.setCanceledOnTouchOutside(false);
+        customBuilder.setLine(0);// 分割横线所处位置 在自定义布局上下或隐藏 0隐藏 1线在上方
+        customBuilder.setContentView(view);
+        customBuilder.setDisBottomButton(true);
+        // 2线在下方
+        Dialog = customBuilder.create();
+        Dialog.show();
+    }
+
+
+    public static void showDialogCode(final Context mContext,  final Callback listener){
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.alert_dialog3, null);
+        TextView tv_title = view.findViewById(R.id.tv_alert_dialog_title);
+        tv_title.setBackgroundResource(R.drawable.bar_top_tips);
+        tv_title.setTextColor(mContext.getResources().getColor(com.tool.R.color.white));
+
+
+        final EditText editText = view.findViewById(R.id.et_code_no);
+
+        TextView btn_left = view.findViewById(R.id.btn_alert_dialog_btn_left);
+        btn_left.setTextColor(mContext.getResources().getColorStateList(R.color.btn_left_selector));
+        btn_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog.dismiss();
+            }
+        });
+
+        TextView btn_right = view.findViewById(R.id.btn_alert_dialog_btn_right);
+        btn_right.setTextColor(mContext.getResources().getColorStateList(R.color.btn_right_selector));
+        btn_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (StringUtils.isBlank(editText.getText().toString().trim())){
+                    ToastUtils.CustomShow(mContext, "请输入验证码");
+                    return;
+                }
+                if (listener != null){
+                    Dialog.dismiss();
+                    listener.getData(editText.getText().toString().trim());
+                }
             }
         });
 

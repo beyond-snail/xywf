@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="1.普通会员：当注册用户在沃富APP里充值199元即成为普通会员，推荐新用户成为普通会员，将享受信易沃富“推荐返现”、“激活送券”权益；"
+                    android:text="1.	会员用户：当注册用户在沃富APP里充值199元即成为会员用户，新注册入网用户推荐好友成为会员用户，将享受信易沃富“奖励金”权益；"
                     android:textColor="@color/black"
                     android:textSize="14sp"/>
                 <TextView
@@ -63,38 +63,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="①VIP定义：当普通会员选择购买相应次数成为VIP1及以上等级VIP时，信易沃富将冻结充值款项。当VIP推荐新用户成为普通会员时，除了已有的“推荐返现”、“激活送券”权益，还将激活信易沃富“推荐享分润”，最高享受万20分润，VIP8及以上还能同时享受平台分红。"
+                    android:text="①	VIP定义：VIP是信易沃富根据会员会员情况综合评定，无需购买代理商权限，除了已有的“奖励金”权益，系统并给予其分润、返利等比例调整权限，不同代理商等级享受不同的权益，代理商等级越高，权益越大"
                     android:textColor="@color/black"
                     android:textSize="14sp"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="②次数充值：充值按照市场价199元对应数量充值。充值VIP1以上次数时将享受折扣，折扣以次数赠送形式返还。"
+                    android:text="②	风险保证金：成为不同等级的代理商享受相关权益需在“返利金与分润”中冻结风险保证金，并可进入“代理商专属通道”进行相关操作"
                     android:textColor="@color/black"
                     android:textSize="14sp"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="③VIP冻结金退还：VIP购买的推荐次数每次成功推荐后，T+1日后信易沃富即退还冻结的充值价 199元*对应折扣 至钱包账户（如VIP2每次成功推荐一位新会员，返还199元*9折=179.1元。当首次成功推荐用户时，客户需在30天后方可完成提现。之后将不受限制，冻结金实时提现T+1到账，遇节假日顺延）"
+                    android:text="③	“代理商专属通道”权限：沃富平台为一级代理商开通“代理商专属通道”权限，发展下级代理享受“分润自调”“返利自调”权益"
                     android:textColor="@color/black"
                     android:textSize="14sp"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="④冻结金提现申请时间：9:00-21:00（遇节假日顺延）；
-于9:00-17:00期间提交申请，T+1（10:00-12:00；14:00-16:30到账
-于17:00-21:00期间提交申请，T+2（10:00-12:00；14:00-16:30）到账。
-"
+                    android:text="④	每次成功推荐后，信易沃富即返还销售差价返利至各级代理钱包账户中"
                     android:textColor="@color/black"
                     android:textSize="14sp"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="⑤VIP身份恢复：VIP推荐次数消耗完毕后，即恢复至普通会员身份，如该客户想要继续享受原VIP级别推荐返现、激活送券、分润待遇则需要继续充值次数。"
+                    android:text="⑤	VIP代理与信易沃富合作结束后未续约，即恢复至会员用户身份，欲继续享受原代理VIP级别返利、分润待遇则需要继续签约合作"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="⑥	推荐关系解绑：代理推荐的新注册用户，若未能在10天内充值199元成为会员用户，则在10天后解除相关推荐关系"
                     android:textColor="@color/black"
                     android:textSize="14sp"/>
             </LinearLayout>

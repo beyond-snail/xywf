@@ -30,6 +30,7 @@ import com.yywf.config.EnumConsts;
 import com.yywf.http.HttpUtil;
 import com.yywf.model.BankCardInfo;
 import com.yywf.util.MyActivityManager;
+import com.yywf.widget.dialog.DialogUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,6 +57,8 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
 
     private String orderId;
     private BankCardInfo vo;
+
+    private String cardId;
 
 
     @Override
@@ -245,6 +248,8 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
             case R.id.id_card:
                 payType = 4;
                 setTickSet(payType);
+                //更换银行卡
+                startActivityForResult(new Intent(mContext, ActivityBankCardList.class), 1);
                 break;
             case R.id.btn_commit://提交
 
@@ -276,6 +281,7 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == 2) {
             vo = (BankCardInfo) data.getSerializableExtra("bankInfo");
+            cardId = vo.getId();
             if (vo != null){
                 if (!StringUtils.isBlank(vo.getCard_num())){
                     if (vo.getCard_num().length() > 4) {
@@ -285,6 +291,8 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
                     }
                 }
             }
+        }else if (requestCode == 2 && resultCode == 3){
+            cardId = data.getStringExtra("cardId");
         }
     }
 
@@ -301,18 +309,21 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
             return;
         }
 
+        if (StringUtils.isBlank(cardId)){
+            //补全信息
+            startActivityForResult(new Intent(mContext, ActivityCreditSupply.class).putExtra("type", 1).putExtra("bankbillId", vo.getBankbillId()), 2);
+            return;
+        }
+
 
         showProgress("加载中...");
         RequestParams params = new RequestParams();
-//		params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
-//		params.add("token", UtilPreference.getStringValue(mContext, "token"));
-//		params.add("idName", et_user_name.getText().toString().trim());
-//		params.add("phone", et_phone.getText().toString().trim());
-//		params.add("idNo", et_user_id.getText().toString().trim());
-//		params.add("bankCode", bankCode);
-//		params.add("cardNum", bandCard);
-//		params.add("code", et_code.getText().toString().trim());
-        HttpUtil.get(ConfigXy.XY_SMRZ, params, requestListener);
+        params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.add("token", UtilPreference.getStringValue(mContext, "token"));
+        params.add("tranAmt", "1");//payAmount+"");
+        params.add("cardId", cardId+"");
+        params.add("orderId", orderId);
+        HttpUtil.get(ConfigXy.CREDIT_PAY, params, requestListener);
 
     }
 
@@ -333,11 +344,14 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
                 if (!result.optBoolean("status")) {
                     ToastUtils.CustomShow(mContext, result.optString("message"));
                 }else{
-                    ToastUtils.CustomShow(mContext, result.optString("message"));
-
+//                    ToastUtils.CustomShow(mContext, result.optString("message"));
+                    DialogUtils.showDialogCode(mContext, new DialogUtils.Callback() {
+                        @Override
+                        public void getData(String data) {
+                            doCodeCommit(data);
+                        }
+                    });
                 }
-
-
 
             } catch (Exception e) {
                 Log.e(TAG, "doCommit() Exception: " + e.getMessage());
@@ -350,6 +364,45 @@ public class ActivitySaleVipGrade extends BaseActivity implements OnClickListene
             showE404();
         }
     };
+
+    private void doCodeCommit(String code) {
+
+        showProgress("加载中...");
+        RequestParams params = new RequestParams();
+        params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.add("token", UtilPreference.getStringValue(mContext, "token"));
+        params.add("code", code+"");
+        HttpUtil.get(ConfigXy.CREDIT_PAY_CODE, params, new HttpUtil.RequestListener() {
+            @Override
+            public void success(String response) {
+                disShowProgress();
+                try {
+
+                    JSONObject result = new JSONObject(response);
+                    if (result.optInt("code") == -2){
+                        UtilPreference.clearNotKeyValues(mContext);
+                        // 退出账号 返回到登录页面
+                        MyActivityManager.getInstance().logout(mContext);
+                        return;
+                    }
+                    if (!result.optBoolean("status")) {
+                        ToastUtils.CustomShow(mContext, result.optString("message"));
+                    }else{
+                        ToastUtils.CustomShow(mContext, result.optString("message"));
+                    }
+
+                } catch (Exception e) {
+                    Log.e(TAG, "doCommit() Exception: " + e.getMessage());
+                }
+            }
+
+            @Override
+            public void failed(Throwable error) {
+                disShowProgress();
+                showE404();
+            }
+        });
+    }
 
 
     private void doZfbPay(String orderid, int orderAmount) {

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/common_radius_rect_white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_alert_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
+        android:singleLine="true"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/setting_list_bg"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:ems="5"
+            android:gravity="center_vertical"
+            android:text="验证码"
+            android:textColor="#333333"
+            android:textSize="@dimen/text_size_hdpi" />
+
+        <EditText
+            android:id="@+id/et_code_no"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="请输入验证码"
+            android:inputType="number"
+            android:maxLength="12"
+            android:singleLine="true"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/text_size_hdpi" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="10dp"
+        android:background="#A9A9A9" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/btn_alert_dialog_btn_left"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="取消"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#A9A9A9" />
+
+        <TextView
+            android:id="@+id/btn_alert_dialog_btn_right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/text_font"
+            android:text="确定"
+            android:textSize="16sp" />
+    </LinearLayout>
+</LinearLayout>
