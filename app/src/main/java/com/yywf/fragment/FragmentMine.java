@@ -73,6 +73,7 @@ public class FragmentMine extends AbstractFragment implements
     private RelativeLayout rl_gzwm;
     private RelativeLayout rl_setting;
     private RelativeLayout rl_safe;
+    private RelativeLayout rl_agent;
 
     private LinearLayout ll_user_info;
 
@@ -132,6 +133,9 @@ public class FragmentMine extends AbstractFragment implements
 
         rl_safe = fragment.findViewById(R.id.rl_safe);
         rl_safe.setOnClickListener(this);
+
+        rl_agent = fragment.findViewById(R.id.rl_agent);
+        rl_agent.setOnClickListener(this);
 
         //自定义配置
         options = new DisplayImageOptions.Builder()
@@ -216,6 +220,9 @@ public class FragmentMine extends AbstractFragment implements
                 break;
             case R.id.rl_safe:
                 startActivity(new Intent(mContext, ActivityBaoDan.class));
+                break;
+            case R.id.rl_agent:
+//                startActivity(new Intent(mContext, ActivityBaoDan.class));
                 break;
             case R.id.rl_gzwm: //关注我们
                 startActivity(new Intent(mContext, ActivityFollowUs.class));

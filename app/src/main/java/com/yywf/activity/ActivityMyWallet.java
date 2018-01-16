@@ -26,6 +26,12 @@ public class ActivityMyWallet extends BaseActivity implements View.OnClickListen
 	private TextView tv1;
 	private TextView tv2;
 
+
+	private TextView tv_yesterday_trans;
+	private TextView tv_accumulate_trans;
+
+
+
 	private View view;
 	private RadioGroup radioGroup;
 	private RadioButton btn1;
@@ -61,9 +67,15 @@ public class ActivityMyWallet extends BaseActivity implements View.OnClickListen
 		tv_fl_amt = textView(R.id.tv_fl_amt);
 		tv_jlj_amt = textView(R.id.tv_jlj_amt);
 
+		tv_yesterday_trans = textView(R.id.tv_yesterday_trans);
+		tv_yesterday_trans.setOnClickListener(this);
+		tv_accumulate_trans = textView(R.id.tv_accumulate_trans);
+		tv_accumulate_trans.setOnClickListener(this);
+
 		relativeLayout(R.id.ll_fr).setOnClickListener(this);
 		relativeLayout(R.id.ll_fh).setOnClickListener(this);
 		relativeLayout(R.id.ll_jlj).setOnClickListener(this);
+		relativeLayout(R.id.ll_mx).setOnClickListener(this);
 
 		textView(R.id.btn_tx).setOnClickListener(this);
 		textView(R.id.btn_sale).setOnClickListener(this);
@@ -142,6 +154,15 @@ public class ActivityMyWallet extends BaseActivity implements View.OnClickListen
 			case R.id.ll_jlj:
 				startActivity(new Intent(mContext, ActivityMyJlj.class));
 				break;
+			case R.id.ll_mx:
+				startActivity(new Intent(mContext, ActivityMyMx.class));
+				break;
+			case R.id.tv_yesterday_trans:
+				setUI(1);
+				break;
+			case R.id.tv_accumulate_trans:
+				setUI(2);
+				break;
 			case R.id.btn_tx:
 //				startActivity(new Intent(mContext, ActivityMyTx.class).putExtra("balance", tv_balance_amt.getText().toString().trim()));
 				myCustomDialog.show();
@@ -151,5 +172,33 @@ public class ActivityMyWallet extends BaseActivity implements View.OnClickListen
 				break;
 
 		}
+	}
+
+
+	/**
+	 * @Description 切换 基本信息 详细信息 评论信息
+	 * @param i
+	 */
+	private void setUI(int i) {
+		tv_yesterday_trans.setTextColor(mContext.getResources().getColorStateList(R.color.font_red_selector));
+		tv_yesterday_trans.setBackgroundResource(R.drawable.btn_yellow_selector2);
+		tv_accumulate_trans.setTextColor(mContext.getResources().getColorStateList(R.color.font_red_selector));
+		tv_accumulate_trans.setBackgroundResource(R.drawable.btn_yellow_selector2);
+
+		switch (i) {
+			case 1:// 切换到昨日分润
+				tv_yesterday_trans.setTextColor(mContext.getResources().getColorStateList(R.color.font_red_selector2));
+				tv_yesterday_trans.setBackgroundResource(R.drawable.btn_yellow_selector);
+				break;
+			case 2:// 切换到累计分润
+				tv_accumulate_trans.setTextColor(mContext.getResources().getColorStateList(R.color.font_red_selector2));
+				tv_accumulate_trans.setBackgroundResource(R.drawable.btn_yellow_selector);
+				break;
+			default:
+				break;
+		}
+
+
+
 	}
 }
