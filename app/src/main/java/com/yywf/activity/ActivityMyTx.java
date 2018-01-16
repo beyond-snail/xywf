@@ -23,6 +23,8 @@ public class ActivityMyTx extends BaseActivity implements View.OnClickListener {
 	private MoneyEditText etTradMoney;
 
 
+	int amount = 0;
+	int type = 0;
 
 
 	@Override
@@ -31,10 +33,13 @@ public class ActivityMyTx extends BaseActivity implements View.OnClickListener {
 		mContext = this;
 		setContentView(R.layout.activity_tx);
 		MyActivityManager.getInstance().addActivity(this);
-		initTitle("提现");
-		if (findViewById(R.id.backBtn) != null) {
-			findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
-		}
+
+		type = getIntent().getIntExtra("type", 0);
+
+
+
+
+
 
 		initView();
 
@@ -51,14 +56,38 @@ public class ActivityMyTx extends BaseActivity implements View.OnClickListener {
 		all_tx = textView(R.id.all_tx);
 		all_tx.setOnClickListener(this);
 
+
+		if (type == 1){
+			initTitle("奖励金提现");
+			amount = getIntent().getIntExtra("JljBalance", 0);
+			textView(R.id.text_balance).setText("奖励金余额");
+			textView(R.id.fee_text).setText("尾号 "+"6789"+" | 提现手续费：0.1%+1元/笔");
+		}else if (type == 2){
+			initTitle("返利金提现");
+			amount = getIntent().getIntExtra("FlBalance", 0);
+			textView(R.id.text_balance).setText("返利金余额");
+			textView(R.id.fee_text).setText("尾号 "+"6789"+" | 提现手续费：6.8%+2元/笔");
+		}else if (type == 3){
+			initTitle("分润提现");
+			amount = getIntent().getIntExtra("FrBalance", 0);
+			textView(R.id.text_balance).setText("分润余额");
+			textView(R.id.fee_text).setText("尾号 "+"6789"+" | 提现手续费：6.8%+2元/笔");
+		}
+
+
+		if (findViewById(R.id.backBtn) != null) {
+			findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
+		}
+
+
+		tv_tx_balance_amt.setText(StringUtils.formatIntMoney(amount));
+
+
+
 		textView(R.id.id_tx_detail).setOnClickListener(this);
 
 		button(R.id.btn_save).setOnClickListener(this);
 
-		String balanceAmt = getIntent().getStringExtra("balance");
-		if (!StringUtils.isBlank(balanceAmt)){
-			tv_tx_balance_amt.setText(balanceAmt);
-		}
 
 	}
 

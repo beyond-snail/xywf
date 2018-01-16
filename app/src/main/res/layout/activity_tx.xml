@@ -59,6 +59,7 @@
         android:background="@drawable/setting_list_bg">
 
         <TextView
+            android:id="@+id/text_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -66,7 +67,7 @@
             android:textColor="#999999"
             android:textSize="14sp"
             android:ems="5"
-            android:text="钱包余额"/>
+            android:text=""/>
 
         <TextView
             android:id="@+id/tv_tx_balance_amt"
@@ -103,6 +104,7 @@
 
 
     <TextView
+        android:id="@+id/fee_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
