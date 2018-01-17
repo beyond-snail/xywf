@@ -43,7 +43,9 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tool.utils.utils.StringUtils;
+import com.tool.utils.view.RoundImageView;
 import com.yywf.R;
+import com.yywf.model.MyTeamInfo;
 import com.yywf.model.TeamInfo;
 import com.yywf.model.WalletListInfo;
 
@@ -60,9 +62,9 @@ public class AdapterTeamDetal extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mInflater;
-    private List<TeamInfo> list;
+    private List<MyTeamInfo> list;
 
-    public AdapterTeamDetal(Context context, List<TeamInfo> list) {
+    public AdapterTeamDetal(Context context, List<MyTeamInfo> list) {
         this.mContext = context;
         mInflater = LayoutInflater.from(context);
         this.list = list;
@@ -89,38 +91,39 @@ public class AdapterTeamDetal extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.item_myteam_detail, parent, false);
-            holder.id_tv_img = convertView.findViewById(R.id.id_tv_img);
-            holder.id_tv_amt = (TextView) convertView.findViewById(R.id.id_tv_amt);
-            holder.id_tv_name = (TextView) convertView.findViewById(R.id.id_tv_name);
-            holder.id_tv_phone = (TextView) convertView.findViewById(R.id.id_tv_phone);
-            holder.id_tv_activate = (TextView) convertView.findViewById(R.id.id_tv_activate);
+            holder.iv_img = convertView.findViewById(R.id.iv_img);
+            holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+            holder.tv_category = (TextView) convertView.findViewById(R.id.tv_category);
+            holder.tv_phone = (TextView) convertView.findViewById(R.id.tv_phone);
+            holder.tv_count = (TextView) convertView.findViewById(R.id.tv_count);
             convertView.setTag(holder);
 
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        TeamInfo vo = list.get(position);
+        MyTeamInfo vo = list.get(position);
 
-        ImageLoader.getInstance().displayImage(vo.getImg(), holder.id_tv_img);
-        holder.id_tv_amt.setText(StringUtils.formatIntMoney(vo.getAmt()));
-        holder.id_tv_name.setText(StringUtils.isBlank(vo.getName()) ? "" : vo.getName());
-        holder.id_tv_phone.setText(StringUtils.isBlank(vo.getName()) ? "" : vo.getPhone());
-        if (vo.isActivate()){
-            holder.id_tv_activate.setText("已激活");
-        }else{
-            holder.id_tv_activate.setText("未激活");
+        ImageLoader.getInstance().displayImage(vo.getIcon(), holder.iv_img);
+
+        holder.tv_name.setText(vo.getMemberName());
+        if (vo.getType() == 1){
+            holder.tv_category.setText("代理");
+        }else {
+            holder.tv_category.setText("会员用户");
         }
+        holder.tv_phone.setText(StringUtils.formatPhoneNo(vo.getPhone()));
+        holder.tv_count.setText("成功推荐"+vo.getCount()+"人");
 
 
         return convertView;
     }
 
     private static final class ViewHolder {
-        ImageView id_tv_img;
-        TextView id_tv_name;
-        TextView id_tv_phone;
-        TextView id_tv_activate;
-        TextView id_tv_amt;
+        RoundImageView iv_img;
+        TextView tv_name;
+        TextView tv_category;
+        TextView tv_phone;
+        TextView tv_count;
 
     }
 }

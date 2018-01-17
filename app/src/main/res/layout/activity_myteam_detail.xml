@@ -11,11 +11,50 @@
         android:layout_height="10dp"
         android:background="#f5f5f5" />
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_list_bg">
+
+        <TextView
+            android:id="@+id/tv_one"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_yellow_selector"
+            android:gravity="center"
+            android:padding="@dimen/dip_normal"
+            android:text="直属团队"
+            android:textColor="@color/font_red_selector2"
+            android:textSize="@dimen/text_size_normal" />
+
+
+        <TextView
+            android:id="@+id/tv_second"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_yellow_selector2"
+            android:gravity="center"
+            android:padding="@dimen/dip_normal"
+            android:text="次级团队"
+            android:textColor="@color/font_red_selector"
+            android:textSize="@dimen/text_size_normal" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#f5f5f5" />
+
     <com.handmark.pulltorefresh.library.PullToRefreshScrollView
 
         android:id="@+id/pull_refresh_scrollview"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:cacheColorHint="@android:color/transparent"
         android:divider="@null"
         android:dividerHeight="0dp"
@@ -74,5 +113,15 @@
 
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
+    <TextView
+        android:id="@+id/btn_commit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_yellow_selector"
+        android:gravity="center"
+        android:padding="@dimen/padding_normal"
+        android:text="累计成功推荐200人"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_title" />
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.yywf.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -28,6 +29,7 @@ import com.yywf.adapter.AdapterVoucher;
 import com.yywf.adapter.AdapterWallet;
 import com.yywf.config.ConfigXy;
 import com.yywf.http.HttpUtil;
+import com.yywf.model.MyTeamInfo;
 import com.yywf.model.TeamInfo;
 import com.yywf.model.VoucherInfo;
 import com.yywf.model.WalletInfo;
@@ -47,12 +49,15 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
 
 
     private PullToRefreshScrollView mPullRefreshScrollView;
-    private List<TeamInfo> teamInfos = new ArrayList<TeamInfo>();
+    private List<MyTeamInfo> teamInfos = new ArrayList<MyTeamInfo>();
     private AdapterTeamDetal adapter;
     private MyListView myListView;
     private int page = 1;
 
+    private TextView tv_one;
+    private TextView tv_second;
 
+    private int type = 1;
 
 
 	@Override
@@ -61,14 +66,13 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
 		mContext = this;
 		setContentView(R.layout.activity_myteam_detail);
 		MyActivityManager.getInstance().addActivity(this);
-		initTitle("查看明细");
+		initTitle("我的团队");
 		if (findViewById(R.id.backBtn) != null) {
 			findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
 		}
 
 		initView();
-        //加载储蓄卡的信息
-//        loadDebitCardInfo();
+        setUI(type);
 	}
 
 
@@ -78,14 +82,19 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
 
 //        //测试数据
 //        for (int i =0; i < 2; i++){
-//            TeamInfo info = new TeamInfo();
-//            info.setAmt(222222);
-//            info.setActivate(true);
+//            MyTeamInfo info = new MyTeamInfo();
 //            info.setPhone("14782108169");
-//            info.setName("吴从鹏");
+//            info.setMemberName("吴从鹏");
+//            info.setCount(122);
+//            info.setType(2);
 //            teamInfos.add(info);
 //        }
 
+
+        tv_one = textView(R.id.tv_one);
+        tv_one.setOnClickListener(this);
+        tv_second = textView(R.id.tv_second);
+        tv_second.setOnClickListener(this);
 
 
         myListView = findViewById(R.id.listview);
@@ -130,7 +139,7 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
                 refreshView.getLoadingLayoutProxy(false, true).setLastUpdatedLabel("更新于：" + label);
 
-                if (teamInfos.size() == 0) {
+//                if (teamInfos.size() == 0) {
                     handler.postDelayed(new Runnable() {
 
                         @Override
@@ -141,10 +150,10 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
                         }
                     }, 1000);
 
-                } else {
-                    page++;
-                    loadData(false);
-                }
+//                } else {
+//                    page++;
+//                    loadData(false);
+//                }
             }
         });
     }
@@ -206,21 +215,20 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
 
                         Gson gson = new Gson();
                         // json数据转换成List
-                        List<TeamInfo> datas = gson.fromJson(str, new TypeToken<List<TeamInfo>>() {
+                        List<MyTeamInfo> datas = gson.fromJson(str, new TypeToken<List<MyTeamInfo>>() {
                         }.getType());
                         teamInfos.addAll(datas);
-                        adapter.notifyDataSetChanged();
                         if (teamInfos.size() > 0) {
                             linearLayout(R.id.id_no_data).setVisibility(View.GONE);
-                            mPullRefreshScrollView.setVisibility(View.VISIBLE);
+                            myListView.setVisibility(View.VISIBLE);
                         } else {
                             linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
-                            mPullRefreshScrollView.setVisibility(View.GONE);
+                            myListView.setVisibility(View.GONE);
                         }
                     }
                     // 刷新完成
                     mPullRefreshScrollView.onRefreshComplete();
-
+                    adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     mPullRefreshScrollView.onRefreshComplete();
@@ -252,10 +260,46 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
 
 	@Override
 	public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.tv_one:
+                setUI(1);
+                break;
+            case R.id.tv_second:
+                setUI(2);
+                break;
+            default:
+                break;
+        }
 	}
 
 
+    /**
+     * @Description 切换 基本信息 详细信息 评论信息
+     * @param i
+     */
+    private void setUI(int i) {
+        tv_one.setTextColor(mContext.getResources().getColorStateList(R.color.font_red_selector));
+        tv_one.setBackgroundResource(R.drawable.btn_yellow_selector2);
+        tv_second.setTextColor(mContext.getResources().getColorStateList(R.color.font_red_selector));
+        tv_second.setBackgroundResource(R.drawable.btn_yellow_selector2);
+
+        type = i;
+        switch (i) {
+            case 1:// 切换到信用卡
+                tv_one.setTextColor(mContext.getResources().getColorStateList(R.color.font_red_selector2));
+                tv_one.setBackgroundResource(R.drawable.btn_yellow_selector);
+                break;
+            case 2:// 切换到储蓄卡
+                tv_second.setTextColor(mContext.getResources().getColorStateList(R.color.font_red_selector2));
+                tv_second.setBackgroundResource(R.drawable.btn_yellow_selector);
+                break;
+            default:
+                break;
+        }
+
+//        reloadData();
+
+    }
 
 
 
