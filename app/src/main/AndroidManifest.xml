@@ -45,6 +45,9 @@
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
 
+    <uses-permission android:name="com.fuiou.permission.FUIOU_PAY" />
+
+
 
     <application
         android:name=".myapplication.MainApplication"
@@ -442,6 +445,20 @@
             android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+        <activity
+            android:name=".activity.ActivityFyPay"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+           android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.WXPayEntryActivity"/>
+            </intent-filter>
         </activity>
 
         <activity

@@ -133,9 +133,9 @@ public class FragmentHomePage extends AbstractFragment implements
                         if (DialogUtils.checkApproveStatus(mContext)){
                             return;
                         }
-//                        if (!DialogUtils.checkGradeStatus(mContext)){
-//                            return;
-//                        }
+                        if (!DialogUtils.checkGradeStatus(mContext)){
+                            return;
+                        }
 
 
                         if (bankList.size() != 0) {
@@ -198,9 +198,9 @@ public class FragmentHomePage extends AbstractFragment implements
                         if (DialogUtils.checkApproveStatus(mContext)){
                             return;
                         }
-//                        if (!DialogUtils.checkGradeStatus(mContext)){
-//                            return;
-//                        }
+                        if (DialogUtils.checkGradeStatus(mContext)){
+                            return;
+                        }
                         startActivity(new Intent(mContext, ActivityVipGrade.class));
                         break;
                 }
