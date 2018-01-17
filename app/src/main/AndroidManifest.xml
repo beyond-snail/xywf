@@ -454,6 +454,13 @@
         </activity>
 
         <activity
+            android:name=".activity.ActivityVipGrade2"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+
+        <activity
             android:name=".wxapi.WXPayEntryActivity"
            android:exported="true">
             <intent-filter>
