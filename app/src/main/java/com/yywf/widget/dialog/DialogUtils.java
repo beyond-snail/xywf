@@ -10,13 +10,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.tool.utils.dialog.CustomDialog;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.ToastUtils;
 import com.tool.utils.utils.UtilPreference;
 import com.yywf.R;
-import com.yywf.activity.ActivityFyPay;
-import com.yywf.activity.ActivityMyZhangDan;
 import com.yywf.activity.ActivitySmrz;
 
 /**
@@ -293,7 +290,7 @@ public class DialogUtils {
                 @Override
                 public void onClick(View view) {
                     myCustomDialog.dismiss();
-                    mContext.startActivity(new Intent(mContext, ActivityFyPay.class));
+//                    mContext.startActivity(new Intent(mContext, ActivityFyPay.class));
                 }
             });
             return false;

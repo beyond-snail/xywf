@@ -446,12 +446,12 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>
-        <activity
-            android:name=".activity.ActivityFyPay"
-            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar">
-        </activity>
+        <!--<activity-->
+            <!--android:name=".activity.ActivityFyPay"-->
+            <!--android:configChanges="orientation|screenSize|keyboard|keyboardHidden"-->
+            <!--android:screenOrientation="portrait"-->
+            <!--android:theme="@android:style/Theme.NoTitleBar">-->
+        <!--</activity>-->
 
         <activity
             android:name=".activity.ActivityVipGrade2"
