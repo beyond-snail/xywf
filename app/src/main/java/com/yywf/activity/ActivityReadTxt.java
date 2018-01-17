@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.tool.utils.utils.LogUtils;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.view.AutoSplitTextView;
+import com.tool.utils.view.JustifyTextView;
 import com.tool.utils.view.MoneyEditText;
 import com.yywf.R;
 import com.yywf.util.MyActivityManager;
@@ -19,7 +20,7 @@ import java.io.InputStreamReader;
 public class ActivityReadTxt extends BaseActivity {
 
 	private final String TAG = "ActivityReadTxt";
-	private AutoSplitTextView tvContent;
+	private JustifyTextView tvContent;
 
 	private BufferedReader br;
 	private InputStream is;
@@ -58,6 +59,8 @@ public class ActivityReadTxt extends BaseActivity {
 			initTitle("扫码收钱使用需知");
 		}else if (type == 8){
 			initTitle("银行卡资金损失保险条款");
+		}else if (type == 9){
+			initTitle("代理商专属通道");
 		}else{
 			initTitle("我要提额");
 		}
@@ -89,6 +92,8 @@ public class ActivityReadTxt extends BaseActivity {
 				is = getAssets().open("smsq.TXT");
 			}else if (type == 8){
 				is = getAssets().open("tb.TXT");
+			}else if (type == 9){
+				is = getAssets().open("dltd.TXT");
 			}else if (type == 11){
 				is = getAssets().open("pfyh.TXT");
 			}else if (type == 12){
@@ -128,7 +133,7 @@ public class ActivityReadTxt extends BaseActivity {
 			ex.printStackTrace();
 		}
 
-		tvContent = (AutoSplitTextView) textView(R.id.content);
+		tvContent = (JustifyTextView) textView(R.id.content);
 		tvContent.setText(s);
 
 	}

@@ -28,6 +28,7 @@ import com.tool.utils.view.MyGridView;
 import com.tool.utils.view.MyListView;
 import com.tool.utils.view.RoundImageView;
 import com.yywf.R;
+import com.yywf.activity.ActivityAgent;
 import com.yywf.activity.ActivityBankCardManager;
 import com.yywf.activity.ActivityBaoDan;
 import com.yywf.activity.ActivityCredit;
@@ -222,7 +223,7 @@ public class FragmentMine extends AbstractFragment implements
                 startActivity(new Intent(mContext, ActivityBaoDan.class));
                 break;
             case R.id.rl_agent:
-//                startActivity(new Intent(mContext, ActivityBaoDan.class));
+                startActivity(new Intent(mContext, ActivityAgent.class));
                 break;
             case R.id.rl_gzwm: //关注我们
                 startActivity(new Intent(mContext, ActivityFollowUs.class));

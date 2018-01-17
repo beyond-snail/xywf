@@ -144,6 +144,13 @@ public class PayPasswordView implements OnClickListener {
 				listener.onCancelPay();
 			}
 		});
+
+		content.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				listener.onForgotPwd();
+			}
+		});
 	}
 
 	private void parseActionType(KeyboardEnum type) {
@@ -269,6 +276,8 @@ public class PayPasswordView implements OnClickListener {
 		void onCancelPay();
 
 		void onSurePay(String password);
+
+		void onForgotPwd();
 	}
 
 	public View getView() {

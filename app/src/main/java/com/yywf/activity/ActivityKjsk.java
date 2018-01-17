@@ -107,6 +107,12 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
 
         @Override
         public void run() {
+            int temp = StringUtils.getInt(StringUtils.changeY2F(et_amt.getMoneyText()));
+            if (temp < 58900){
+                ToastUtils.CustomShow(mContext, "交易金额最低589");
+                return;
+            }
+
             //在这里调用服务器的接口，获取数据
             loadfeeDecriptionData();
         }
@@ -150,7 +156,7 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
 
 
                 //延迟800ms，如果不再输入字符，则执行该线程的run方法
-                handler.postDelayed(delayRun, 500);
+                handler.postDelayed(delayRun, 1000);
             }
         });
 

@@ -143,6 +143,11 @@ public class ActivityTest extends BaseActivity implements OnClickListener {
 			}
 
 			@Override
+			public void onForgotPwd() {
+
+			}
+
+			@Override
 			public void onCancelPay() {
 				// TODO Auto-generated method stub
 				keyboard.dismiss();

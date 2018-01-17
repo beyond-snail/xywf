@@ -143,6 +143,11 @@ public class ActivityCredit extends BaseActivity implements OnClickListener {
             return;
         }
 
+        if (StringUtils.changeY2F(et_amt.getMoneyText()).length() > 7){
+            ToastUtils.CustomShow(mContext, "单笔金额不超过2万");
+            return;
+        }
+
 
 
         keyboard = new KeyBoardDialog((Activity) mContext, getDecorViewDialog());
@@ -167,6 +172,11 @@ public class ActivityCredit extends BaseActivity implements OnClickListener {
 //		params.add("password", password);
                 HttpUtil.get(ConfigXy.XY_SMRZ, params, requestListener);
 
+            }
+
+            @Override
+            public void onForgotPwd() {
+                startActivity(new Intent(mContext, ActivityForgotPayPwd.class));
             }
 
             @Override

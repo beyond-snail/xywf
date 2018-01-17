@@ -546,6 +546,11 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 			}
 
 			@Override
+			public void onForgotPwd() {
+				startActivity(new Intent(mContext, ActivityForgotPayPwd.class));
+			}
+
+			@Override
 			public void onCancelPay() {
 				// TODO Auto-generated method stub
 				keyboard.dismiss();

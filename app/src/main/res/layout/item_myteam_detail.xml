@@ -59,7 +59,7 @@
                 android:textSize="10sp"/>
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal"
@@ -67,10 +67,9 @@
 
             <TextView
                 android:id="@+id/tv_phone"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawablePadding="10dp"
+                android:layout_centerVertical="true"
                 android:singleLine="true"
                 android:text="--"
                 android:textColor="#333333"
@@ -79,12 +78,14 @@
                 android:id="@+id/tv_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
                 android:singleLine="true"
                 android:text="成功推荐人数400人"
                 android:textColor="@color/text_font"
                 android:textSize="13sp" />
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 
 
