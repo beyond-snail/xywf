@@ -168,7 +168,7 @@ public class ActivityMyWallet extends BaseActivity implements View.OnClickListen
 				myCustomDialog.show();
 				break;
 			case R.id.btn_sale:
-				startActivity(new Intent(mContext, ActivityVipGrade.class));
+				startActivity(new Intent(mContext, ActivityVipGrade2.class));
 				break;
 
 		}
