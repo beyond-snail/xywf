@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.NumberKeyListener;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +42,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 public class ActivityCredit extends BaseActivity implements OnClickListener {
@@ -96,7 +99,39 @@ public class ActivityCredit extends BaseActivity implements OnClickListener {
         linearLayout(R.id.ll_change).setOnClickListener(this);
 
         et_amt = (MoneyEditText) editText(R.id.et_amt);
+        et_amt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                Date nowTime = StringUtils.getDateFromString(StringUtils.getFormatCurTime(), "yyyyMMddHHmmss");
+                Date startTime  = StringUtils.getDate(StringUtils.getCurDate()+"000000", "yyyyMMddHHmmss");
+                Date endTime  = StringUtils.getDate(StringUtils.getCurDate()+"210000", "yyyyMMddHHmmss");
+                if (!StringUtils.isEffectiveDate(nowTime, startTime, endTime)){
+                    ToastUtils.CustomShow(mContext, "该时间段内不能交易");
+                    return;
+                }
+
+
+//                if(delayRun!=null){
+//                    //每次editText有变化的时候，则移除上次发出的延迟线程
+//                    handler.removeCallbacks(delayRun);
+//                }
+//
+//
+//                //延迟800ms，如果不再输入字符，则执行该线程的run方法
+//                handler.postDelayed(delayRun, 1000);
+            }
+        });
         button(R.id.btn_commit).setOnClickListener(this);
 
 

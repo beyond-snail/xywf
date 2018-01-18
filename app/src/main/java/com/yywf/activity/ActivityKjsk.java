@@ -40,6 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ActivityKjsk extends BaseActivity implements OnClickListener {
@@ -113,6 +114,8 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
                 return;
             }
 
+
+
             //在这里调用服务器的接口，获取数据
             loadfeeDecriptionData();
         }
@@ -149,6 +152,16 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
 
             @Override
             public void afterTextChanged(Editable s) {
+
+                Date nowTime = StringUtils.getDateFromString(StringUtils.getFormatCurTime(), "yyyyMMddHHmmss");
+                Date startTime  = StringUtils.getDate(StringUtils.getCurDate()+"000000", "yyyyMMddHHmmss");
+                Date endTime  = StringUtils.getDate(StringUtils.getCurDate()+"210000", "yyyyMMddHHmmss");
+                if (!StringUtils.isEffectiveDate(nowTime, startTime, endTime)){
+                    ToastUtils.CustomShow(mContext, "该时间段内不能交易");
+                    return;
+                }
+
+
                 if(delayRun!=null){
                     //每次editText有变化的时候，则移除上次发出的延迟线程
                     handler.removeCallbacks(delayRun);
