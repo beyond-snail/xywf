@@ -5,16 +5,16 @@ package com.yywf.model;
  */
 
 public class PlanList {
-    private int amt;
+    private String amt;
     private String time1;
     private String time2;
-    private int feeAmt;
+    private String feeAmt;
 
-    public int getAmt() {
+    public String getAmt() {
         return amt;
     }
 
-    public void setAmt(int amt) {
+    public void setAmt(String amt) {
         this.amt = amt;
     }
 
@@ -34,11 +34,11 @@ public class PlanList {
         this.time2 = time2;
     }
 
-    public int getFeeAmt() {
+    public String getFeeAmt() {
         return feeAmt;
     }
 
-    public void setFeeAmt(int feeAmt) {
+    public void setFeeAmt(String feeAmt) {
         this.feeAmt = feeAmt;
     }
 }

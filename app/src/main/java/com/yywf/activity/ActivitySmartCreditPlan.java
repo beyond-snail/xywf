@@ -32,6 +32,8 @@ import com.tool.utils.passwordView.KeyBoardDialog;
 import com.tool.utils.passwordView.PayPasswordView;
 import com.tool.utils.utils.ArithUtil;
 import com.tool.utils.utils.KeyBoardUtils;
+import com.tool.utils.utils.LogUtils;
+import com.tool.utils.utils.MoneyUtil;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.ToastUtils;
 import com.tool.utils.utils.UtilPreference;
@@ -43,6 +45,7 @@ import com.yywf.R;
 import com.yywf.adapter.AdapterPlanList;
 import com.yywf.adapter.BankListAdapter;
 import com.yywf.config.ConfigXy;
+import com.yywf.config.ConstApp;
 import com.yywf.http.HttpUtil;
 import com.yywf.model.BankCardInfo;
 import com.yywf.model.PlanList;
@@ -54,6 +57,7 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClickListener {
@@ -194,11 +198,23 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 		@Override
 		public void run() {
-			//总金额 转成分
-			int amount = Integer.valueOf(StringUtils.changeY2F(et_amt.getMoneyText().trim()));
+//			//总金额 转成分
+//			int amount = Integer.valueOf(StringUtils.changeY2F(et_amt.getMoneyText().trim()));
+//			//手续费
+//			int feeAmt = (amount * ConstApp.FEE)/10000;
+//			textView(R.id.tv_tx_balance_amt).setText(StringUtils.formatIntMoney(feeAmt));
+
+			//总金额
+//			tv_total_amt.setText(MoneyUtil.formatMoney(et_amt.getMoneyText().trim()));
+			if (StringUtils.isBlank(et_amt.getMoneyText())){
+				textView(R.id.tv_tx_balance_amt).setText("0.00");
+				return;
+			}
+
 			//手续费
-			int feeAmt = (amount * 85)/10000;
-			textView(R.id.tv_tx_balance_amt).setText(StringUtils.formatIntMoney(feeAmt));
+			String feeAmt = MoneyUtil.moneydiv(MoneyUtil.moneyMul(et_amt.getMoneyText().trim(), ConstApp.FEE+""), "10000");
+			textView(R.id.tv_tx_balance_amt).setText(feeAmt);
+
 		}
 	};
 
@@ -232,6 +248,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 				if (linearLayout(R.id.ll_plan_amt).getVisibility() == View.VISIBLE){
 					linearLayout(R.id.ll_plan_amt).setVisibility(View.GONE);
+					reset();
 				}
 
 				//延迟800ms，如果不再输入字符，则执行该线程的run方法
@@ -402,6 +419,13 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 	}
 
 
+	private void reset(){
+		isAction = false;
+		list.clear();
+		adapter.notifyDataSetChanged();
+		btn.setText("预览计划");
+	}
+
 
 
 	@Override
@@ -461,22 +485,24 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 	private void setPlanList(String moneyText) {
 
-		//账单日 10天内设置计划
+		//账单日 6天内设置计划
 		int zdDay = Integer.valueOf(vo.getZdDay());
 		int hkDay = Integer.valueOf(vo.getHkDay());
 		int curDay = Integer.valueOf(StringUtils.getCurDay());
 		String dateDay="";
+
+		linearLayout(R.id.ll_plan_amt).setVisibility(View.VISIBLE);
+
 
 
 		//当前天数 小于账单日，那么设置后在账单日后一天开始执行计划
 		if (curDay < zdDay){
 			dateDay = StringUtils.getCurrentDate("yyyy-MM") + "-" + vo.getZdDay();
 		}else{
-			//从当前天数开始往后 10天，大于还款日则到下一个月的账单日后一天执行
-			if (curDay + 10 > hkDay){
-//				ToastUtils.CustomShow(mContext, "无法设置计划");
-//				return;
-				dateDay = StringUtils.monthCalculate(StringUtils.getCurrentDate("yyyy-MM"), 1) + "-" + vo.getZdDay();
+			//还款日前-5天内，无法设置计划
+			if (curDay + 5 > hkDay){
+				ToastUtils.CustomShow(mContext, "还款日前5天无法执行计划");
+				return;
 			}else{
 				DecimalFormat df = new DecimalFormat("00");
 				String str_m = df.format(curDay);
@@ -485,30 +511,110 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 		}
 
 
-		linearLayout(R.id.ll_plan_amt).setVisibility(View.VISIBLE);
 
-		//总金额 转成分
-		int amount = Integer.valueOf(StringUtils.changeY2F(moneyText.trim()));
-		tv_total_amt.setText(StringUtils.formatIntMoney(amount));
+		//总金额
+		tv_total_amt.setText(MoneyUtil.formatMoney(moneyText.trim()));
 
 		//手续费
-		int feeAmt = (amount * 85)/10000;
-		tv_total_fee.setText(StringUtils.formatIntMoney(feeAmt));
+		String feeAmt = MoneyUtil.moneydiv(MoneyUtil.moneyMul(moneyText, ConstApp.FEE+""), "10000");
+		tv_total_fee.setText(MoneyUtil.formatMoney(feeAmt));
 
-		//卡内最低余额(还款总额*10% + 手续费)
-		int minBalanceAmt = (amount*10)/100 + feeAmt;
-		tv_sigle_amt.setText("执行计划需要"+StringUtils.formatIntMoney(minBalanceAmt)+"元");
+		//卡内最低余额（还款总额*10% + 手续费）
+		String minBalanceAmt = MoneyUtil.moneyAdd(MoneyUtil.moneydiv(MoneyUtil.moneyMul(moneyText, "10"), "100"), feeAmt);
+		tv_sigle_amt.setText("执行计划需要"+MoneyUtil.formatMoney(minBalanceAmt)+"元");
 
-		//分10期，前9次一样
+
+
+		/**
+		 * 假设我这笔的消费系数是9%，那么我消费出来的金额=5000*9%+5000*9%*万八五（这个是手续费）+1元清算费；而还款金额只有5000*9%
+		 */
+		//分10期，前9次随机系数计算
 		list.clear();
-		for (int i = 0; i < 10; i++){
+
+		String lastSaleAmt = "";
+		String lastCreditAmt = "";
+
+		for (int i = 0; i < 9; i++){
 			PlanList planList = new PlanList();
-			planList.setAmt(amount/10);
-			planList.setFeeAmt(amount/10);
-			planList.setTime1(StringUtils.dayCalculate(dateDay, i+1)+" "+"09:30:00");
-			planList.setTime2(StringUtils.dayCalculate(dateDay, i+1)+" "+"14:59:00");
+
+			//还款金额
+			String creditAmt = MoneyUtil.moneydiv(MoneyUtil.moneyMul(moneyText,  StringUtils.getRandIntNum(ConstApp.COFFICIENT)+""), "1000");
+			planList.setAmt(creditAmt);
+
+			//消费金额
+			String saleAmt = MoneyUtil.moneyAdd(creditAmt, MoneyUtil.moneydiv(MoneyUtil.moneyMul(creditAmt, ConstApp.FEE+""), "10000"));
+			planList.setFeeAmt(saleAmt);
+
+			//前9次消费金额的总和
+			lastSaleAmt = MoneyUtil.moneyAdd(MoneyUtil.formatMoney(lastSaleAmt), saleAmt);
+			//前9次还款金额的总和
+			lastCreditAmt = MoneyUtil.moneyAdd(MoneyUtil.formatMoney(lastCreditAmt), creditAmt);
+
 			list.add(planList);
 		}
+
+		//计算 最后一笔
+		PlanList planList1 = new PlanList();
+		planList1.setAmt(MoneyUtil.moneySub(moneyText, lastCreditAmt));
+		planList1.setFeeAmt(MoneyUtil.moneySub(moneyText, lastSaleAmt));
+		list.add(planList1);
+
+
+
+
+
+		//当前时间是否大于17:30，如果大于那么第一笔消费，会在第二天的下午17:31~21：00执行，其他的计划不变
+		//当天执行只执行消费1
+		//07:00~10:30 还 1、3、5、7、9
+		//10:00~14:00 消 2、4、6、8、10
+		//14:01~17:30 还 2、4、6、8、10
+		//17:31~21:00 消 3、5、7、9
+
+		int index = 0;
+		//还款
+		for (int i= 0; i < list.size(); i++){
+			if (i % 2 != 0){
+				//还款
+				Date randCreditTime = StringUtils.randomDate(StringUtils.dayCalculate(dateDay, index)+" "+"14:01:00", StringUtils.dayCalculate(dateDay, index)+" "+"17:30:00");
+				list.get(i).setTime1(StringUtils.getStringFromDate(randCreditTime, "yyyy-MM-dd HH:mm:ss"));
+			}else{
+				index++;
+				//还款
+				Date randCreditTime = StringUtils.randomDate(StringUtils.dayCalculate(dateDay, index)+" "+"07:00:00", StringUtils.dayCalculate(dateDay, index)+" "+"10:30:00");
+				list.get(i).setTime1(StringUtils.getStringFromDate(randCreditTime, "yyyy-MM-dd HH:mm:ss"));
+			}
+			LogUtils.e("还款"+(i+1)+"="+list.get(i).getTime1());
+		}
+
+
+		//判断消费时间
+		int type = StringUtils.compareDate(StringUtils.getFormatCurTime(), StringUtils.getCurDate() + "173000", "yyyyMMddHHmmss");
+		if (type == 1){//当前时间大于17:30
+			//消费1 在隔天下午执行
+			Date randSaleTime = StringUtils.randomDate(StringUtils.dayCalculate(dateDay,  1) + " " + "17:30:00", StringUtils.dayCalculate(dateDay, + 1) + " " + "21:00:00");
+			list.get(0).setTime2(StringUtils.getStringFromDate(randSaleTime, "yyyy-MM-dd HH:mm:ss"));
+		}else{
+			Date randSaleTime = StringUtils.randomDate(StringUtils.dayCalculate(dateDay,  0) + " " + "17:30:00", StringUtils.dayCalculate(dateDay, + 1) + " " + "21:00:00");
+			list.get(0).setTime2(StringUtils.getStringFromDate(randSaleTime, "yyyy-MM-dd HH:mm:ss"));
+		}
+		LogUtils.e("消费"+(1)+"="+list.get(0).getTime2());
+		index = 0;
+		for (int i = 0; i < list.size()-1; i++){
+			if (i % 2 != 0){
+				Date randSaleTime = StringUtils.randomDate(StringUtils.dayCalculate(dateDay, index)+" "+"17:31:00", StringUtils.dayCalculate(dateDay, index)+" "+"21:00:00");
+				list.get(i+1).setTime2(StringUtils.getStringFromDate(randSaleTime, "yyyy-MM-dd HH:mm:ss"));
+			}else {
+				index++;
+				//消费
+				Date randSaleTime = StringUtils.randomDate(StringUtils.dayCalculate(dateDay, index) + " " + "10:00:00", StringUtils.dayCalculate(dateDay, index) + " " + "14:00:00");
+				list.get(i+1).setTime2(StringUtils.getStringFromDate(randSaleTime, "yyyy-MM-dd HH:mm:ss"));
+			}
+
+			LogUtils.e("消费"+(i+2)+"="+list.get(i+1).getTime2());
+		}
+
+
+
 
 		adapter.notifyDataSetChanged();
 

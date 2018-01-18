@@ -103,9 +103,9 @@ public class AdapterPlanList extends BaseAdapter {
         }
         PlanList vo = list.get(position);
 
-        holder.id_tv_amt.setText(StringUtils.formatIntMoney(vo.getAmt()));
+        holder.id_tv_amt.setText(vo.getAmt());
         holder.id_tv_count.setText(vo.getTime1());
-        holder.id_tv_fee.setText(StringUtils.formatIntMoney(vo.getFeeAmt()));
+        holder.id_tv_fee.setText(vo.getFeeAmt());
         holder.id_tv_sigle_amt.setText(vo.getTime2());
 
         return convertView;
