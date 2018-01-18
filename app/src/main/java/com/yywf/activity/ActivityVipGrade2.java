@@ -77,7 +77,7 @@ public class ActivityVipGrade2 extends BaseActivity implements OnClickListener {
             findViewById(R.id.img_right).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity( new Intent(mContext, ActivityReadWord.class));
+                    startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 10));
                 }
             });
         }

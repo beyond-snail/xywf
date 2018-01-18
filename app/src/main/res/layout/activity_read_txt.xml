@@ -15,16 +15,16 @@
         android:id="@+id/SCROLLER_ID"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
         android:scrollbars="vertical"
         android:fillViewport="true">
 
-    <com.tool.utils.view.JustifyTextView
+    <com.tool.utils.view.XRTextView
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
+
         android:textSize="15sp"
         android:textColor="#333333"/>
 

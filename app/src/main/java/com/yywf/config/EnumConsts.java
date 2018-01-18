@@ -70,7 +70,8 @@ public class EnumConsts {
 		MENU_1(1, R.drawable.mywallet,"我的钱包"),
 		MENU_2(2, R.drawable.mygroup,"我的团队"),
 		MENU_3(3, R.drawable.myqrcode,"推广二维码"),
-		MENU_4(4, R.drawable.myvouchar,"抵用券"),
+//		MENU_4(4, R.drawable.myvouchar,"抵用券"),
+		MENU_4(4, R.drawable.icon_scanqr,"扫码收钱"),
 
 		;
 

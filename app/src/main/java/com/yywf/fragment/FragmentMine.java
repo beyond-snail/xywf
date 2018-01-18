@@ -120,8 +120,8 @@ public class FragmentMine extends AbstractFragment implements
         rl_bank_manager = fragment.findViewById(R.id.rl_bank_manager);
         rl_bank_manager.setOnClickListener(this);
 
-        rl_smsq = fragment.findViewById(R.id.rl_smsq);
-        rl_smsq.setOnClickListener(this);
+//        rl_smsq = fragment.findViewById(R.id.rl_smsq);
+//        rl_smsq.setOnClickListener(this);
 
         rl_gzwm = fragment.findViewById(R.id.rl_gzwm);
         rl_gzwm.setOnClickListener(this);
@@ -193,7 +193,8 @@ public class FragmentMine extends AbstractFragment implements
                         startActivity(new Intent(mContext, ActivityMyQr.class));
                         break;
                     case 4: //抵用券
-                        startActivity(new Intent(mContext, ActivityVoucherTab.class));
+//                        startActivity(new Intent(mContext, ActivityVoucherTab.class));
+                        startActivity(new Intent(mContext, ActivitySaoMaShouKuan.class));
                         break;
                 }
             }
@@ -216,9 +217,9 @@ public class FragmentMine extends AbstractFragment implements
                 }
                 startActivity(new Intent(mContext, ActivityBankCardManager.class));
                 break;
-            case R.id.rl_smsq: //扫码收钱
-                startActivity(new Intent(mContext, ActivitySaoMaShouKuan.class));
-                break;
+//            case R.id.rl_smsq: //扫码收钱
+//                startActivity(new Intent(mContext, ActivitySaoMaShouKuan.class));
+//                break;
             case R.id.rl_safe:
                 startActivity(new Intent(mContext, ActivityBaoDan.class));
                 break;

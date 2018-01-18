@@ -3,13 +3,17 @@ package com.yywf.activity;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.tool.utils.utils.LogUtils;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.view.AutoSplitTextView;
+import com.tool.utils.view.BaikeTextView;
 import com.tool.utils.view.JustifyTextView;
 import com.tool.utils.view.MoneyEditText;
+import com.tool.utils.view.WebFont;
+import com.tool.utils.view.XRTextView;
 import com.yywf.R;
 import com.yywf.util.MyActivityManager;
 
@@ -20,14 +24,13 @@ import java.io.InputStreamReader;
 public class ActivityReadTxt extends BaseActivity {
 
 	private final String TAG = "ActivityReadTxt";
-	private JustifyTextView tvContent;
+	private XRTextView tvContent;
 
 	private BufferedReader br;
 	private InputStream is;
 	private String s = "";
 
 	private int type = 0;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +64,10 @@ public class ActivityReadTxt extends BaseActivity {
 			initTitle("银行卡资金损失保险条款");
 		}else if (type == 9){
 			initTitle("代理商专属通道");
-		}else{
+		}else if (type == 10){
+			initTitle("购买等级");
+		}
+		else{
 			initTitle("我要提额");
 		}
 		if (findViewById(R.id.backBtn) != null) {
@@ -94,6 +100,8 @@ public class ActivityReadTxt extends BaseActivity {
 				is = getAssets().open("tb.TXT");
 			}else if (type == 9){
 				is = getAssets().open("dltd.TXT");
+			}else if (type == 10){
+				is = getAssets().open("gmdj.TXT");
 			}else if (type == 11){
 				is = getAssets().open("pfyh.TXT");
 			}else if (type == 12){
@@ -133,11 +141,26 @@ public class ActivityReadTxt extends BaseActivity {
 			ex.printStackTrace();
 		}
 
-		tvContent = (JustifyTextView) textView(R.id.content);
+
+
+		tvContent = (XRTextView) textView(R.id.content);
 		tvContent.setText(s);
+
 
 	}
 
+
+	public static String ToDBC(String input) {
+		char[] c = input.toCharArray();
+		for (int i = 0; i< c.length; i++) {
+			if (c[i] == 12288) {
+				c[i] = (char) 32;
+				continue;
+			}if (c[i]> 65280&& c[i]< 65375)
+				c[i] = (char) (c[i] - 65248);
+		}
+		return new String(c);
+	}
 
 
 
