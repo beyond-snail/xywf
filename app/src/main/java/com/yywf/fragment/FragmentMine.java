@@ -316,7 +316,8 @@ public class FragmentMine extends AbstractFragment implements
                 }
 
                 if (!StringUtils.isBlank(grade_name)){
-                    tvGradeName.setText(grade_name + " - "+ grade_count+"次");
+//                    tvGradeName.setText(grade_name + " - "+ grade_count+"次");
+                    tvGradeName.setText(grade_name);
                 }
 
                 if (!StringUtils.isBlank(service_phone)){
