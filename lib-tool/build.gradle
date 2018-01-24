@@ -65,4 +65,5 @@ dependencies {
     compile files('src/main/libs/poi-3.15.jar')
     compile files('src/main/libs/poi-scratchpad-3.15.jar')
     compile project(':shareLibrary')
+    compile files('src/main/libs/xstream-1.4.7.jar')
 }

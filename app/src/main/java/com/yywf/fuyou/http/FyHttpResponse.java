@@ -1,8 +1,8 @@
 package com.yywf.fuyou.http;
 
-import java.io.InputStream;
-
 import org.json.JSONObject;
+
+import java.io.InputStream;
 
 /**
  * User: MengHX Date: 1/26/13 Time: 1:23 PM

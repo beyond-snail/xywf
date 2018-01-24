@@ -48,6 +48,7 @@ import me.weyye.hipermission.PermissionItem;
 
 public abstract class BaseActivity extends Activity {
 
+
     private static final String TAG = "BaseActivity";
 
 

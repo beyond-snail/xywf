@@ -46,7 +46,7 @@
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
 
     <uses-permission android:name="com.fuiou.permission.FUIOU_PAY" />
-
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
 
 
     <application
@@ -446,12 +446,12 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>
-        <!--<activity-->
-            <!--android:name=".activity.ActivityFyPay"-->
-            <!--android:configChanges="orientation|screenSize|keyboard|keyboardHidden"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:theme="@android:style/Theme.NoTitleBar">-->
-        <!--</activity>-->
+        <activity
+            android:name=".activity.ActivityFyPay"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
 
         <activity
             android:name=".activity.ActivityVipGrade2"
@@ -486,6 +486,12 @@
             android:name="com.moxie.client.MainActivity"
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>
+
+        <activity
+            android:name="com.fuiou.mobile.activity.FyWebActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
     </application>
 
 </manifest>

@@ -337,11 +337,11 @@ public class UpdateManager {
 				File ApkFile = new File(apkFilePath);
 
 				// 是否已下载更新文件
-				if (ApkFile.exists()) {
-					downloadDialog.dismiss();
-					installApk();
-					return;
-				}
+//				if (ApkFile.exists()) {
+//					downloadDialog.dismiss();
+//					installApk();
+//					return;
+//				}
 
 				// 输出临时下载文件
 				File tmpFile = new File(tmpFilePath);

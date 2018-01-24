@@ -3,7 +3,7 @@ package com.yywf.fuyou.http;
 import java.util.HashMap;
 
 
-public final class FyXmlNodeData extends HashMap<Object, Object>{
+public final class FyXmlNodeData extends HashMap<Object, Object> {
 
 	private static final long serialVersionUID = -474930809860388732L;
 

@@ -165,10 +165,13 @@ public class ConfigXy {
     public static final String GRADE_LIST = ZF_SERVER_API+"app/member/queryXyMemberGrade";
 
     //生成订单
-    public static final String GET_ORDER_ID = ZF_SERVER_API + "/app/pay/submitOrder";
+    public static final String GET_ORDER_ID = ZF_SERVER_API + "app/pay/submitOrder";
 
     //会员等级是否购买
     public static final String IS_GRADE = ZF_SERVER_API+"app/member/isHasGrade";
+
+    //快捷卡支付
+    public static final String FY_PAY = ZF_SERVER_API + "app/callback/sdkBankPay";
 
 
 }

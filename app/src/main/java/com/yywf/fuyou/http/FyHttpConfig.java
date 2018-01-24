@@ -4,7 +4,7 @@ import android.content.Context;
 
 public final class FyHttpConfig {
 	private Context context;
-	private boolean release = false;
+	public static boolean release;
 	private static FyHttpConfig instance;
 
 	public static final String RSP_CODE_SUCCESS = "0000";
@@ -32,11 +32,13 @@ public final class FyHttpConfig {
 		return release;
 	}
 
-	String getBaseURL() {
+	public String getBaseURL() {
+//		"http://www-1.fuiou.com:18670/mobile_pay/sdkpay/";//商户测试的生产环境
 //		return "http://192.168.199.188:8080/mobile_pay/findPay/";
-		return "https://mpay.fuiou.com:16128/findPay/";
+
+		return this.release ? "https://mpay.fuiou.com:16128/findPay/" : "http://www-1.fuiou.com:18670/mobile_pay/findPay/";
+		
 //		return this.release ? "https://mpay.fuiou.com:16128/sdkpay/"
-//		return "http://www-1.fuiou.com:18670/mobile_pay/sdkpay/";//商户测试的生产环境
 //		return "http://www-1.fuiou.com:18670/mobile_pay/findPay/";//外网
 //		return "http://192.168.8.29:29024/mobile_pay/";//内网
 	}
