@@ -281,36 +281,36 @@ public class DialogUtils {
     public static boolean checkGradeStatus(final Context mContext){
         int isGrade = UtilPreference.getIntValue(mContext, "isGrade");
 
-//        if (isGrade == 0){
-//            myCustomDialog = showGradeDialog(mContext, new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    myCustomDialog.dismiss();
-//                }
-//            }, new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    myCustomDialog.dismiss();
-//                    mContext.startActivity(new Intent(mContext, ActivityFyPay.class));
-//                }
-//            });
-//            return false;
-//        }
+        if (isGrade == 0){
+            myCustomDialog = showGradeDialog(mContext, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    myCustomDialog.dismiss();
+                }
+            }, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    myCustomDialog.dismiss();
+                    mContext.startActivity(new Intent(mContext, ActivityFyPay.class));
+                }
+            });
+            return false;
+        }
 
-        myCustomDialog = showGradeDialog(mContext, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myCustomDialog.dismiss();
-            }
-        }, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myCustomDialog.dismiss();
-                mContext.startActivity(new Intent(mContext, ActivityFyPay.class));
-
-            }
-        });
-        return false;
+//        myCustomDialog = showGradeDialog(mContext, new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                myCustomDialog.dismiss();
+//            }
+//        }, new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                myCustomDialog.dismiss();
+//                mContext.startActivity(new Intent(mContext, ActivityFyPay.class));
+//
+//            }
+//        });
+        return true;
     }
 
     private static MyCustomDialog showGradeDialog(Context mContext, View.OnClickListener leftClick, View.OnClickListener rightClick) {
