@@ -199,7 +199,7 @@ public class FragmentHomePage extends AbstractFragment implements
                         if (DialogUtils.checkApproveStatus(mContext)){
                             return;
                         }
-                        if (DialogUtils.checkGradeStatus(mContext)){
+                        if (!DialogUtils.checkGradeStatus(mContext)){
                             return;
                         }
                         startActivity(new Intent(mContext, ActivityVipGrade2.class));
