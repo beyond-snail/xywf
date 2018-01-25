@@ -60,7 +60,7 @@ public class ActivityFyPay extends BaseActivity  {
 	private String mchnt_cd = "0003310F1063978";
 	private String mchnt_key = "l3qh715s9wysmkhk1zvnfagenn6afkq7";
 	private String amount = "1";
-	public  String mURL = "http://180.168.100.155:14652/mobile_pay/applePay/backNotify.pay";
+	public  String mURL = ConfigXy.FY_PAY_CALLBACK;//"http://180.168.100.155:14652/mobile_pay/applePay/backNotify.pay";
 	private String temp, ordernumber;
 	private String userId;
 
@@ -104,7 +104,8 @@ public class ActivityFyPay extends BaseActivity  {
 			@Override
 			public void onClick(View view) {
 				if (id_card.getVisibility() == View.VISIBLE) {
-					Pay();
+//					Pay();
+					loadOrderId();
 				}else {
 					finish();
 				}
@@ -181,6 +182,130 @@ public class ActivityFyPay extends BaseActivity  {
 		}
 	};
 
+	private void loadOrderId() {
+		showProgress("加载中...");
+		RequestParams params = new RequestParams();
+		params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+		params.add("token", UtilPreference.getStringValue(mContext, "token"));
+		params.add("gradeId", "1");
+		params.add("orderAmount", amount.trim()+"");
+		HttpUtil.get(ConfigXy.GET_ORDER_ID, params, new HttpUtil.RequestListener() {
+			@Override
+			public void success(String response) {
+				disShowProgress();
+				try {
+					JSONObject result = new JSONObject(response);
+					if (result.optInt("code") == -2){
+						UtilPreference.clearNotKeyValues(mContext);
+						// 退出账号 返回到登录页面
+						MyActivityManager.getInstance().logout(mContext);
+						return;
+					}
+					if (!result.optBoolean("status")) {
+						ToastUtils.CustomShow(mContext, result.optString("message"));
+					}else{
+						JSONObject dataStr = result.getJSONObject("data");
+						orderNo = dataStr.optString("orderId");
+						String sign = MD5UtilString.MD5Encode(mchnt_cd.trim() + "|"
+								+ orderNo + "|"
+								+ userId + "|"
+								+ amount.trim() + "|"
+								+ mURL + "|"
+								+ "08"+ "|" + "2.0" + "|"
+								+ mchnt_key);
+
+						Bundle bundle = new Bundle();//bundle的key值固定，照传即可
+						bundle.putString(FyPay.KEY_MCHNTORDERID, orderNo);
+						bundle.putString(FyPay.KEY_MAC, getMac());
+						bundle.putString(FyPay.KEY_MCHNT_CD, mchnt_cd.trim());
+						bundle.putString(FyPay.KEY_ACTUAL_MONEY, amount.trim());
+						bundle.putString(FyPay.KEY_USER_ID, userId);
+						bundle.putString(FyPay.KEY_BACKURL, mURL);
+						bundle.putString(FyPay.KEY_SIGN, sign);
+						Log.e("http", "payBefore >>>"+ bundle.toString());
+						//开始调起sdk做支付
+						int i = FyPay.pay(mContext, bundle,
+								new FyPayCallBack() {
+
+									@Override
+									public void onPayBackMessage(String datas) {
+										//交易结果后台返回数据datas,商户自行解析数据展示，这里不再处理
+										Log.e("http", "onPayBackMessage >>>"+ datas);
+//										setCallBackToSbs(datas);
+										ll_success.setVisibility(View.VISIBLE);
+										id_card.setVisibility(View.GONE);
+										button(R.id.btn_commit).setText("完成");
+									}
+									@Override
+									public void onPayComplete(String rspCode, String rspDesc, Bundle extraData) {
+										// rspCode: 0001（唯一）；
+										// rspDesc：用户取消支付（唯一）；
+										// extraData：支付传递的参数。
+										// 考虑不同的商户ui设计的不同，所以这里商户自行根据响应对界面做成功或者失败的展示
+										Log.e("http", "rspCode = " + rspCode + " ; rspDesc = " + rspDesc);
+									}
+								});
+
+					}
+
+
+				} catch (Exception e) {
+					Log.e(TAG, "doCommit() Exception: " + e.getMessage());
+				}
+			}
+
+			@Override
+			public void failed(Throwable error) {
+				disShowProgress();
+				showE404();
+			}
+		});
+	}
+
+//	public void testPay(){
+//		orderNo = "20180125140833";//(String) data.get("OrderId");//OrderId：返回的订单号，拿到这个值塞到sdk中
+//
+//		String sign = MD5UtilString.MD5Encode(mchnt_cd.trim() + "|"
+//				+ orderNo + "|"
+//				+ userId + "|"
+//				+ amount.trim() + "|"
+//				+ mURL + "|"
+//				+ "08"+ "|" + "2.0" + "|"
+//				+ mchnt_key);
+//
+//		Bundle bundle = new Bundle();//bundle的key值固定，照传即可
+//		bundle.putString(FyPay.KEY_MCHNTORDERID, orderNo);
+//		bundle.putString(FyPay.KEY_MAC, getMac());
+//		bundle.putString(FyPay.KEY_MCHNT_CD, mchnt_cd.trim());
+//		bundle.putString(FyPay.KEY_ACTUAL_MONEY, amount.trim());
+//		bundle.putString(FyPay.KEY_USER_ID, userId);
+//		bundle.putString(FyPay.KEY_BACKURL, mURL);
+//		bundle.putString(FyPay.KEY_SIGN, sign);
+//		Log.e("http", "payBefore >>>"+ bundle.toString());
+//		//开始调起sdk做支付
+//		int i = FyPay.pay(mContext, bundle,
+//				new FyPayCallBack() {
+//
+//					@Override
+//					public void onPayBackMessage(String datas) {
+//						//交易结果后台返回数据datas,商户自行解析数据展示，这里不再处理
+//						Log.e("http", "onPayBackMessage >>>"+ datas);
+////										setCallBackToSbs(datas);
+//						ll_success.setVisibility(View.VISIBLE);
+//						id_card.setVisibility(View.GONE);
+//						button(R.id.btn_commit).setText("完成");
+//					}
+//					@Override
+//					public void onPayComplete(String rspCode, String rspDesc, Bundle extraData) {
+//						// rspCode: 0001（唯一）；
+//						// rspDesc：用户取消支付（唯一）；
+//						// extraData：支付传递的参数。
+//						// 考虑不同的商户ui设计的不同，所以这里商户自行根据响应对界面做成功或者失败的展示
+//						Log.e("http", "rspCode = " + rspCode + " ; rspDesc = " + rspDesc);
+//					}
+//				});
+//	}
+
 
 
 	public void Pay() {
@@ -223,7 +348,7 @@ public class ActivityFyPay extends BaseActivity  {
 						bundle.putString(FyPay.KEY_USER_ID, userId);
 						bundle.putString(FyPay.KEY_BACKURL, mURL);
 						bundle.putString(FyPay.KEY_SIGN, sign);
-
+						Log.e("http", "payBefore >>>"+ bundle.toString());
 						//开始调起sdk做支付
 						int i = FyPay.pay(mContext, bundle,
 								new FyPayCallBack() {
@@ -232,7 +357,7 @@ public class ActivityFyPay extends BaseActivity  {
 									public void onPayBackMessage(String datas) {
 										//交易结果后台返回数据datas,商户自行解析数据展示，这里不再处理
 										Log.e("http", "onPayBackMessage >>>"+ datas);
-										setCallBackToSbs(datas);
+//										setCallBackToSbs(datas);
 										ll_success.setVisibility(View.VISIBLE);
 										id_card.setVisibility(View.GONE);
 										button(R.id.btn_commit).setText("完成");
@@ -310,7 +435,7 @@ public class ActivityFyPay extends BaseActivity  {
 
 
 
-						startActivity(new Intent(mContext, ActivityHome.class));
+//						startActivity(new Intent(mContext, ActivityHome.class));
 						finish();
 
 					} catch (Exception e) {

@@ -172,6 +172,7 @@ public class ConfigXy {
 
     //快捷卡支付
     public static final String FY_PAY = ZF_SERVER_API + "app/callback/sdkBankPay";
+    public static final String FY_PAY_CALLBACK = ZF_SERVER_API + "app/callback/fySdkPay";
 
 
 }
