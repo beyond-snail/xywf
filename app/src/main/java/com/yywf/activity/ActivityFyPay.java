@@ -59,7 +59,7 @@ public class ActivityFyPay extends BaseActivity  {
 //	private String mchnt_key = "mht0zrefxyyspytctz9hdj3bcqzx6orw";
 	private String mchnt_cd = "0003310F1063978";
 	private String mchnt_key = "l3qh715s9wysmkhk1zvnfagenn6afkq7";
-	private String amount = "1";
+	private String amount = "19900";
 	public  String mURL = ConfigXy.FY_PAY_CALLBACK;//"http://180.168.100.155:14652/mobile_pay/applePay/backNotify.pay";
 	private String temp, ordernumber;
 	private String userId;

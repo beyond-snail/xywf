@@ -39,6 +39,7 @@ import com.yywf.activity.ActivityMine;
 import com.yywf.activity.ActivityMyQr;
 import com.yywf.activity.ActivityMyTeam;
 import com.yywf.activity.ActivityMyWallet;
+import com.yywf.activity.ActivityNewHelp;
 import com.yywf.activity.ActivitySaoMaShouKuan;
 import com.yywf.activity.ActivitySetting;
 import com.yywf.activity.ActivitySmrz;
@@ -75,6 +76,7 @@ public class FragmentMine extends AbstractFragment implements
     private RelativeLayout rl_setting;
     private RelativeLayout rl_safe;
     private RelativeLayout rl_agent;
+    private RelativeLayout rl_new_help;
 
     private LinearLayout ll_user_info;
 
@@ -137,6 +139,10 @@ public class FragmentMine extends AbstractFragment implements
 
         rl_agent = fragment.findViewById(R.id.rl_agent);
         rl_agent.setOnClickListener(this);
+
+        rl_new_help = fragment.findViewById(R.id.rl_new_help);
+        rl_new_help.setOnClickListener(this);
+
 
         //自定义配置
         options = new DisplayImageOptions.Builder()
@@ -225,6 +231,9 @@ public class FragmentMine extends AbstractFragment implements
                 break;
             case R.id.rl_agent:
                 startActivity(new Intent(mContext, ActivityAgent.class));
+                break;
+            case R.id.rl_new_help:
+                startActivity(new Intent(mContext, ActivityNewHelp.class));
                 break;
             case R.id.rl_gzwm: //关注我们
                 startActivity(new Intent(mContext, ActivityFollowUs.class));

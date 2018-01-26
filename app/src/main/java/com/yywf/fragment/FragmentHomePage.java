@@ -134,9 +134,9 @@ public class FragmentHomePage extends AbstractFragment implements
                         if (DialogUtils.checkApproveStatus(mContext)){
                             return;
                         }
-                        if (!DialogUtils.checkGradeStatus(mContext)){
-                            return;
-                        }
+//                        if (!DialogUtils.checkGradeStatus(mContext)){
+//                            return;
+//                        }
 
 
                         if (bankList.size() != 0) {

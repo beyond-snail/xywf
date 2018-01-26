@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -53,6 +54,9 @@ public class ActivityCredit extends BaseActivity implements OnClickListener {
     private TextView bankName;
     private TextView userName;
     private TextView bankCarkNo;
+    private TextView tv_choose_card;
+
+    private RelativeLayout rl_choose;
 
     private MoneyEditText et_amt;
 
@@ -69,7 +73,7 @@ public class ActivityCredit extends BaseActivity implements OnClickListener {
         mContext = this;
         setContentView(R.layout.activity_credit);
         MyActivityManager.getInstance().addActivity(this);
-        initTitle("还信用卡");
+        initTitle("自助还款");
         if (findViewById(R.id.backBtn) != null) {
             findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
         }
@@ -92,6 +96,12 @@ public class ActivityCredit extends BaseActivity implements OnClickListener {
 
 
     private void initView() {
+
+        rl_choose = relativeLayout(R.id.rl_choose);
+        rl_choose.setOnClickListener(this);
+
+        tv_choose_card = textView(R.id.tv_choose_card);
+
         imageView = findViewById(R.id.icon_bank);
         bankName = textView(R.id.id_bank_name);
         userName = textView(R.id.id_username);

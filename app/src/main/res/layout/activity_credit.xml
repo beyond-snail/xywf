@@ -175,6 +175,47 @@
             android:text=""/>
 
     </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:background="#f5f5f5" />
+    <RelativeLayout
+        android:id="@+id/rl_choose"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/setting_list_bg"
+        android:padding="15dp"
+        android:visibility="visible" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:text="选择付款卡"
+            android:textColor="#333333"
+            android:textSize="@dimen/text_size_hdpi"/>
+
+        <ImageView
+            android:id="@+id/iv_go"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/bank_icon_next" />
+
+        <TextView
+            android:id="@+id/tv_choose_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/iv_go"
+            android:text=""
+            android:textColor="@color/text_font"
+            android:textSize="@dimen/text_size_normal" />
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

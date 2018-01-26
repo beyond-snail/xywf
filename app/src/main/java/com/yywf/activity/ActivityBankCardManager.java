@@ -187,7 +187,9 @@ public class ActivityBankCardManager extends BaseActivity implements OnClickList
         String url = ConfigXy.XY_BANK_INFO_REMOVE;
         RequestParams params = new RequestParams();
         params.put("memberId", UtilPreference.getStringValue(mContext, "memberId"));
-        params.put("bankId", bankCardInfo.getId());
+        params.put("bankId", bankCardInfo.getId()+"");
+        params.put("bankbillId", bankCardInfo.getBankbillId());
+
         params.put("token", UtilPreference.getStringValue(mContext, "token"));
 
         HttpUtil.get(url, params, new HttpUtil.RequestListener() {

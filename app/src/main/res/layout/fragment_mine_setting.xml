@@ -348,6 +348,37 @@
                 android:layout_height="8dp"
                 android:background="#f5f5f5" />
             <RelativeLayout
+                android:id="@+id/rl_new_help"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/setting_list_bg"
+                android:clickable="true"
+                android:padding="@dimen/padding_normal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:drawableLeft="@drawable/xinshouzhiying_icon"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:text="新手指引"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/text_size_hdpi" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/bank_icon_next" />
+            </RelativeLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#f5f5f5"
+                android:visibility="visible" />
+            <RelativeLayout
                 android:id="@+id/rl_gzwm"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
