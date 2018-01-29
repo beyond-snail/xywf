@@ -213,7 +213,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 			//手续费
 			String feeAmt = MoneyUtil.moneydiv(MoneyUtil.moneyMul(et_amt.getMoneyText().trim(), ConstApp.FEE+""), "10000");
-			feeAmt = MoneyUtil.moneyAdd(feeAmt , "1");
+			feeAmt = MoneyUtil.moneyAdd(feeAmt , "10");
 			textView(R.id.tv_tx_balance_amt).setText(feeAmt);
 
 		}
@@ -519,6 +519,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 		//手续费
 		String feeAmt = MoneyUtil.moneydiv(MoneyUtil.moneyMul(moneyText, ConstApp.FEE+""), "10000");
+		feeAmt = MoneyUtil.moneyAdd(feeAmt , "10");
 		tv_total_fee.setText(MoneyUtil.formatMoney(feeAmt));
 
 		//卡内最低余额（还款总额*10% + 手续费）

@@ -31,7 +31,7 @@ public class XRTextView extends TextView{
 		super(context, attrs);
 		text = attrs.getAttributeValue(
 				"http://schemas.android.com/apk/res/android", "text");
-		textSize = attrs.getAttributeIntValue(namespace, "textSize", 40);//字体大小
+		textSize = attrs.getAttributeIntValue(namespace, "textSize", 45);//字体大小
 		textColor = attrs.getAttributeIntValue(namespace, "textColor",Color.BLACK);//字体颜色
 		paddingLeft = attrs.getAttributeIntValue(namespace, "paddingLeft", 0);
 		paddingRight = attrs.getAttributeIntValue(namespace, "paddingRight", 0);

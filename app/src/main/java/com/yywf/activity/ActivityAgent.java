@@ -3,6 +3,7 @@ package com.yywf.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,7 @@ public class ActivityAgent extends BaseActivity implements View.OnClickListener 
 	private final String TAG = "ActivityAgent";
 	private TextView tv_web;
 	private TextView tv_phone;
+	private TextView tv_text;
 
 	private LinearLayout ll_agent;
 	private MoneyEditText et_amt;
@@ -66,6 +68,8 @@ public class ActivityAgent extends BaseActivity implements View.OnClickListener 
 
 		linearLayout(R.id.ll_agent).setOnClickListener(this);
 		button(R.id.btn_commit).setOnClickListener(this);
+//		tv_text = textView(R.id.tv_text);
+//		tv_text.setText(Html.fromHtml(getResources().getString(R.string.set_fee)));
 
 		et_fr = editText(R.id.et_fr);
 		et_amt = (MoneyEditText) editText(R.id.et_amt);

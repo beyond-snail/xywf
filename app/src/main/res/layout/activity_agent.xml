@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:rtv="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -65,6 +66,46 @@
                             android:orientation="horizontal">
                             <TextView
                                 android:id="@+id/tv_vip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="3dp"
+                                android:gravity="center"
+                                android:layout_gravity="center|bottom"
+                                android:text="0"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@color/white"/>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="返利"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/tv_fl"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="3dp"
@@ -191,7 +232,7 @@
                     android:layout_gravity="center_vertical"
                     android:ems="8"
                     android:gravity="center_vertical"
-                    android:text="设置拿货价格"
+                    android:text="设置返利(元)"
                     android:textColor="#333333"
                     android:textSize="@dimen/text_size_hdpi" />
 
@@ -223,14 +264,36 @@
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
+                <!--<com.tool.utils.view.RTextView-->
+                    <!--android:layout_width=""-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:drawableRight="@drawable/wanfen"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:text="@string/set_fee"-->
+                    <!--android:textColor="#333333"-->
+                    <!--android:textSize="@dimen/text_size_hdpi"/>-->
 
+                <!--<com.tool.utils.view.RTextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:text="@string/set_fee"-->
+                    <!--android:textColor="#333333"-->
+                    <!--android:textSize="@dimen/text_size_hdpi"-->
+                    <!--rtv:icon_src_normal="@drawable/wanfen"-->
+                    <!--rtv:icon_direction="right"-->
+                    <!--rtv:icon_height="20dp"-->
+                    <!--rtv:icon_width="30dp"/>-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:ems="8"
                     android:gravity="center_vertical"
-                    android:text="设置分润(‱)"
+                    android:text="@string/set_fee"
                     android:textColor="#333333"
                     android:textSize="@dimen/text_size_hdpi" />
 
