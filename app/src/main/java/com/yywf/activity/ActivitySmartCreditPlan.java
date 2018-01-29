@@ -213,6 +213,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 			//手续费
 			String feeAmt = MoneyUtil.moneydiv(MoneyUtil.moneyMul(et_amt.getMoneyText().trim(), ConstApp.FEE+""), "10000");
+			feeAmt = MoneyUtil.moneyAdd(feeAmt , "1");
 			textView(R.id.tv_tx_balance_amt).setText(feeAmt);
 
 		}
@@ -465,7 +466,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 					//预览计划
 					setPlanList(et_amt.getMoneyText());
-					isAction = true;
+
 				}else {
 
 					//执行计划
@@ -491,7 +492,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 		int curDay = Integer.valueOf(StringUtils.getCurDay());
 		String dateDay="";
 
-		linearLayout(R.id.ll_plan_amt).setVisibility(View.VISIBLE);
+
 
 
 
@@ -501,8 +502,9 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 		}else{
 			//还款日前-5天内，无法设置计划
 			if (curDay + 5 > hkDay){
-				ToastUtils.CustomShow(mContext, "还款日前5天无法执行计划");
-				return;
+//				ToastUtils.CustomShow(mContext, "还款日前5天无法执行计划");
+//				return;
+				dateDay = StringUtils.monthCalculate(StringUtils.getCurrentDate("yyyy-MM"), 1)+"-"+vo.getZdDay();
 			}else{
 				DecimalFormat df = new DecimalFormat("00");
 				String str_m = df.format(curDay);
@@ -543,6 +545,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 			//消费金额
 			String saleAmt = MoneyUtil.moneyAdd(creditAmt, MoneyUtil.moneydiv(MoneyUtil.moneyMul(creditAmt, ConstApp.FEE+""), "10000"));
+			saleAmt = MoneyUtil.moneyAdd(saleAmt, "1"); //一元清算费
 			planList.setFeeAmt(saleAmt);
 
 			//前9次消费金额的总和
@@ -594,7 +597,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 			Date randSaleTime = StringUtils.randomDate(StringUtils.dayCalculate(dateDay,  1) + " " + "17:30:00", StringUtils.dayCalculate(dateDay, + 1) + " " + "21:00:00");
 			list.get(0).setTime2(StringUtils.getStringFromDate(randSaleTime, "yyyy-MM-dd HH:mm:ss"));
 		}else{
-			Date randSaleTime = StringUtils.randomDate(StringUtils.dayCalculate(dateDay,  0) + " " + "17:30:00", StringUtils.dayCalculate(dateDay, + 1) + " " + "21:00:00");
+			Date randSaleTime = StringUtils.randomDate(StringUtils.dayCalculate(dateDay,  0) + " " + "17:30:00", StringUtils.dayCalculate(dateDay, + 0) + " " + "21:00:00");
 			list.get(0).setTime2(StringUtils.getStringFromDate(randSaleTime, "yyyy-MM-dd HH:mm:ss"));
 		}
 		LogUtils.e("消费"+(1)+"="+list.get(0).getTime2());
@@ -614,12 +617,13 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 		}
 
 
-
+		linearLayout(R.id.ll_plan_amt).setVisibility(View.VISIBLE);
 
 		adapter.notifyDataSetChanged();
 
 		btn.setText("执行计划");
 
+		isAction = true;
 
 
 	}

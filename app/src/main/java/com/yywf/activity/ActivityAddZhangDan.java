@@ -25,8 +25,8 @@ public class ActivityAddZhangDan extends BaseActivity implements View.OnClickLis
 
 
 	private String mUserId = "xinyi_test";
-//	private String mApiKey = "ac8c5018733142a0a66eff8666df550b";
-	private String mApiKey = "cb8fd8ea11094563b0d877c2b8bf719e";
+	private String mApiKey = "ac8c5018733142a0a66eff8666df550b";
+//	private String mApiKey = "cb8fd8ea11094563b0d877c2b8bf719e";
 
 	private String mThemeColor = "#ff9500";
 	private String mAgreementUrl = "https://api.51datakey.com/h5/agreement.html";

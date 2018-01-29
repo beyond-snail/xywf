@@ -156,6 +156,7 @@ public class ActivityVipGrade2 extends BaseActivity implements OnClickListener {
 //        totalBetter.setText(StringUtils.formatIntMoney(amount));
         tv_jlj_amt.setText(StringUtils.formatIntMoney(vo.getCashback()));
         tv_fl_amt.setText(vo.getProfitratio()+"");
+        tv_fr_amt.setText(StringUtils.formatIntMoney(vo.getEarnestMoney()));
 
     }
 

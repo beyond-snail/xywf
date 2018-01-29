@@ -46,7 +46,7 @@ public class VipGrade implements Serializable {
 	private int gradedemand;
 	private String profitratio;
 	private int cashback;
-
+	private int earnestMoney;
 	private boolean isDefault;
 	private int ishot;
 
@@ -112,6 +112,14 @@ public class VipGrade implements Serializable {
 
 	public void setDefault(boolean aDefault) {
 		isDefault = aDefault;
+	}
+
+	public int getEarnestMoney() {
+		return earnestMoney;
+	}
+
+	public void setEarnestMoney(int earnestMoney) {
+		this.earnestMoney = earnestMoney;
 	}
 
 	public int getIshot() {
