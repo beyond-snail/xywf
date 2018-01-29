@@ -237,7 +237,7 @@
                         android:layout_centerVertical="true"
                         android:ems="6"
                         android:gravity="center_vertical"
-                        android:text="我的奖励金"
+                        android:text="奖励金"
                         android:textColor="#333333"
                         android:textSize="14sp" />
 
@@ -283,7 +283,7 @@
                         android:layout_centerVertical="true"
                         android:ems="6"
                         android:gravity="center_vertical"
-                        android:text="我的分润"
+                        android:text="分润"
                         android:textColor="#333333"
                         android:textSize="14sp" />
 
@@ -331,7 +331,7 @@
                         android:layout_centerVertical="true"
                         android:ems="6"
                         android:gravity="center_vertical"
-                        android:text="我的分红"
+                        android:text="分红"
                         android:textColor="#333333"
                         android:textSize="14sp" />
 
