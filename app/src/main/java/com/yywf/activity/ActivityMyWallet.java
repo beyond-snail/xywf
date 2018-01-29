@@ -11,10 +11,21 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.RequestParams;
 import com.tool.utils.utils.StringUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.yywf.R;
+import com.yywf.config.ConfigXy;
+import com.yywf.http.HttpUtil;
+import com.yywf.model.MyWalletInfo;
+import com.yywf.model.WalletInfo;
 import com.yywf.util.MyActivityManager;
 import com.yywf.widget.dialog.MyCustomDialog;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class ActivityMyWallet extends BaseActivity implements View.OnClickListener {
 
@@ -23,13 +34,17 @@ public class ActivityMyWallet extends BaseActivity implements View.OnClickListen
 	private TextView tv_fl_amt;
 	private TextView tv_fr_amt;
 	private TextView tv_jlj_amt;
-	private TextView tv1;
-	private TextView tv2;
+	private TextView tv_amount;
+	private TextView tv_count;
 
 
 	private TextView tv_yesterday_trans;
 	private TextView tv_accumulate_trans;
 
+	private String totalRatio;
+	private String totalAmt;
+	private String yesterdayTotalRatio;
+	private String yerterdayTotalAmt;
 
 
 	private View view;
@@ -66,6 +81,11 @@ public class ActivityMyWallet extends BaseActivity implements View.OnClickListen
 		tv_fr_amt = textView(R.id.tv_fr_amt);
 		tv_fl_amt = textView(R.id.tv_fl_amt);
 		tv_jlj_amt = textView(R.id.tv_jlj_amt);
+
+		tv_amount = textView(R.id.tv_amount);
+		tv_count = textView(R.id.tv_count);
+
+
 
 		tv_yesterday_trans = textView(R.id.tv_yesterday_trans);
 		tv_yesterday_trans.setOnClickListener(this);
@@ -134,6 +154,71 @@ public class ActivityMyWallet extends BaseActivity implements View.OnClickListen
 	@Override
 	protected void onResume() {
 		super.onResume();
+		loadData();
+	}
+
+
+	private void loadData() {
+
+		showProgress("加载中...");
+
+		String url = ConfigXy.XY_WALLET_INFO;
+		RequestParams params = new RequestParams();
+		params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+		params.add("token", UtilPreference.getStringValue(mContext, "token"));
+
+		HttpUtil.get(url, params, new HttpUtil.RequestListener() {
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public void success(String response) {
+				disShowProgress();
+				try {
+
+					JSONObject result = new JSONObject(response);
+					if (result.optInt("code") == -2){
+						UtilPreference.clearNotKeyValues(mContext);
+						// 退出账号 返回到登录页面
+						MyActivityManager.getInstance().logout(mContext);
+						return;
+					}
+					if (!result.optBoolean("status")) {
+						showErrorMsg(result.getString("message"));
+						return;
+					}
+
+
+
+					Gson gson = new Gson();
+					MyWalletInfo walletInfo = gson.fromJson(result.optString("data"), new TypeToken<MyWalletInfo>() {
+					}.getType());
+
+					tv_jlj_amt.setText(walletInfo.getRewardAmt());
+					tv_fl_amt.setText(walletInfo.getProfitAmt());
+					tv_fr_amt.setText(walletInfo.getRebateAmt());
+
+					tv_amount.setText(walletInfo.getYerterdayTotalAmt());
+					tv_count.setText(walletInfo.getYesterdayTotalRatio());
+
+					totalRatio = walletInfo.getTotalRatio();
+					totalAmt = walletInfo.getTotalAmt();
+					yesterdayTotalRatio = walletInfo.getYesterdayTotalRatio();
+					yerterdayTotalAmt = walletInfo.getYerterdayTotalAmt();
+
+
+				} catch (Exception e) {
+					e.getMessage();
+
+				}
+			}
+
+			@Override
+			public void failed(Throwable error) {
+				disShowProgress();
+				showE404();
+
+			}
+		});
 	}
 
 	@Override
@@ -159,6 +244,7 @@ public class ActivityMyWallet extends BaseActivity implements View.OnClickListen
 				break;
 			case R.id.tv_yesterday_trans:
 				setUI(1);
+
 				break;
 			case R.id.tv_accumulate_trans:
 				setUI(2);
@@ -189,10 +275,16 @@ public class ActivityMyWallet extends BaseActivity implements View.OnClickListen
 			case 1:// 切换到昨日分润
 				tv_yesterday_trans.setTextColor(mContext.getResources().getColorStateList(R.color.font_red_selector2));
 				tv_yesterday_trans.setBackgroundResource(R.drawable.btn_yellow_selector);
+
+				tv_amount.setText(totalAmt);
+				tv_count.setText(totalRatio);
 				break;
 			case 2:// 切换到累计分润
 				tv_accumulate_trans.setTextColor(mContext.getResources().getColorStateList(R.color.font_red_selector2));
 				tv_accumulate_trans.setBackgroundResource(R.drawable.btn_yellow_selector);
+
+				tv_amount.setText(yerterdayTotalAmt);
+				tv_count.setText(yesterdayTotalRatio);
 				break;
 			default:
 				break;

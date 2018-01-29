@@ -174,5 +174,8 @@ public class ConfigXy {
     public static final String FY_PAY = ZF_SERVER_API + "app/callback/sdkBankPay";
     public static final String FY_PAY_CALLBACK = ZF_SERVER_API + "app/callback/fySdkPay";
 
+    //会员钱包信息
+    public static final String XY_WALLET_INFO = ZF_SERVER_API + "app/member/memberWalletInfo";
+
 
 }
