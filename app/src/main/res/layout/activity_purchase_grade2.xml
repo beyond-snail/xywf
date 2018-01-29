@@ -229,7 +229,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/guanzhuwomen_erweima" />
+                    android:src="@drawable/qr_joinus" />
             </LinearLayout>
 
 

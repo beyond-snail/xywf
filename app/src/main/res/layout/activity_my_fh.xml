@@ -26,7 +26,7 @@
             android:background="@drawable/btn_yellow_selector"
             android:gravity="center"
             android:padding="@dimen/dip_normal"
-            android:text="昨日分红"
+            android:text="昨日分润"
             android:textColor="@color/font_red_selector2"
             android:textSize="@dimen/text_size_normal" />
 
@@ -39,7 +39,7 @@
             android:background="@drawable/btn_yellow_selector2"
             android:gravity="center"
             android:padding="@dimen/dip_normal"
-            android:text="累计分红"
+            android:text="累计分润"
             android:textColor="@color/font_red_selector"
             android:textSize="@dimen/text_size_normal" />
 
@@ -120,7 +120,7 @@
                 android:layout_centerVertical="true"
                 android:ems="6"
                 android:gravity="center_vertical"
-                android:text="昨日累计分红"
+                android:text="昨日累计分润"
                 android:textColor="#333333"
                 android:textSize="14sp" />
 
@@ -159,7 +159,7 @@
                 android:layout_centerVertical="true"
                 android:ems="6"
                 android:gravity="center_vertical"
-                android:text="历史累计分红"
+                android:text="历史累计分润"
                 android:textColor="#333333"
                 android:textSize="14sp" />
 

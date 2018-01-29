@@ -54,7 +54,7 @@ public class ActivityMyJlj extends BaseActivity implements OnClickListener {
 		mContext = this;
 		setContentView(R.layout.activity_my_jlj);
 		MyActivityManager.getInstance().addActivity(this);
-		initTitle("我的奖励金");
+		initTitle("奖励金");
 		if (findViewById(R.id.backBtn) != null) {
 			findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
 		}

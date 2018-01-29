@@ -54,7 +54,7 @@ public class ActivityMyFh extends BaseActivity implements OnClickListener {
 		mContext = this;
 		setContentView(R.layout.activity_my_fh);
 		MyActivityManager.getInstance().addActivity(this);
-		initTitle("我的分红");
+		initTitle("分润");
 		if (findViewById(R.id.backBtn) != null) {
 			findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
 		}

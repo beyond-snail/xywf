@@ -62,7 +62,7 @@ public class ActivityMyBenefit extends BaseActivity implements OnClickListener {
 		mContext = this;
 		setContentView(R.layout.activity_my_fr);
 		MyActivityManager.getInstance().addActivity(this);
-		initTitle("我的分润");
+		initTitle("返利金");
 		if (findViewById(R.id.backBtn) != null) {
 			findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
 		}

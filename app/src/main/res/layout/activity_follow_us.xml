@@ -108,7 +108,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
-                    android:text="www.xyk11.com"
+                    android:text="www.xywof.com"
                     android:textColor="@color/text_font"
                     android:textSize="@dimen/text_size_xhdpi"/>
             </LinearLayout>
