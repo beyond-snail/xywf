@@ -1,6 +1,5 @@
 package com.yywf.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,22 +8,17 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.RequestParams;
-import com.tool.utils.passwordView.KeyBoardDialog;
-import com.tool.utils.passwordView.PayPasswordView;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.ToastUtils;
 import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MoneyEditText;
 import com.tool.utils.view.MyCountDownTimer;
-import com.tool.utils.view.MyListView;
 import com.tool.utils.view.RoundImageView;
 import com.yywf.R;
 import com.yywf.config.ConfigXy;
@@ -34,12 +28,10 @@ import com.yywf.http.HttpUtil;
 import com.yywf.model.BankCardInfo;
 import com.yywf.util.MyActivityManager;
 import com.yywf.widget.dialog.DialogUtils;
-import com.yywf.widget.dialog.MyCustomDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -153,11 +145,7 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
             @Override
             public void afterTextChanged(Editable s) {
 
-                Date nowTime = StringUtils.getDateFromString(StringUtils.getFormatCurTime(), "yyyyMMddHHmmss");
-                Date startTime  = StringUtils.getDate(StringUtils.getCurDate()+"000000", "yyyyMMddHHmmss");
-                Date endTime  = StringUtils.getDate(StringUtils.getCurDate()+"210000", "yyyyMMddHHmmss");
-                if (!StringUtils.isEffectiveDate(nowTime, startTime, endTime)){
-                    ToastUtils.CustomShow(mContext, "该时间段内不能交易");
+                if (!getIsPay()){
                     return;
                 }
 
@@ -175,6 +163,18 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
 
         button(R.id.btn_commit).setOnClickListener(this);
 
+    }
+
+
+    private boolean getIsPay(){
+        Date nowTime = StringUtils.getDateFromString(StringUtils.getFormatCurTime(), "yyyyMMddHHmmss");
+        Date startTime  = StringUtils.getDate(StringUtils.getCurDate()+"000000", "yyyyMMddHHmmss");
+        Date endTime  = StringUtils.getDate(StringUtils.getCurDate()+"210000", "yyyyMMddHHmmss");
+        if (!StringUtils.isEffectiveDate(nowTime, startTime, endTime)){
+            ToastUtils.CustomShow(mContext, "该时间段内不能交易");
+            return false;
+        }
+        return true;
     }
 
 
@@ -218,6 +218,10 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
      *
      */
     private void getValidCode() {
+
+        if (!getIsPay()){
+            return;
+        }
 
         if (StringUtils.isBlank(et_amt.getText().toString().trim())){
             ToastUtils.CustomShow(mContext, "请输入金额");
@@ -266,9 +270,18 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
      */
     private void doCommit() {
 
+        if (!getIsPay()){
+            return;
+        }
 
         if (StringUtils.isBlank(et_amt.getText().toString().trim())){
             ToastUtils.CustomShow(mContext, "请输入金额");
+            return;
+        }
+
+        int temp = StringUtils.getInt(StringUtils.changeY2F(et_amt.getMoneyText()));
+        if (temp < 58900){
+            ToastUtils.CustomShow(mContext, "交易金额最低589");
             return;
         }
 
