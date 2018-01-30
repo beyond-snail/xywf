@@ -10,112 +10,185 @@
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:background="#f5f5f5" />
-    <ScrollView
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="#f5f5f5"-->
+            <!--android:orientation="vertical">-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:text="了解我们"-->
+                <!--android:textColor="@color/text_font"-->
+                <!--android:textSize="@dimen/text_size_xhdpi" />-->
+
+
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:src="@drawable/qr_knowus" />-->
+
+            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_gravity="center"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_marginTop="10dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:text="加入我们"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:textColor="@color/text_font"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:textSize="@dimen/text_size_xhdpi" />&ndash;&gt;-->
+
+
+            <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_gravity="center_horizontal"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_marginTop="5dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_marginBottom="10dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:src="@drawable/qr_joinus" />&ndash;&gt;-->
+
+
+
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="20dp"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:gravity="center">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="center"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:textColor="#333333"-->
+                    <!--android:textSize="@dimen/text_size_xhdpi"-->
+                    <!--android:text="招商热线:"/>-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="0571-8858 6888"-->
+                    <!--android:textColor="@color/text_font"-->
+                    <!--android:textSize="@dimen/text_size_xhdpi"/>-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:gravity="center">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="center"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:textColor="#333333"-->
+                    <!--android:textSize="@dimen/text_size_xhdpi"-->
+                    <!--android:text="公司网站:"/>-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="www.xywof.com"-->
+                    <!--android:textColor="@color/text_font"-->
+                    <!--android:textSize="@dimen/text_size_xhdpi"/>-->
+            <!--</LinearLayout>-->
+        <!--</LinearLayout>-->
+    <!--</ScrollView>-->
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/qr_knowus" />
+
+    <!--<TextView-->
+        <!--android:id="@+id/tv_current_version"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:text="了解我们"-->
+        <!--android:textColor="@color/text_font"-->
+        <!--android:textSize="@dimen/text_size_xhdpi" />-->
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:textColor="#333333"
+            android:textSize="@dimen/text_size_xhdpi"
+            android:text="招商热线:"/>
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="#f5f5f5"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:text="了解我们"
-                android:textColor="@color/text_font"
-                android:textSize="@dimen/text_size_xhdpi" />
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="0571-8858 6888"
+            android:textColor="@color/text_font"
+            android:textSize="@dimen/text_size_xhdpi"/>
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center"
+        android:gravity="center">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/qr_knowus" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:textColor="#333333"
+            android:textSize="@dimen/text_size_xhdpi"
+            android:text="公司网站:"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="加入我们"
-                android:textColor="@color/text_font"
-                android:textSize="@dimen/text_size_xhdpi" />
-
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/qr_joinus" />
-
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dp"
-                    android:textColor="#333333"
-                    android:textSize="@dimen/text_size_xhdpi"
-                    android:text="招商热线:"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:text="0571-8858 6888"
-                    android:textColor="@color/text_font"
-                    android:textSize="@dimen/text_size_xhdpi"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp"
-                android:layout_gravity="center"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dp"
-                    android:textColor="#333333"
-                    android:textSize="@dimen/text_size_xhdpi"
-                    android:text="公司网站:"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:text="www.xywof.com"
-                    android:textColor="@color/text_font"
-                    android:textSize="@dimen/text_size_xhdpi"/>
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="www.xywof.com"
+            android:textColor="@color/text_font"
+            android:textSize="@dimen/text_size_xhdpi"/>
+    </LinearLayout>
 
 
 

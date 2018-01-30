@@ -16,20 +16,22 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:orientation="vertical">
-        <!--<TextView-->
-            <!--android:id="@+id/title"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:padding="10dp"-->
-            <!--android:text="@string/share_to"-->
-            <!--android:textColor="#333333"-->
-            <!--android:textSize="17sp"/>-->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="我要分享"
+            android:textColor="#333333"
+            android:textSize="17sp"/>
 
-        <!--<View-->
-            <!--android:id="@+id/title_sep"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="1px"-->
-            <!--android:background="#8d8d8d"/>-->
+        <View
+            android:id="@+id/title_sep"
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="#8d8d8d"/>
 
         <GridView
             android:id="@+id/share_grid"

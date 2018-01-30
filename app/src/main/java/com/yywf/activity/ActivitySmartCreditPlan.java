@@ -536,19 +536,25 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 		String lastSaleAmt = "";
 		String lastCreditAmt = "";
-
+		Log.e(TAG, "=======================输入的还款金额="+moneyText.trim()+"==========================");
 		for (int i = 0; i < 9; i++){
+
+			Log.e(TAG, "=======================第"+(i+1)+"次"+"==========================");
+
 			PlanList planList = new PlanList();
 
+			int xishu = StringUtils.getRandIntNum(ConstApp.COFFICIENT);
 			//还款金额
-			String creditAmt = MoneyUtil.moneydiv(MoneyUtil.moneyMul(moneyText,  StringUtils.getRandIntNum(ConstApp.COFFICIENT)+""), "1000");
+			String creditAmt = MoneyUtil.moneydiv(MoneyUtil.moneyMul(moneyText,  xishu+""), "1000");
 			planList.setAmt(creditAmt);
+			Log.e(TAG, "系数="+xishu);
+			Log.e(TAG, "还款金额="+creditAmt);
 
 			//消费金额
 			String saleAmt = MoneyUtil.moneyAdd(creditAmt, MoneyUtil.moneydiv(MoneyUtil.moneyMul(creditAmt, ConstApp.FEE+""), "10000"));
 			saleAmt = MoneyUtil.moneyAdd(saleAmt, "1"); //一元清算费
 			planList.setFeeAmt(saleAmt);
-
+			Log.e(TAG, "消费金额="+saleAmt);
 			//前9次消费金额的总和
 			lastSaleAmt = MoneyUtil.moneyAdd(MoneyUtil.formatMoney(lastSaleAmt), saleAmt);
 			//前9次还款金额的总和
@@ -557,13 +563,18 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 			list.add(planList);
 		}
 
+		Log.e(TAG, "=======================第"+10+"次"+"==========================");
 		//计算 最后一笔
 		PlanList planList1 = new PlanList();
-		planList1.setAmt(MoneyUtil.moneySub(moneyText, lastCreditAmt));
-		planList1.setFeeAmt(MoneyUtil.moneySub(moneyText, lastSaleAmt));
+		String lastC = MoneyUtil.moneySub(moneyText, lastCreditAmt);
+		String lastS = MoneyUtil.moneySub(MoneyUtil.moneyAdd(moneyText, feeAmt), lastSaleAmt);
+//		lastS = MoneyUtil.moneyAdd(lastS, "1"); //一元清算费
+		planList1.setAmt(lastC);
+		planList1.setFeeAmt(lastS);
 		list.add(planList1);
-
-
+		Log.e(TAG, "还款金额="+lastC);
+		Log.e(TAG, "消费金额="+lastS);
+		Log.e(TAG, "==========================结束==============================");
 
 
 
