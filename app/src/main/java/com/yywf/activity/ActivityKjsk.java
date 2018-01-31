@@ -274,6 +274,12 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
             return;
         }
 
+        if (StringUtils.isBlank(vo.getId())) {
+            //补全信息
+            startActivityForResult(new Intent(mContext, ActivityCreditSupply.class).putExtra("bankbillId", vo.getBankbillId()), 0);
+            return;
+        }
+
         if (StringUtils.isBlank(et_amt.getText().toString().trim())){
             ToastUtils.CustomShow(mContext, "请输入金额");
             return;
@@ -430,6 +436,9 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
 
                 finish();
             }
+        }if (requestCode == 2 && resultCode == 3){
+            String cardId = data.getStringExtra("cardId");
+            vo.setId(cardId);
         }
     }
 
