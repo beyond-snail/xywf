@@ -19,8 +19,8 @@ android {
         applicationId "com.yywf"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 1017
-        versionName "1.1.7"
+        versionCode 1018
+        versionName "1.1.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         ndk {
