@@ -88,7 +88,7 @@
                         android:gravity="center_vertical"
                         android:marqueeRepeatLimit="marquee_forever"
                         android:singleLine="true"
-                        android:text="“沃富上线，快捷收钱秒到带积分、提额安全、费率全国最优惠万75+2.5”"
+                        android:text="“沃富上线，快捷收钱秒到带积分、提额安全、费率全国最优惠万75+3”"
                         android:textColor="#666666"
                         android:textSize="16sp" />
                 </LinearLayout>
