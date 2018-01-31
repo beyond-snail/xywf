@@ -99,7 +99,7 @@
             android:gravity="center_vertical"
             android:layout_centerVertical="true"
             android:ems="4"
-            android:text="还信用卡"
+            android:text="自助还款"
             android:textColor="#333333"
             android:textSize="16sp"/>
 
