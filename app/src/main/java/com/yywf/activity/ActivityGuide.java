@@ -66,7 +66,7 @@ public class ActivityGuide extends Activity implements OnClickListener {
 
 			@Override
 			public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-				if (currentPosititon == 3) {
+				if (currentPosititon == 5) {
 					if (Math.abs(velocityX) < 200) {
 						return false;
 					}
@@ -109,7 +109,7 @@ public class ActivityGuide extends Activity implements OnClickListener {
 	 * 如果加载图片失败，使用本地引导图
 	 */
 	private void initLocalData() {
-		int[] imageIds = new int[] {R.drawable.guide1, R.drawable.guide2, R.drawable.guide3};
+		int[] imageIds = new int[] {R.drawable.guide1, R.drawable.guide2, R.drawable.guide3, R.drawable.guide4, R.drawable.guide5};
 		// 准备显示的图片
 		images.clear();
 		for (int i = 0; i < imageIds.length; i++) {
@@ -231,7 +231,7 @@ public class ActivityGuide extends Activity implements OnClickListener {
 		}
 		public void onPageSelected(int position) {
 			currentPosititon = position;
-			if (position == 2) {
+			if (position == 4) {
 				button.setVisibility(View.INVISIBLE);
 //				images.get(position-1).setOnClickListener(new OnClickListener() {
 //					@Override
