@@ -59,6 +59,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/setting_list_bg"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:padding="15dp">
 
         <TextView
@@ -117,6 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:visibility="invisible"
             android:src="@drawable/bank_icon_next" />
 
         <TextView

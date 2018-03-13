@@ -177,5 +177,11 @@ public class ConfigXy {
     //会员钱包信息
     public static final String XY_WALLET_INFO = ZF_SERVER_API + "app/member/memberWalletInfo";
 
+    //预览计划
+    public static final String XY_PREVIEW_PLAN = ZF_SERVER_API + "app/pay/previewPlan";
+    public static final String XY_DO_PLAN = ZF_SERVER_API + "app/pay/yiShengBankCardBind";
+    //我的团队
+    public static final String XY_MY_TEAM = ZF_SERVER_API + "app/member/myTeam";
+
 
 }

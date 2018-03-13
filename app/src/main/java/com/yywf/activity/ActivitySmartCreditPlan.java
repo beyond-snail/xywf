@@ -48,6 +48,7 @@ import com.yywf.config.ConfigXy;
 import com.yywf.config.ConstApp;
 import com.yywf.http.HttpUtil;
 import com.yywf.model.BankCardInfo;
+import com.yywf.model.PlanInfo;
 import com.yywf.model.PlanList;
 import com.yywf.util.MyActivityManager;
 import com.yywf.widget.dialog.MyCustomDialog;
@@ -95,6 +96,8 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 	private BankCardInfo vo;
 
+	private PlanInfo info;
+
 	private boolean isAction = false;
 
 	@Override
@@ -117,7 +120,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 		initView();
 
-		initListPlan();
+//		initListPlan();
 
 	}
 
@@ -253,7 +256,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 				}
 
 				//延迟800ms，如果不再输入字符，则执行该线程的run方法
-				handler.postDelayed(delayRun, 500);
+//				handler.postDelayed(delayRun, 500);
 			}
 		});
 //		KeyBoardUtils.closeKeybord(et_amt, mContext);
@@ -262,45 +265,47 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 
 
-		relativeLayout(R.id.ll_do_model).setOnClickListener(this);
+//		relativeLayout(R.id.ll_do_model).setOnClickListener(this);
 		btn = button(R.id.btn_commit);
 		btn.setText("预览计划");
 		btn.setOnClickListener(this);
 
+		tv_do_text.setText("自动还款");
+
 
 		//加载模式框
-		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		view = inflater.inflate(R.layout.dialog_credit_choice, null);
-		radioGroup = view.findViewById(R.id.radioGroup1);
-		btn1 = view.findViewById(R.id.button1);
-		btn2 = view.findViewById(R.id.button2);
-
-		//默认手动还款
-//		btn1.setChecked(true);
-//		tv_do_text.setText(btn1.getText().toString());
-
-		final MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(mContext,
-				R.style.MyDialogStyleBottom);
-		customBuilder.setCanceledOnTouchOutside(true);
-		customBuilder.setLine(0);// 分割横线所处位置 在自定义布局上下或隐藏 0隐藏 1线在上方
-		customBuilder.setContentView(view);
-		customBuilder.setDisBottomButton(true);
-		myCustomDialog = customBuilder.create();
-
-
-		//当改变的时候
-		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
-				if (i == btn1.getId()){
-					tv_do_text.setText(btn1.getText().toString());
-					myCustomDialog.dismiss();
-				}else if (i == btn2.getId()){
-					tv_do_text.setText(btn2.getText().toString());
-					myCustomDialog.dismiss();
-				}
-			}
-		});
+//		LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//		view = inflater.inflate(R.layout.dialog_credit_choice, null);
+//		radioGroup = view.findViewById(R.id.radioGroup1);
+//		btn1 = view.findViewById(R.id.button1);
+//		btn2 = view.findViewById(R.id.button2);
+//
+//		//默认自动还款
+//		btn2.setChecked(true);
+//		tv_do_text.setText(btn2.getText().toString());
+//
+//		final MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(mContext,
+//				R.style.MyDialogStyleBottom);
+//		customBuilder.setCanceledOnTouchOutside(true);
+//		customBuilder.setLine(0);// 分割横线所处位置 在自定义布局上下或隐藏 0隐藏 1线在上方
+//		customBuilder.setContentView(view);
+//		customBuilder.setDisBottomButton(true);
+//		myCustomDialog = customBuilder.create();
+//
+//
+//		//当改变的时候
+//		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//			@Override
+//			public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+//				if (i == btn1.getId()){
+//					tv_do_text.setText(btn1.getText().toString());
+//					myCustomDialog.dismiss();
+//				}else if (i == btn2.getId()){
+//					tv_do_text.setText(btn2.getText().toString());
+//					myCustomDialog.dismiss();
+//				}
+//			}
+//		});
 
 		myListView = findViewById(R.id.listview);
 		adapter = new AdapterPlanList(mContext, list);
@@ -324,30 +329,64 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 		Log.d(TAG, "reloadData()");
 		page = 1;
 		list.clear();
-		loadData(true);
+		loadData();
 	}
 
 
-	private void loadData(boolean showProgress) {
-
-
-
-		// String url = ConfigApp.HC_GET_STORE_GOODS;
-		String url = ConfigXy.PLAN_LIST;
+	private void actionData(){
+		showProgress("加载中...");
+		String url = ConfigXy.XY_DO_PLAN;
 		RequestParams params = new RequestParams();
+		params.put("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+		params.put("token", UtilPreference.getStringValue(mContext, "token"));
+		params.put("cardId", vo.getId());
+		params.put("planId",info.getPlan_id());
+		HttpUtil.get(url, params, new HttpUtil.RequestListener() {
 
-//		String id = UtilPreference.getStringValue(mContext, "zf_member_id");
-//		params.add("memberId", id);
-//		params.add("token", UtilPreference.getStringValue(mContext, "token"));
-//		params.add("page", page + "");// 当前页
-//		params.add("key", editText(R.id.query).getText().toString());
-//		params.add("sortType", sort_qb + "");
-//		if (cId != 0) {
-//			params.add("categroyId", cId + "");
-//		}
-//		if (showProgress) {
-//			showProgress("加载中...");
-//		}
+			@Override
+			public void success(String response) {
+				disShowProgress();
+				try {
+
+					JSONObject result = new JSONObject(response);
+					if (result.optInt("code") == -2){
+						UtilPreference.clearNotKeyValues(mContext);
+						// 退出账号 返回到登录页面
+						MyActivityManager.getInstance().logout(mContext);
+						return;
+					}
+					if (!result.optBoolean("status")) {
+						showErrorMsg(result.getString("message"));
+						return;
+					}
+
+					showErrorMsg(result.getString("message"));
+					finish();
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void failed(Throwable error) {
+				showE404();
+				disShowProgress();
+			}
+		});
+	}
+
+
+	private void loadData() {
+
+
+		showProgress("加载中...");
+		String url = ConfigXy.XY_PREVIEW_PLAN;
+		RequestParams params = new RequestParams();
+		params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+		params.add("token", UtilPreference.getStringValue(mContext, "token"));
+		params.add("cardId", vo.getId());
+		params.add("money", StringUtils.changeY2F(et_amt.getMoneyText().trim()));
 
 		HttpUtil.get(url, params, new HttpUtil.RequestListener() {
 
@@ -364,24 +403,67 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 						return;
 					}
 					if (!result.optBoolean("status")) {
-						// showErrorMsg(result.getString("message"));
+						 showErrorMsg(result.getString("message"));
 						return;
 					}
-					if (result.getString("data") != null) {
+					if (!StringUtils.isBlank(result.getString("data"))) {
 						String str = result.getString("data");
+
+						//再次解析
+						if (StringUtils.isBlank(str)){
+							showErrorMsg("数据返回为空");
+							return;
+						}
+
+						JSONObject obj = new JSONObject(str);
+						if (StringUtils.isBlank(obj.optString("data"))){
+							showErrorMsg("数据返回为空");
+							return;
+						}
 
 						Gson gson = new Gson();
 						// json数据转换成List
-						List<PlanList> datas = gson.fromJson(str, new TypeToken<List<PlanList>>() {
-						}.getType());
-						list.addAll(datas);
+						info = gson.fromJson(obj.optString("data"), new TypeToken<PlanInfo>() {}.getType());
+
+						if (info == null){
+							showErrorMsg("数据解析失败");
+							return;
+						}
+						if (info.getPlan() == null){
+							showErrorMsg("无预览计划");
+							return;
+						}
+						list.clear();
+						//组装数据
+						for (int i = 0; i < info.getPlan().size(); i++){
+							PlanList planList = new PlanList();
+							planList.setFeeAmt(info.getPlan().get(i).getConsume().getReal_payment());
+							planList.setTime2(info.getPlan().get(i).getConsume().getConsume_at());
+							planList.setAmt(info.getPlan().get(i).getRepay().getReal_payment());
+							planList.setTime1(info.getPlan().get(i).getRepay().getRepay_at());
+							list.add(planList);
+						}
+
+//						List<PlanList> datas = gson.fromJson(obj.optString("data"), new TypeToken<List<PlanList>>() {
+//						}.getType());
+//						list.addAll(datas);
 						adapter.notifyDataSetChanged();
 						if (list.size() > 0) {
 							linearLayout(R.id.id_no_data).setVisibility(View.GONE);
-							// mPullRefreshScrollView.setVisibility(View.VISIBLE);
+							linearLayout(R.id.ll_plan_amt).setVisibility(View.VISIBLE);
+
 							btn.setText("执行计划");
+							isAction = true;
+
+							//总金额
+							tv_total_amt.setText(MoneyUtil.formatMoney(et_amt.getMoneyText()));
+							tv_total_fee.setText(StringUtils.isBlank(info.getCharge().getTotal()) ? "--" : info.getCharge().getTotal());
+							//卡内最低余额（还款总额*10% + 手续费）
+							String minBalanceAmt = MoneyUtil.moneyAdd(MoneyUtil.moneydiv(MoneyUtil.moneyMul(et_amt.getMoneyText(), "10"), "100"), info.getCharge().getTotal());
+							tv_sigle_amt.setText("执行计划需要"+MoneyUtil.formatMoney(minBalanceAmt)+"元");
 						} else {
 							linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
+							linearLayout(R.id.ll_plan_amt).setVisibility(View.GONE);
 							// mPullRefreshScrollView.setVisibility(View.GONE);
 							startActivityForResult(new Intent(mContext, ActivityCreditSupply.class), 0);
 						}
@@ -459,18 +541,21 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 					}
 
 					//设置模式
-					if (StringUtils.isBlank(tv_do_text.getText().toString().trim())) {
-						ToastUtils.CustomShow(mContext, "请设置模式");
-						return;
-					}
+//					if (StringUtils.isBlank(tv_do_text.getText().toString().trim())) {
+//						ToastUtils.CustomShow(mContext, "请设置模式");
+//						return;
+//					}
 
 					//预览计划
-					setPlanList(et_amt.getMoneyText());
+//					setPlanList(et_amt.getMoneyText());
+
+					loadData();
 
 				}else {
 
 					//执行计划
-					ToastUtils.CustomShow(mContext, "执行计划");
+//					ToastUtils.CustomShow(mContext, "执行计划");
+					actionData();
 
 				}
 
@@ -478,7 +563,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 				break;
 			case R.id.ll_do_model:
-				myCustomDialog.show();
+//				myCustomDialog.show();
 				break;
 
 		}

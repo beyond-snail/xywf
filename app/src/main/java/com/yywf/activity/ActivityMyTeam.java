@@ -3,20 +3,28 @@ package com.yywf.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.loopj.android.http.RequestParams;
 import com.tool.utils.utils.LogUtils;
 import com.tool.utils.utils.ScreenUtils;
 import com.tool.utils.utils.StringUtils;
+import com.tool.utils.utils.ToastUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MoneyEditText;
 import com.yywf.R;
+import com.yywf.config.ConfigXy;
+import com.yywf.http.HttpUtil;
 import com.yywf.model.AdInfo;
 import com.yywf.util.MyActivityManager;
 import com.yywf.widget.ADCommonView;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,5 +120,52 @@ public class ActivityMyTeam extends BaseActivity implements View.OnClickListener
 
 
 		}
+	}
+
+
+	public void loadData(){
+		showProgress("加载中...");
+		RequestParams params = new RequestParams();
+		params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+		params.add("token", UtilPreference.getStringValue(mContext, "token"));
+		HttpUtil.get(ConfigXy.XY_MY_TEAM, params, new HttpUtil.RequestListener() {
+			@Override
+			public void success(String response) {
+				disShowProgress();
+				try {
+
+					JSONObject result = new JSONObject(response);
+					if (result.optInt("code") == -2){
+						UtilPreference.clearNotKeyValues(mContext);
+						// 退出账号 返回到登录页面
+						MyActivityManager.getInstance().logout(mContext);
+						return;
+					}
+					if (!result.optBoolean("status")) {
+						ToastUtils.CustomShow(mContext, result.optString("message"));
+					}else{
+						JSONObject dataStr = result.getJSONObject("data");
+						String proxyAmount = dataStr.optString("proxyAmount");
+						String memberAmount = dataStr.optString("memberAmount");
+						String commonAmount = dataStr.optString("commonAmount");
+
+						tv_t_count_person.setText(StringUtils.isBlank(proxyAmount) ? "0" : proxyAmount);
+						tv_activate_count.setText(StringUtils.isBlank(memberAmount) ? "0" : memberAmount);
+						tv_no_activate_count.setText(StringUtils.isBlank(commonAmount) ? "0" : commonAmount);
+					}
+
+
+
+				} catch (Exception e) {
+					Log.e(TAG, "doCommit() Exception: " + e.getMessage());
+				}
+			}
+
+			@Override
+			public void failed(Throwable error) {
+				disShowProgress();
+				showE404();
+			}
+		});
 	}
 }

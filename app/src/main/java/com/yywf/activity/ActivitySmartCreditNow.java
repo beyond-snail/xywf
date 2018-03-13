@@ -12,7 +12,7 @@ import com.yywf.util.MyActivityManager;
 
 public class ActivitySmartCreditNow extends BaseActivity implements View.OnClickListener {
 
-	private final String TAG = "ActivitySmartCreditNow";
+	private static final String TAG = "ActivitySmartCreditNow";
 	private BankCardInfo vo;
 
 

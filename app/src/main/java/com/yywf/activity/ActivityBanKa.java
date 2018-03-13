@@ -119,7 +119,7 @@ public class ActivityBanKa extends BaseActivity  {
 								list.get(position).getName()));
 						break;
 					case 3: //兴业银行
-						String url_xy = "https://wm.cib.com.cn/application/cardapp/newfast/ApplyCard/toSelectCard?id=a8b4ff5394744e31ba3607c9668cd24c";
+						String url_xy = "https://ccshop.cib.com.cn:8010/application/cardapp/newfast/ApplyCard/toSelectCard?id=11f4966a588340a3acca4ca861f2b78e";
 						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_xy).putExtra("title",
 								list.get(position).getName()));
 						break;

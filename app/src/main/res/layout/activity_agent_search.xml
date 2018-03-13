@@ -102,7 +102,6 @@
                 android:listSelector="@drawable/setting_list_bg" />
 
 
-
             <LinearLayout
                 android:id="@+id/id_no_data"
                 android:layout_width="match_parent"
