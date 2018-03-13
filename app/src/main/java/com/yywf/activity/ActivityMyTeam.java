@@ -100,6 +100,7 @@ public class ActivityMyTeam extends BaseActivity implements View.OnClickListener
 	@Override
 	protected void onResume() {
 		super.onResume();
+		loadData();
 	}
 
 	@Override
