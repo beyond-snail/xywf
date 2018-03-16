@@ -2,6 +2,7 @@ package com.yywf.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -52,6 +53,7 @@ import com.yywf.model.PlanInfo;
 import com.yywf.model.PlanList;
 import com.yywf.util.MyActivityManager;
 import com.yywf.widget.dialog.MyCustomDialog;
+import com.yywf.widget.dialog.MyDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -377,6 +379,25 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 	}
 
 
+	private void errorDialog(String message){
+		MyDialog.Builder builder = new MyDialog.Builder(mContext);
+		builder.setTitle("提示");
+		builder.setMessage(message);
+		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+			}
+		});
+		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int arg1) {
+				dialog.dismiss();
+			}
+		});
+		builder.create().show();
+	}
+
+
 	private void loadData() {
 
 
@@ -403,7 +424,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 						return;
 					}
 					if (!result.optBoolean("status")) {
-						 showErrorMsg(result.getString("message"));
+						errorDialog(result.getString("message"));
 						return;
 					}
 					if (!StringUtils.isBlank(result.getString("data"))) {
@@ -411,13 +432,13 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 						//再次解析
 						if (StringUtils.isBlank(str)){
-							showErrorMsg("数据返回为空");
+							errorDialog("数据返回为空");
 							return;
 						}
 
 						JSONObject obj = new JSONObject(str);
 						if (StringUtils.isBlank(obj.optString("data"))){
-							showErrorMsg("数据返回为空");
+							errorDialog("数据返回为空");
 							return;
 						}
 
@@ -426,11 +447,11 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 						info = gson.fromJson(obj.optString("data"), new TypeToken<PlanInfo>() {}.getType());
 
 						if (info == null){
-							showErrorMsg("数据解析失败");
+							errorDialog("数据解析失败");
 							return;
 						}
 						if (info.getPlan() == null){
-							showErrorMsg("无预览计划");
+							errorDialog("无预览计划");
 							return;
 						}
 						list.clear();
@@ -443,6 +464,8 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 							planList.setTime1(info.getPlan().get(i).getRepay().getRepay_at());
 							list.add(planList);
 						}
+
+//						errorDialog("数据返回为空");
 
 //						List<PlanList> datas = gson.fromJson(obj.optString("data"), new TypeToken<List<PlanList>>() {
 //						}.getType());
