@@ -114,6 +114,8 @@ public class ConfigXy {
 
     //添加信用卡
     public static final String XY_CREDIT_ADD =  ZF_SERVER_API+"/app/member/bindCreditCard";
+    //编辑信用卡
+    public static final String XY_CREDIT_EDIT =  ZF_SERVER_API+"/app/member/cardUpdate";
 
     //储蓄卡信息
     public static final String GET_DEBIT_INFO = ZF_SERVER_API+"app/member/queryCardList";
@@ -144,6 +146,8 @@ public class ConfigXy {
 
     //补全信息
     public static final String CREDIT_SUPPLY = ZF_SERVER_API+"app/member/bindCardPerfect";
+    //信用卡查询
+    public static final String CREDIT_QUERY = ZF_SERVER_API+"app/member/queryCreditCardInfo";
 
     //已绑定银行卡支付
     public static final String CREDIT_PAY = ZF_SERVER_API+"app/pay/existBankGoodsPay";

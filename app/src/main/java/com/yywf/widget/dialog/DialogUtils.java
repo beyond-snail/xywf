@@ -112,6 +112,48 @@ public class DialogUtils {
     }
 
 
+    public static MyCustomDialog showDialog3(final Context mContext, String title, String leftText, String rightText, String cardNo, String zd, String hk, View.OnClickListener leftClick, View.OnClickListener rightClick){
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.alert_dialog4, null);
+        TextView tv_title = view.findViewById(R.id.tv_alert_dialog_title);
+        tv_title.setText(title);
+        tv_title.setBackgroundResource(R.drawable.bar_top_tips);
+        tv_title.setTextColor(mContext.getResources().getColor(com.tool.R.color.white));
+
+        TextView tv_card_no = view.findViewById(R.id.tv_card_no);
+        tv_card_no.setText(cardNo);
+
+        TextView tv_zd_day = view.findViewById(R.id.tv_zd_day);
+        tv_zd_day.setText(zd);
+
+        TextView tv_hk_day = view.findViewById(R.id.tv_hk_day);
+        tv_hk_day.setText(hk);
+
+
+        TextView btn_left = view.findViewById(R.id.btn_alert_dialog_btn_left);
+        btn_left.setText(leftText);
+        btn_left.setTextColor(mContext.getResources().getColorStateList(R.color.btn_left_selector));
+        btn_left.setOnClickListener(leftClick);
+
+        TextView btn_right = view.findViewById(R.id.btn_alert_dialog_btn_right);
+        btn_right.setText(rightText);
+        btn_right.setTextColor(mContext.getResources().getColorStateList(R.color.btn_right_selector));
+        btn_right.setOnClickListener(rightClick);
+
+        final MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(mContext,
+                R.style.MyDialogStyleBottom);
+//        customBuilder.setCancelable(false);
+        customBuilder.setCanceledOnTouchOutside(false);
+        customBuilder.setLine(0);// 分割横线所处位置 在自定义布局上下或隐藏 0隐藏 1线在上方
+        customBuilder.setContentView(view);
+        customBuilder.setDisBottomButton(true);
+        // 2线在下方
+        MyCustomDialog dialog = customBuilder.create();
+        dialog.show();
+        return dialog;
+    }
+
+
     public static void showDialogTb(final Context mContext, boolean flag){
 
 

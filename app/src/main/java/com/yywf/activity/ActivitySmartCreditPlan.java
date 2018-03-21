@@ -52,6 +52,7 @@ import com.yywf.model.BankCardInfo;
 import com.yywf.model.PlanInfo;
 import com.yywf.model.PlanList;
 import com.yywf.util.MyActivityManager;
+import com.yywf.widget.dialog.DialogUtils;
 import com.yywf.widget.dialog.MyCustomDialog;
 import com.yywf.widget.dialog.MyDialog;
 
@@ -101,6 +102,8 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 	private PlanInfo info;
 
 	private boolean isAction = false;
+
+	private MyCustomDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -563,6 +566,31 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 						return;
 					}
 
+//					StringBuilder builder = new StringBuilder();
+//					builder.append("信用卡信息: ");
+//					builder.append(vo.getCard_num());
+//					builder.append("\r\n");
+//					builder.append("账单日: ");
+//					builder.append(vo.getZdDay());
+//					builder.append("\r\n");
+//					builder.append("还款日: ");
+//					builder.append(vo.getHkDay());
+					dialog = DialogUtils.showDialog3(mContext, "温馨提示", "修改", "确定", "********"+vo.getCard_num(), vo.getZdDay(), vo.getHkDay(), new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							dialog.dismiss();
+							startActivity(new Intent(mContext, ActivityCreditEdit.class).putExtra("id", vo.getId()));
+						}
+					}, new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							dialog.dismiss();
+							loadData();
+						}
+					});
+
+
+
 					//设置模式
 //					if (StringUtils.isBlank(tv_do_text.getText().toString().trim())) {
 //						ToastUtils.CustomShow(mContext, "请设置模式");
@@ -572,7 +600,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 					//预览计划
 //					setPlanList(et_amt.getMoneyText());
 
-					loadData();
+
 
 				}else {
 
