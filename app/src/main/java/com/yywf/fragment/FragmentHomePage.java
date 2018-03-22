@@ -41,6 +41,7 @@ import com.yywf.activity.ActivityDaiBanShiXiang;
 import com.yywf.activity.ActivityKjsk;
 import com.yywf.activity.ActivityMine;
 import com.yywf.activity.ActivityMyZhangDan;
+import com.yywf.activity.ActivityPublicWeb;
 import com.yywf.activity.ActivitySaoMaShouKuan;
 import com.yywf.activity.ActivitySmartCredit;
 import com.yywf.activity.ActivityVipGrade;
@@ -155,14 +156,18 @@ public class FragmentHomePage extends AbstractFragment implements
                         startActivity(new Intent(mContext, ActivitySmartCredit.class));
                         break;
                     case 3: //还信用卡
-                        if (DialogUtils.checkApproveStatus(mContext)){
-                            return;
-                        }
-                        if (bankList.size() != 0) {
-                            startActivity(new Intent(mContext, ActivityCredit.class));
-                        }else{
-                            startActivity(new Intent(mContext, ActivityBankCardList.class));
-                        }
+//                        if (DialogUtils.checkApproveStatus(mContext)){
+//                            return;
+//                        }
+//                        if (bankList.size() != 0) {
+//                            startActivity(new Intent(mContext, ActivityCredit.class));
+//                        }else{
+//                            startActivity(new Intent(mContext, ActivityBankCardList.class));
+//                        }
+
+                        String url_pf = "http://www.pbccrc.org.cn/";
+                        startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_pf).putExtra("title",
+                                "征信查询"));
 
                         break;
                     case 4: //一键提额

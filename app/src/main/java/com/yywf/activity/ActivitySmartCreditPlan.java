@@ -219,9 +219,15 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 				return;
 			}
 
+			if (!MoneyUtil.moneyComp(et_amt.getMoneyText().trim(), "6000")){
+				ToastUtils.showLong(mContext, "低于6000无法交易,单笔2万,单卡5万,单日10万");
+				return;
+			}
+
 			//手续费
-			String feeAmt = MoneyUtil.moneydiv(MoneyUtil.moneyMul(et_amt.getMoneyText().trim(), ConstApp.FEE+""), "10000");
-			feeAmt = MoneyUtil.moneyAdd(feeAmt , "10");
+//			String feeAmt = MoneyUtil.moneydiv(MoneyUtil.moneyMul(et_amt.getMoneyText().trim(), ConstApp.FEE+""), "10000");
+//			feeAmt = MoneyUtil.moneyAdd(feeAmt , "10");
+			String feeAmt = MoneyUtil.moneydiv(MoneyUtil.moneyMul(et_amt.getMoneyText().trim(), "11"), "100");
 			textView(R.id.tv_tx_balance_amt).setText(feeAmt);
 
 		}
@@ -261,7 +267,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 				}
 
 				//延迟800ms，如果不再输入字符，则执行该线程的run方法
-//				handler.postDelayed(delayRun, 500);
+				handler.postDelayed(delayRun, 500);
 			}
 		});
 //		KeyBoardUtils.closeKeybord(et_amt, mContext);
@@ -483,10 +489,12 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 							//总金额
 							tv_total_amt.setText(MoneyUtil.formatMoney(et_amt.getMoneyText()));
-							tv_total_fee.setText(StringUtils.isBlank(info.getCharge().getTotal()) ? "--" : info.getCharge().getTotal());
+//							tv_total_fee.setText(StringUtils.isBlank(info.getCharge().getTotal()) ? "--" : info.getCharge().getTotal());
+							tv_total_fee.setText("万85+1*10");
 							//卡内最低余额（还款总额*10% + 手续费）
-							String minBalanceAmt = MoneyUtil.moneyAdd(MoneyUtil.moneydiv(MoneyUtil.moneyMul(et_amt.getMoneyText(), "10"), "100"), info.getCharge().getTotal());
-							tv_sigle_amt.setText("执行计划需要"+MoneyUtil.formatMoney(minBalanceAmt)+"元");
+//							String minBalanceAmt = MoneyUtil.moneyAdd(MoneyUtil.moneydiv(MoneyUtil.moneyMul(et_amt.getMoneyText(), "10"), "100"), info.getCharge().getTotal());
+							String minBalanceAmt = MoneyUtil.moneydiv(MoneyUtil.moneyMul(et_amt.getMoneyText().trim(), "11"), "100");
+							tv_sigle_amt.setText("计划执行需要"+MoneyUtil.formatMoney(minBalanceAmt)+"元");
 						} else {
 							linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
 							linearLayout(R.id.ll_plan_amt).setVisibility(View.GONE);

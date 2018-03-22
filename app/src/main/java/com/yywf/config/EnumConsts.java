@@ -13,7 +13,7 @@ public class EnumConsts {
 	public enum MenuType {
 		MENU_1(1, R.drawable.kuaijieshouqian,"快捷收钱"),
 		MENU_2(2, R.drawable.zhinenghuankuan,"智能还款"),
-		MENU_3(3, R.drawable.huanxinyongka,"自助还款"),
+		MENU_3(3, R.drawable.huanxinyongka,"征信查询"),
 		MENU_4(4, R.drawable.yijiantie,"一键提额"),
 		MENU_5(5, R.drawable.daibanshixiang,"待办事项"),
 		MENU_6(6, R.drawable.yijianbanka,"一键办卡"),

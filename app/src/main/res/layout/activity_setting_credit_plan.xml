@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/setting_list_bg"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:visibility="visible"
         android:padding="15dp">
 
         <TextView
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
-            android:text="执行本次计划所需手续费"
+            android:text="执行本次计划信用卡需预留"
             android:textColor="#999999"
             android:textSize="13sp" />
 
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:gravity="center_vertical"
-            android:text="元"
+            android:text="备付金"
             android:textColor="#999999"
             android:textSize="13sp" />
 
