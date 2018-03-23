@@ -112,7 +112,7 @@ public class DialogUtils {
     }
 
 
-    public static MyCustomDialog showDialog3(final Context mContext, String title, String leftText, String rightText, String cardNo, String zd, String hk, View.OnClickListener leftClick, View.OnClickListener rightClick){
+    public static MyCustomDialog showDialog3(final Context mContext, String title, String leftText, String rightText, String cardNo, String zd, String hk, String amt, View.OnClickListener leftClick, View.OnClickListener rightClick){
         LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.alert_dialog4, null);
         TextView tv_title = view.findViewById(R.id.tv_alert_dialog_title);
@@ -128,6 +128,9 @@ public class DialogUtils {
 
         TextView tv_hk_day = view.findViewById(R.id.tv_hk_day);
         tv_hk_day.setText(hk);
+
+        TextView tv_bfj = view.findViewById(R.id.tv_bfj);
+        tv_bfj.setText("信用卡备付金"+amt+"元");
 
 
         TextView btn_left = view.findViewById(R.id.btn_alert_dialog_btn_left);

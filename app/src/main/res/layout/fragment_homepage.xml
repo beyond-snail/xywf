@@ -116,7 +116,7 @@
                 android:layout_gravity="center"
                 android:padding="10dp"
                 android:gravity="center"
-                android:text="+添加账单"
+                android:text="+添加信用卡/账单"
                 android:textSize="20sp"
                 android:textColor="#1b82d2"/>
             <View

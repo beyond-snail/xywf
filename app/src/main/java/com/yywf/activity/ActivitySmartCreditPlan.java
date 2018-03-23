@@ -116,6 +116,16 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 			findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
 		}
 
+		if (findViewById(R.id.img_right) != null){
+			findViewById(R.id.img_right).setVisibility(View.VISIBLE);
+			findViewById(R.id.img_right).setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 25));
+				}
+			});
+		}
+
 		vo = (BankCardInfo) getIntent().getSerializableExtra("BankCardInfo");
 		if (vo == null){
 			ToastUtils.CustomShow(mContext, "数据错误");
@@ -583,7 +593,8 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 //					builder.append("\r\n");
 //					builder.append("还款日: ");
 //					builder.append(vo.getHkDay());
-					dialog = DialogUtils.showDialog3(mContext, "温馨提示", "修改", "确定", "********"+vo.getCard_num(), vo.getZdDay(), vo.getHkDay(), new View.OnClickListener() {
+					String feeAmt = MoneyUtil.moneydiv(MoneyUtil.moneyMul(et_amt.getMoneyText().trim(), "11"), "100");
+					dialog = DialogUtils.showDialog3(mContext, "温馨提示", "修改", "确定", "********"+vo.getCard_num(), vo.getZdDay(), vo.getHkDay(), feeAmt, new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
 							dialog.dismiss();

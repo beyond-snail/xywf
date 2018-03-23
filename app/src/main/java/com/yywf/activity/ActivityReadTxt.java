@@ -66,6 +66,8 @@ public class ActivityReadTxt extends BaseActivity {
 			initTitle("代理商专属通道");
 		}else if (type == 10){
 			initTitle("购买等级");
+		}else if (type == 25){
+			initTitle("智能还款用户需知");
 		}
 		else{
 			initTitle("我要提额");
@@ -130,6 +132,8 @@ public class ActivityReadTxt extends BaseActivity {
 				is = getAssets().open("gdyh.TXT");
 			}else if (type == 24){
 				is = getAssets().open("hxyh.TXT");
+			}else if (type == 25){
+				is = getAssets().open("znhkxz.TXT");
 			}
 			br = new BufferedReader(new InputStreamReader(is));
 			String temp = "";
