@@ -5,6 +5,8 @@ package com.yywf.model;
  */
 
 public class MyWalletInfo {
+
+    private String balance;
     private String profitAmt;
     private String rebateAmt;
     private String rewardAmt;
@@ -12,6 +14,14 @@ public class MyWalletInfo {
     private String totalAmt;
     private String yesterdayTotalRatio;
     private String yerterdayTotalAmt;
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
 
     public String getProfitAmt() {
         return profitAmt;

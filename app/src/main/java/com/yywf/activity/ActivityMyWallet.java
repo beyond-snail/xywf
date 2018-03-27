@@ -193,6 +193,7 @@ public class ActivityMyWallet extends BaseActivity implements View.OnClickListen
 					MyWalletInfo walletInfo = gson.fromJson(result.optString("data"), new TypeToken<MyWalletInfo>() {
 					}.getType());
 
+					tv_balance_amt.setText(walletInfo.getBalance());
 					tv_jlj_amt.setText(walletInfo.getRewardAmt());
 					tv_fl_amt.setText(walletInfo.getProfitAmt());
 					tv_fr_amt.setText(walletInfo.getRebateAmt());
