@@ -8,27 +8,26 @@ import java.io.Serializable;
 
 public class MyTeamInfo implements Serializable {
 
-    private String icon;
-    private String memberName;
+    private String picture;
+    private String name;
     private String phone;
-    private int count;
-    private int type;
-    private int totalCount;
+    private int listCount;
+    private String typeName;
 
-    public String getIcon() {
-        return icon;
+    public String getPicture() {
+        return picture;
     }
 
-    public void setIcon(String icon) {
-        this.icon = icon;
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
-    public String getMemberName() {
-        return memberName;
+    public String getName() {
+        return name;
     }
 
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPhone() {
@@ -39,27 +38,19 @@ public class MyTeamInfo implements Serializable {
         this.phone = phone;
     }
 
-    public int getCount() {
-        return count;
+    public int getListCount() {
+        return listCount;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setListCount(int listCount) {
+        this.listCount = listCount;
     }
 
-    public int getType() {
-        return type;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public int getTotalCount() {
-        return totalCount;
-    }
-
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }

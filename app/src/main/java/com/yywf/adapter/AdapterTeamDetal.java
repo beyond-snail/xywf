@@ -103,16 +103,14 @@ public class AdapterTeamDetal extends BaseAdapter {
         }
         MyTeamInfo vo = list.get(position);
 
-        ImageLoader.getInstance().displayImage(vo.getIcon(), holder.iv_img);
+        ImageLoader.getInstance().displayImage(vo.getPicture(), holder.iv_img);
 
-        holder.tv_name.setText(vo.getMemberName());
-        if (vo.getType() == 1){
-            holder.tv_category.setText("代理");
-        }else {
-            holder.tv_category.setText("会员用户");
-        }
+        holder.tv_name.setText(vo.getName());
+
+        holder.tv_category.setText(vo.getTypeName());
+
         holder.tv_phone.setText(StringUtils.formatPhoneNo(vo.getPhone()));
-        holder.tv_count.setText("成功推荐"+vo.getCount()+"人");
+        holder.tv_count.setText("成功推荐"+vo.getListCount()+"人");
 
 
         return convertView;

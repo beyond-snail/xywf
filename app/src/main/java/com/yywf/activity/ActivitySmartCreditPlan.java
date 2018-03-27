@@ -229,10 +229,10 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 				return;
 			}
 
-			if (!MoneyUtil.moneyComp(et_amt.getMoneyText().trim(), "6000")){
-				ToastUtils.showLong(mContext, "低于6000无法交易,单笔2万,单卡5万,单日10万");
-				return;
-			}
+//			if (!MoneyUtil.moneyComp(et_amt.getMoneyText().trim(), "6000")){
+//				ToastUtils.showLong(mContext, "低于6000无法交易,单笔2万,单卡5万,单日10万");
+//				return;
+//			}
 
 			//手续费
 //			String feeAmt = MoneyUtil.moneydiv(MoneyUtil.moneyMul(et_amt.getMoneyText().trim(), ConstApp.FEE+""), "10000");

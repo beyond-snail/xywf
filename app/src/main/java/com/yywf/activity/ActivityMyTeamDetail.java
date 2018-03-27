@@ -56,6 +56,7 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
 
     private TextView tv_one;
     private TextView tv_second;
+    private TextView btn_commit;
 
     private int type = 1;
 
@@ -95,6 +96,8 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
         tv_one.setOnClickListener(this);
         tv_second = textView(R.id.tv_second);
         tv_second.setOnClickListener(this);
+
+        btn_commit = textView(R.id.btn_commit);
 
 
         myListView = findViewById(R.id.listview);
@@ -159,6 +162,8 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
     }
 
 
+
+
     /**
      * 重新加载数据
      */
@@ -175,8 +180,12 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
 
 
         // String url = ConfigApp.HC_GET_STORE_GOODS;
-        String url = ConfigXy.PLAN_LIST;
+        String url = ConfigXy.XY_MY_TEAM_LIST;
         RequestParams params = new RequestParams();
+
+        params.put("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.put("token", UtilPreference.getStringValue(mContext, "token"));
+        params.put("type", type);
 
 //		String id = UtilPreference.getStringValue(mContext, "zf_member_id");
 //		params.add("memberId", id);
@@ -188,7 +197,7 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
 //			params.add("categroyId", cId + "");
 //		}
 //		if (showProgress) {
-//			showProgress("加载中...");
+			showProgress("加载中...");
 //		}
 
         HttpUtil.get(url, params, new HttpUtil.RequestListener() {
@@ -226,6 +235,10 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
                             myListView.setVisibility(View.GONE);
                         }
                     }
+                    if (result.getString("data_extend") != null){
+                        String totalCount = result.getString("data_extend");
+                        btn_commit.setText("累计成功推荐"+totalCount+"人");
+                    }
                     // 刷新完成
                     mPullRefreshScrollView.onRefreshComplete();
                     adapter.notifyDataSetChanged();
@@ -249,7 +262,7 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
 	@Override
 	protected void onResume() {
 		super.onResume();
-//        reloadData();
+        reloadData();
 
 	}
 
@@ -270,6 +283,8 @@ public class ActivityMyTeamDetail extends BaseActivity implements OnClickListene
             default:
                 break;
         }
+        reloadData();
+
 	}
 
 

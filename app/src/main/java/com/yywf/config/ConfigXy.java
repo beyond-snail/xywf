@@ -186,6 +186,11 @@ public class ConfigXy {
     public static final String XY_DO_PLAN = ZF_SERVER_API + "app/pay/yiShengBankCardBind";
     //我的团队
     public static final String XY_MY_TEAM = ZF_SERVER_API + "app/member/myTeam";
+    //我的团队列表
+    public static final String XY_MY_TEAM_LIST = ZF_SERVER_API + "app/member/myTeamList";
+
+
+
 
 
 }

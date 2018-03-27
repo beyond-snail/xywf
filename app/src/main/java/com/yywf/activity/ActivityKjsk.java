@@ -100,11 +100,11 @@ public class ActivityKjsk extends BaseActivity implements OnClickListener {
 
         @Override
         public void run() {
-            int temp = StringUtils.getInt(StringUtils.changeY2F(et_amt.getMoneyText()));
-            if (temp < 58900){
-                ToastUtils.CustomShow(mContext, "交易金额最低589");
-                return;
-            }
+//            int temp = StringUtils.getInt(StringUtils.changeY2F(et_amt.getMoneyText()));
+//            if (temp < 58900){
+//                ToastUtils.CustomShow(mContext, "交易金额最低589");
+//                return;
+//            }
 
 
 

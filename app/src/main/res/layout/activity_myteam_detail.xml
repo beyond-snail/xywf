@@ -120,7 +120,7 @@
         android:background="@drawable/btn_yellow_selector"
         android:gravity="center"
         android:padding="@dimen/padding_normal"
-        android:text="累计成功推荐200人"
+        android:text="累计成功推荐0人"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_title" />
 
