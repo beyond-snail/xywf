@@ -149,10 +149,12 @@ public class ActivityMyTeam extends BaseActivity implements View.OnClickListener
 						String proxyAmount = dataStr.optString("proxyAmount");
 						String memberAmount = dataStr.optString("memberAmount");
 						String commonAmount = dataStr.optString("commonAmount");
+						String personCount = dataStr.optString("personCount");
 
 						tv_t_count_person.setText(StringUtils.isBlank(proxyAmount) ? "0" : proxyAmount);
 						tv_activate_count.setText(StringUtils.isBlank(memberAmount) ? "0" : memberAmount);
 						tv_no_activate_count.setText(StringUtils.isBlank(commonAmount) ? "0" : commonAmount);
+						id_team_person_count.setText(StringUtils.isBlank(personCount) ? "0人" : personCount+"人");
 					}
 
 

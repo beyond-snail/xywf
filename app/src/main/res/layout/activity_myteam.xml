@@ -215,7 +215,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_toLeftOf="@id/iv_go"
                 android:text=""
-                android:textColor="#c9c9c9"
+                android:textColor="#666666"
                 android:textSize="13sp" />
 
 
