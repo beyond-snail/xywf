@@ -2,6 +2,16 @@ apply plugin: 'com.android.application'
 
 android {
 
+
+//    signingConfigs {
+//        release {
+//            keyAlias 'androiddebugkey'
+//            keyPassword 'android'
+//            storePassword 'android'
+//            storeFile file('/Users/wucongpeng/Documents/work_space/gogo/JFK.jks')
+//        }
+//    }
+
     signingConfigs {
         release {
             keyAlias 'androiddebugkey'
