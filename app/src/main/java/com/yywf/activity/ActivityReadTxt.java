@@ -51,15 +51,15 @@ public class ActivityReadTxt extends BaseActivity {
 		}else if (type == 2){
 			initTitle("信易沃富扣款、转账授权协议");
 		}else if (type == 3){
-			initTitle("快捷收款用户需知");
+			initTitle("快捷收款用户须知");
 		}else if (type == 4){
-			initTitle("还信用卡用户需知");
+			initTitle("还信用卡用户须知");
 		}else if (type == 5){
 			initTitle("提现规则");
 		}else if (type == 6){
-			initTitle("抵用券使用需知");
+			initTitle("抵用券使用须知");
 		}else if (type == 7){
-			initTitle("扫码收钱使用需知");
+			initTitle("扫码收钱使用须知");
 		}else if (type == 8){
 			initTitle("银行卡资金损失保险条款");
 		}else if (type == 9){
@@ -67,7 +67,7 @@ public class ActivityReadTxt extends BaseActivity {
 		}else if (type == 10){
 			initTitle("购买等级");
 		}else if (type == 25){
-			initTitle("智能还款用户需知");
+			initTitle("智能还款用户须知");
 		}
 		else{
 			initTitle("我要提额");

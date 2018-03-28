@@ -97,7 +97,7 @@ public class ActivityMyWallet extends BaseActivity implements View.OnClickListen
 		relativeLayout(R.id.ll_jlj).setOnClickListener(this);
 		relativeLayout(R.id.ll_mx).setOnClickListener(this);
 
-//		textView(R.id.btn_tx).setOnClickListener(this);
+		textView(R.id.btn_tx).setOnClickListener(this);
 		textView(R.id.btn_sale).setOnClickListener(this);
 
 

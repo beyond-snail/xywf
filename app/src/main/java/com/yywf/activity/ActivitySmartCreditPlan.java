@@ -538,9 +538,18 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 			return;
 		}
 
-		if (requestCode == 0) {
+		if (requestCode == 0 && resultCode == 3) {
 			btn.setText("执行计划");
+		}else if (requestCode == 1 && resultCode == 4){
+			Bundle bundle = data.getBundleExtra("day");
+			String zdDay =bundle.getString("zdDay");
+			String hkDay = bundle.getString("hkDay");
+
+			vo.setZdDay(zdDay);
+			vo.setHkDay(hkDay);
 		}
+
+
 
 
 	}
@@ -594,11 +603,11 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 //					builder.append("还款日: ");
 //					builder.append(vo.getHkDay());
 					String feeAmt = MoneyUtil.moneydiv(MoneyUtil.moneyMul(et_amt.getMoneyText().trim(), "11"), "100");
-					dialog = DialogUtils.showDialog3(mContext, "温馨提示", "修改", "确定", "********"+vo.getCard_num(), vo.getZdDay(), vo.getHkDay(), feeAmt, new View.OnClickListener() {
+					dialog = DialogUtils.showDialog3(mContext, "温馨提示", "修改", "确定", vo.getCard_num(), vo.getZdDay(), vo.getHkDay(), feeAmt, new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
 							dialog.dismiss();
-							startActivity(new Intent(mContext, ActivityCreditEdit.class).putExtra("id", vo.getId()));
+							startActivityForResult(new Intent(mContext, ActivityCreditEdit.class).putExtra("id", vo.getId()), 1);
 						}
 					}, new View.OnClickListener() {
 						@Override
@@ -638,6 +647,13 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 		}
 	}
+
+
+
+
+
+
+
 
 	private void setPlanList(String moneyText) {
 

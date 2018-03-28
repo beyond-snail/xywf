@@ -429,6 +429,14 @@ public class ActivityCreditEdit extends BaseActivity implements OnClickListener 
                     ToastUtils.CustomShow(mContext, result.optString("message"));
                 }else{
                     ToastUtils.CustomShow(mContext, result.optString("message"));
+
+                    Intent mIntent = new Intent();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("zdDay", et_bill_day.getText().toString().trim());
+                    bundle.putString("hkDay", et_repayment_day.getText().toString().trim());
+                    mIntent.putExtra("day", bundle);
+                    // 设置结果，并进行传送
+                    setResult(4, mIntent);
                     finish();
                 }
 
