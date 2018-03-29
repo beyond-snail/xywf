@@ -459,6 +459,12 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>
+        <activity
+            android:name=".activity.ActivityVipGrade3"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
 
         <activity
             android:name=".activity.ActivityAgent"

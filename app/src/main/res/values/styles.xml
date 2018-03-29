@@ -7,11 +7,14 @@
         <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
         <!--<item name="colorAccent">@color/colorAccent</item>-->
     <!--</style>-->
-    <style name="AppTheme">
+    <style name="AppTheme" parent="AppBaseTheme">
         <!-- Customize your theme here. -->
     </style>
-
+    <style name="MySelfTheme">
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
     <style name="AppBaseTheme" >
+
     </style>
 
     <style name="base_match">

@@ -46,6 +46,7 @@ import com.yywf.activity.ActivitySaoMaShouKuan;
 import com.yywf.activity.ActivitySmartCredit;
 import com.yywf.activity.ActivityVipGrade;
 import com.yywf.activity.ActivityVipGrade2;
+import com.yywf.activity.ActivityVipGrade3;
 import com.yywf.adapter.BankListAdapter;
 import com.yywf.adapter.MyMenuAdapter;
 import com.yywf.config.ConfigXy;
@@ -207,7 +208,7 @@ public class FragmentHomePage extends AbstractFragment implements
                         if (!DialogUtils.checkGradeStatus(mContext)){
                             return;
                         }
-                        startActivity(new Intent(mContext, ActivityVipGrade2.class));
+                        startActivity(new Intent(mContext, ActivityVipGrade3.class));
                         break;
                 }
             }
