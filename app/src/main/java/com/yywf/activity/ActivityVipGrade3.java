@@ -101,55 +101,9 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 //                ToastUtils.CustomShow(mContext, ""+i);
 //                startActivity(new Intent(mContext, ActivityOrderDetail.class));
+               startActivity(new Intent(mContext, ActivityFyPay.class).putExtra("amount", list.get(i).getEarnestMoney()));
             }
         });
-
-//        mPullRefreshScrollView = findViewById(R.id.pull_refresh_scrollview);
-//        // 下拉刷新、上拉加载更多
-//        mPullRefreshScrollView.setMode(PullToRefreshBase.Mode.BOTH);
-//        // TODO:必须先设置Mode后再设置刷新文本
-//        ILoadingLayout startLabels = mPullRefreshScrollView.getLoadingLayoutProxy(true, false);
-//        startLabels.setPullLabel("下拉刷新...");// 刚下拉时，显示的提示
-//        startLabels.setRefreshingLabel("正在载入...");// 刷新时
-//        startLabels.setReleaseLabel("释放立即刷新...");// 下来达到一定距离时，显示的提示
-//        // TODO:必须先设置Mode后再设置刷新文本
-//        ILoadingLayout endLabels = mPullRefreshScrollView.getLoadingLayoutProxy(false, true);
-//        endLabels.setPullLabel("上拉加载更多...");// 刚下拉时，显示的提示
-//        endLabels.setRefreshingLabel("正在载入...");// 刷新时
-//        endLabels.setReleaseLabel("释放立即加载...");// 下来达到一定距离时，显示的提示
-//        mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ScrollView>() {
-//
-//            @Override
-//            public void onPullDownToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-//                // 下拉刷新
-//                String label = DateUtils.formatDateTime(mContext, System.currentTimeMillis(),
-//                        DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
-//                refreshView.getLoadingLayoutProxy(true, false).setLastUpdatedLabel("更新于：" + label);
-////                reloadData();
-//            }
-//
-//            @Override
-//            public void onPullUpToRefresh(PullToRefreshBase<ScrollView> refreshView) {
-//                // 上拉加载更多
-//                String label = DateUtils.formatDateTime(mContext, System.currentTimeMillis(),
-//                        DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
-//                refreshView.getLoadingLayoutProxy(false, true).setLastUpdatedLabel("更新于：" + label);
-//
-//
-//
-//                handler.postDelayed(new Runnable() {
-//
-//                    @Override
-//                    public void run() {
-//                        showErrorMsg("没有更多了");
-//                        mPullRefreshScrollView.onRefreshComplete();
-//                    }
-//                }, 1000);
-//
-//
-//            }
-//        });
-
 
         button(R.id.btn_commit).setOnClickListener(this);
 
@@ -234,8 +188,6 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
                     }
                     if (!result.optBoolean("status")) {
                         showErrorMsg(result.getString("message"));
-                        // 刷新完成
-//                        mPullRefreshScrollView.onRefreshComplete();
                         return;
                     }
 
@@ -259,43 +211,16 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
 
                         } else {
                             if (list.size() > 0) {
-
                                 linearLayout(R.id.id_no_data).setVisibility(View.GONE);
                                 myListView.setVisibility(View.VISIBLE);
-//                                handler.postDelayed(new Runnable() {
-//
-//                                    @Override
-//                                    public void run() {
-//                                        showErrorMsg("没有更多数据");
-//                                    }
-//                                }, 1000);
                             } else {
                                 linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
                                 myListView.setVisibility(View.GONE);
                             }
                         }
-
-//                        if (vipGradeList.size() > 0) {
-//                            //去掉前三个
-//                            List<VipGrade> tempList = new ArrayList<>();
-//                            for (int i = 3; i < vipGradeList.size(); i++){
-//                                tempList.add(vipGradeList.get(i));
-//                            }
-//
-//                            list.clear();
-//                            list.addAll(list.size(), tempList);
-//
-//                            vo = list.get(list.size()-1);
-//                            vo.setDefault(true);
-//
-//                        } else {
-//                           ToastUtils.CustomShow(mContext, "返回套餐为空");
-//                        }
                     }else{
                         ToastUtils.CustomShow(mContext, "返回数据错误");
                     }
-                    // 刷新完成
-//                    mPullRefreshScrollView.onRefreshComplete();
                     adapter.notifyDataSetChanged();
 
                 } catch (JSONException e) {

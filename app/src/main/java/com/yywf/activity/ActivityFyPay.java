@@ -90,15 +90,21 @@ public class ActivityFyPay extends BaseActivity  {
 
 	private void initView() {
 
+
+		int amt = getIntent().getIntExtra("amount", 0);
+		if (amt != 0){
+			amount = amt+"";
+		}
+
+
+
+
+
 		userId = UtilPreference.getStringValue(mContext, "memberId");
 
 		ll_success = linearLayout(R.id.ll_success);
 		id_card = linearLayout(R.id.id_card);
-//
-//		tv_user_name = textView(R.id.tv_user_name);
-//		tv_user_id = textView(R.id.tv_user_id);
-//		et_card_no = editText(R.id.tv_card_no);
-//		et_card_no.addTextChangedListener(new Split4EditTextWatcher(et_card_no));
+
 
 		button(R.id.btn_commit).setOnClickListener(new View.OnClickListener() {
 			@Override
