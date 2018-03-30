@@ -11,6 +11,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
+import com.tool.utils.systemUtils.SystemUtils;
+
 public class XRTextView extends TextView{
 	private final String namespace = "rong.android.TextView";
 	private String text;
@@ -31,7 +33,7 @@ public class XRTextView extends TextView{
 		super(context, attrs);
 		text = attrs.getAttributeValue(
 				"http://schemas.android.com/apk/res/android", "text");
-		textSize = attrs.getAttributeIntValue(namespace, "textSize", 45);//字体大小
+		textSize = attrs.getAttributeIntValue(namespace, "textSize", sp2px(context, 14));//字体大小
 		textColor = attrs.getAttributeIntValue(namespace, "textColor",Color.BLACK);//字体颜色
 		paddingLeft = attrs.getAttributeIntValue(namespace, "paddingLeft", 0);
 		paddingRight = attrs.getAttributeIntValue(namespace, "paddingRight", 0);
@@ -166,6 +168,19 @@ public class XRTextView extends TextView{
 		paintColor.setTextSize(textSize);
 	}
 
+
+
+	/**
+	 * 将sp值转换为px值，保证文字大小不变
+	 *
+	 * @param spValue
+	 * @param fontScale （DisplayMetrics类中属性scaledDensity）
+	 * @return
+	 */
+	public static int sp2px(Context context, float spValue) {
+		final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+		return (int) (spValue * fontScale + 0.5f);
+	}
 
 
 }

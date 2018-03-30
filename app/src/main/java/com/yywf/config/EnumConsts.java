@@ -18,7 +18,7 @@ public class EnumConsts {
 		MENU_5(5, R.drawable.daibanshixiang,"待办事项"),
 		MENU_6(6, R.drawable.yijianbanka,"一键办卡"),
 		MENU_7(7, R.drawable.wodezhangdai,"我的账单"),
-		MENU_8(8, R.drawable.saomashouqian,"购买等级"),
+		MENU_8(8, R.drawable.saomashouqian,"升级代理"),
 
 		;
 

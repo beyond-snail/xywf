@@ -5,9 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.adapter.AdapterBase;
+import com.tool.utils.utils.StringUtils;
 import com.yywf.R;
 import com.yywf.model.VipGrade;
 
@@ -36,6 +38,8 @@ public class AdapterVipGrade3 extends AdapterBase<VipGrade> {
             convertView = mInflater.inflate(R.layout.item_vip_grade3, null);
 
             holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+            holder.tv_name2 = (TextView) convertView.findViewById(R.id.tv_name2);
+            holder.ll_item = (LinearLayout) convertView.findViewById(R.id.ll_item);
 
             convertView.setTag(holder);
 
@@ -45,16 +49,21 @@ public class AdapterVipGrade3 extends AdapterBase<VipGrade> {
 
         final VipGrade vo = data.get(position);
         holder.tv_name.setText(vo.getGradename());
+        holder.tv_name2.setText("返利"+ StringUtils.formatIntMoney(vo.getCashback())+"元, "+"分润万"+vo.getProfitratio()+", 且享受奖励金");
 
-
-        
+        if (position == 0) {
+            holder.ll_item.setBackgroundResource(R.drawable.yuanjiaojuxinger);
+        }else{
+            holder.ll_item.setBackgroundResource(R.drawable.yuanjiaojuxingsan);
+        }
 
         return convertView;
     }
 
     private static final class ViewHolder {
-
+        LinearLayout ll_item;
         TextView tv_name;
+        TextView tv_name2;
     }
 
 }

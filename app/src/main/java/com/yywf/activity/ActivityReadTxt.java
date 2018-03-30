@@ -1,5 +1,6 @@
 package com.yywf.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.tool.utils.utils.LogUtils;
+import com.tool.utils.utils.ScreenUtils;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.view.AutoSplitTextView;
 import com.tool.utils.view.BaikeTextView;
@@ -68,6 +70,24 @@ public class ActivityReadTxt extends BaseActivity {
 			initTitle("购买等级");
 		}else if (type == 25){
 			initTitle("智能还款用户须知");
+		}else if (type == 26){
+			initTitle("代理说明");
+			if (findViewById(R.id.tv_right) != null){
+				TextView tv = findViewById(R.id.tv_right);
+				tv.setVisibility(View.VISIBLE);
+				tv.setText("提现规则");
+				tv.setTextSize(13);
+				tv.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 28));
+					}
+				});
+			}
+		}else if (type == 27){
+			initTitle("代理协议");
+		}else if (type == 28){
+			initTitle("提现规则");
 		}
 		else{
 			initTitle("我要提额");
@@ -134,6 +154,12 @@ public class ActivityReadTxt extends BaseActivity {
 				is = getAssets().open("hxyh.TXT");
 			}else if (type == 25){
 				is = getAssets().open("znhkxz.TXT");
+			}else if (type == 26){
+				is = getAssets().open("dlgz.TXT");
+			}else if (type == 27){
+				is = getAssets().open("dlxy.TXT");
+			}else if (type == 28){
+				is = getAssets().open("tx.TXT");
 			}
 			br = new BufferedReader(new InputStreamReader(is));
 			String temp = "";
