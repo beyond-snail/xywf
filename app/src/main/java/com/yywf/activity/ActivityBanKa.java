@@ -2,28 +2,20 @@ package com.yywf.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputFilter;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.tool.utils.banner.AutoPlayManager;
 import com.tool.utils.banner.ImageIndicatorView;
-import com.tool.utils.utils.LogUtils;
 import com.tool.utils.utils.ScreenUtils;
-import com.tool.utils.utils.StringUtils;
-import com.tool.utils.view.MoneyEditText;
 import com.tool.utils.view.MyGridView;
 import com.yywf.R;
 import com.yywf.adapter.MyMenuAdapter;
 import com.yywf.config.EnumConsts;
-import com.yywf.model.AdInfo;
 import com.yywf.model.Menu;
 import com.yywf.util.MyActivityManager;
-import com.yywf.widget.ADCommonView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +101,7 @@ public class ActivityBanKa extends BaseActivity  {
 				int index = EnumConsts.BankMenuType.getCodeByName(list.get(position).getName());
 				switch (index){
 					case 1: //浦发银行
-						String url_pf = "https://ecentre.spdbccc.com.cn/creditcard/indexActivity.htm?data=P2070702&from=groupmessage&isappinstalled=0";
+						String url_pf = "https://www.spdbccc.com.cn/zh/wap/newwap/weixin20161116/index.html";
 						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_pf).putExtra("title",
 								list.get(position).getName()));
 						break;
