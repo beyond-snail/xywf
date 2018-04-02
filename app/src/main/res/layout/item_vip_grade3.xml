@@ -4,31 +4,53 @@
     android:layout_height="wrap_content"
     android:id="@+id/ll_item"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:padding="5dp"
-    android:background="@drawable/yuanjiaojuxinger" >
+    android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_name"
+    <LinearLayout
+        android:id="@+id/ll_left"
         android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_gravity="center_vertical"
-        android:text=""
-        android:textColor="@color/white"
-        android:textStyle="bold"/>
+        android:background="@mipmap/lan02"
 
-    <TextView
-        android:id="@+id/tv_name2"
+        android:gravity="center_vertical|left"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:layout_gravity="center_vertical"
+            android:text=""
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_right"
         android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="2"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:textSize="13sp"
-        android:text=""
-        android:textStyle="bold"
-        android:textColor="@color/white_light"/>
+        android:background="@mipmap/lan01"
+        android:gravity="right|center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_name2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:padding="10dp"
+            android:textSize="13sp"
+            android:text=""
+            android:textStyle="bold"
+            android:textColor="@color/white_light"/>
+    </LinearLayout>
+
+
 
 
 

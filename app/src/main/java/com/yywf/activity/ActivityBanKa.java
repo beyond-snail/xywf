@@ -215,7 +215,7 @@ public class ActivityBanKa extends BaseActivity  {
 	//系统本地图片加载
 	public void local() {
 		// 声明一个数组, 指定图片的ID
-		final Integer[] resArray = new Integer[] {R.drawable.card_banner1, R.drawable.card_banner2
+		final Integer[] resArray = new Integer[] {R.drawable.card_banner4, R.drawable.card_banner5, R.drawable.card_banner6
 				};
 		ImageIndicatorView indicate_view = new ImageIndicatorView(mContext);
 		// 把数组交给图片展播组件

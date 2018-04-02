@@ -159,7 +159,7 @@ public class ActivityBanKTiE extends BaseActivity  {
 	//系统本地图片加载
 	public void local() {
 		// 声明一个数组, 指定图片的ID
-		final Integer[] resArray = new Integer[] {R.drawable.card_banner2
+		final Integer[] resArray = new Integer[] {R.drawable.card_banner7, R.drawable.card_banner8, R.drawable.card_banner9
 		};
 		ImageIndicatorView indicate_view = new ImageIndicatorView(mContext);
 		// 把数组交给图片展播组件

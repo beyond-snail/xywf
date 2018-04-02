@@ -114,7 +114,11 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
                 String title = "<font color='red'><b><big>恭喜您</big></b>"+"</font>"+"<font color='black'>成为"+list.get(i).getGradename()+"</font>";
 
 
-                String content = "请缴纳" + StringUtils.formatIntMoney(list.get(i).getEarnestMoney()) + "元风险保证金, "+list.get(i).getGradegive()+"个月完成"+list.get(i).getGradedemand()+"个会员用户或"+list.get(i).getIshot()+"万交易";
+//                String content = "请缴纳" + StringUtils.formatIntMoney(list.get(i).getEarnestMoney()) + "元风险保证金, 返利"+list.get(i).getGradegive()+"个月完成"+list.get(i).getGradedemand()+"个会员用户或"+list.get(i).getIshot()+"万交易";
+                String content = "请缴纳" + StringUtils.formatIntMoney(list.get(i).getEarnestMoney()) + "元保证金，返利"+StringUtils.formatIntMoney(list.get(i).getCashback())+"，分润万"+list.get(i).getProfitratio()+"，目标任务完成"+list.get(i).getGradedemand()+"个会员或"+list.get(i).getIshot()+"万营业额。";
+
+
+//                        "请缴纳" + StringUtils.formatIntMoney(list.get(i).getEarnestMoney()) + "元风险保证金, 返利"+list.get(i).getGradegive()+"个月完成"+list.get(i).getGradedemand()+"个会员用户或"+list.get(i).getIshot()+"万交易";
 
 
                 dialog2 = DialogUtils.showDialogDl(mContext, Html.fromHtml(title), "取消", "充值", content, new OnClickListener() {
@@ -145,7 +149,7 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
         ll_advertis = (LinearLayout) findViewById(R.id.advertis);
         // 设置宽度高度一致
         LinearLayout.LayoutParams linearParams = (LinearLayout.LayoutParams) ll_advertis.getLayoutParams();
-        linearParams.height = (int) (ScreenUtils.getScreenWidth(mContext) / 3);// 640-370
+        linearParams.height = (int) (ScreenUtils.getScreenWidth(mContext) / 2);// 640-370
         // 750-434
         ll_advertis.setLayoutParams(linearParams);
 

@@ -40,6 +40,8 @@ public class AdapterVipGrade3 extends AdapterBase<VipGrade> {
             holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
             holder.tv_name2 = (TextView) convertView.findViewById(R.id.tv_name2);
             holder.ll_item = (LinearLayout) convertView.findViewById(R.id.ll_item);
+            holder.ll_left = (LinearLayout) convertView.findViewById(R.id.ll_left);
+            holder.ll_right = (LinearLayout) convertView.findViewById(R.id.ll_right);
 
             convertView.setTag(holder);
 
@@ -52,9 +54,13 @@ public class AdapterVipGrade3 extends AdapterBase<VipGrade> {
         holder.tv_name2.setText("返利"+ StringUtils.formatIntMoney(vo.getCashback())+"元, "+"分润万"+vo.getProfitratio()+", 且享受奖励金");
 
         if (position == 0) {
-            holder.ll_item.setBackgroundResource(R.drawable.yuanjiaojuxinger);
+//            holder.ll_item.setBackgroundResource(R.drawable.yuanjiaojuxinger);
+            holder.ll_left.setBackgroundResource(R.mipmap.cheng02);
+            holder.ll_right.setBackgroundResource(R.mipmap.cheng01);
         }else{
-            holder.ll_item.setBackgroundResource(R.drawable.yuanjiaojuxingsan);
+//            holder.ll_item.setBackgroundResource(R.drawable.yuanjiaojuxingsan);
+            holder.ll_left.setBackgroundResource(R.mipmap.lan02);
+            holder.ll_right.setBackgroundResource(R.mipmap.lan01);
         }
 
         return convertView;
@@ -62,6 +68,8 @@ public class AdapterVipGrade3 extends AdapterBase<VipGrade> {
 
     private static final class ViewHolder {
         LinearLayout ll_item;
+        LinearLayout ll_left;
+        LinearLayout ll_right;
         TextView tv_name;
         TextView tv_name2;
     }
