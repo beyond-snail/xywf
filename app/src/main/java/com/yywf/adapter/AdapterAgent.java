@@ -109,12 +109,12 @@ public class AdapterAgent extends BaseAdapter {
 
 
 
-        ImageLoader.getInstance().displayImage(vo.getIcon(), holder.iv_img);
+        ImageLoader.getInstance().displayImage(vo.getPicture(), holder.iv_img);
 
-        holder.tv_name.setText(vo.getMemberName());
+        holder.tv_name.setText(vo.getName());
         holder.tv_phone.setText(StringUtils.formatPhoneNo(vo.getPhone()));
-        holder.tv_fr.setText(vo.getProfitratio());
-        holder.tv_fr.setText(StringUtils.formatIntMoney(vo.getPrice()));
+        holder.tv_fr.setText(vo.getTwoProfit()+"");
+        holder.tv_price.setText(StringUtils.formatIntMoney(vo.getTwoRebate()));
 
 
         return convertView;

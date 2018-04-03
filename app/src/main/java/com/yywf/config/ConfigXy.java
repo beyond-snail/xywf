@@ -181,6 +181,17 @@ public class ConfigXy {
     //会员钱包信息
     public static final String XY_WALLET_INFO = ZF_SERVER_API + "app/member/memberWalletInfo";
 
+    //代理商通道详情
+    public static final String XY_AGENT_INFO = ZF_SERVER_API + "app/member/agentInfo";
+
+
+    //修改代理商分润
+    public static final String XY_AGENT_UPDATE_INFO = ZF_SERVER_API + "app/member/updateProfit";
+
+
+    //代理商二级列表
+    public static final String XY_AGENT_LIST_INFO = ZF_SERVER_API + "app/member/myTwoAgentList";
+
     //预览计划
     public static final String XY_PREVIEW_PLAN = ZF_SERVER_API + "app/pay/previewPlan";
     public static final String XY_DO_PLAN = ZF_SERVER_API + "app/pay/yiShengBankCardBind";
@@ -188,6 +199,12 @@ public class ConfigXy {
     public static final String XY_MY_TEAM = ZF_SERVER_API + "app/member/myTeam";
     //我的团队列表
     public static final String XY_MY_TEAM_LIST = ZF_SERVER_API + "app/member/myTeamList";
+
+
+    //提现
+    public static final String XY_MY_TX = ZF_SERVER_API + "app/member/withdrawal";
+
+
 
 
 

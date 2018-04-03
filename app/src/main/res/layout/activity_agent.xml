@@ -46,6 +46,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:gravity="center"
+                        android:visibility="gone"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
                         <TextView
@@ -81,6 +82,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginBottom="20dp"
                         android:layout_marginTop="20dp"
+                        android:visibility="gone"
                         android:background="@color/white"/>
                     <LinearLayout
                         android:layout_width="0dp"
@@ -192,6 +194,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/tv_name"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
@@ -308,7 +311,7 @@
                     android:gravity="center_vertical"
                     android:hint="请输入分润"
                     android:textColorHint="#c9c9c9"
-                    android:maxLength="10"
+                    android:maxLength="2"
                     android:inputType="number"
                     android:singleLine="true"
                     android:textColor="#333333"

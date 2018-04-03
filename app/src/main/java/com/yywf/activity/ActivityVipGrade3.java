@@ -49,18 +49,10 @@ import java.util.List;
 public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
     private final String TAG = "ActivityVipGrade";
 
-//    private PullToRefreshScrollView mPullRefreshScrollView;
     private MyListView myListView;
-
-    private VipGrade vo;
     private List<VipGrade> list = new ArrayList<VipGrade>();
-
     private AdapterVipGrade3 adapter;
-
     private LinearLayout ll_advertis;
-
-
-
     private MyCustomDialog dialog;
     private MyCustomDialog dialog2;
 
@@ -74,12 +66,12 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
         if (findViewById(R.id.backBtn) != null) {
             findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
         }
-        if (findViewById(R.id.img_right) != null){
+        if (findViewById(R.id.img_right) != null) {
             findViewById(R.id.img_right).setVisibility(View.VISIBLE);
             findViewById(R.id.img_right).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 26));
+                    startActivity(new Intent(mContext, ActivityReadTxt.class).putExtra("type", 26));
                 }
             });
         }
@@ -88,7 +80,6 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
 
 
     }
-
 
 
     @Override
@@ -109,18 +100,8 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-//                ToastUtils.CustomShow(mContext, ""+i);
-//                startActivity(new Intent(mContext, ActivityOrderDetail.class));
-                String title = "<font color='red'><b><big>恭喜您</big></b>"+"</font>"+"<font color='black'>成为"+list.get(i).getGradename()+"</font>";
-
-
-//                String content = "请缴纳" + StringUtils.formatIntMoney(list.get(i).getEarnestMoney()) + "元风险保证金, 返利"+list.get(i).getGradegive()+"个月完成"+list.get(i).getGradedemand()+"个会员用户或"+list.get(i).getIshot()+"万交易";
-                String content = "请缴纳" + StringUtils.formatIntMoney(list.get(i).getEarnestMoney()) + "元保证金，返利"+StringUtils.formatIntMoney(list.get(i).getCashback())+"，分润万"+list.get(i).getProfitratio()+"，目标任务完成"+list.get(i).getGradedemand()+"个会员或"+list.get(i).getIshot()+"万营业额。";
-
-
-//                        "请缴纳" + StringUtils.formatIntMoney(list.get(i).getEarnestMoney()) + "元风险保证金, 返利"+list.get(i).getGradegive()+"个月完成"+list.get(i).getGradedemand()+"个会员用户或"+list.get(i).getIshot()+"万交易";
-
-
+                String title = "<font color='red'><b><big>恭喜您</big></b>" + "</font>" + "<font color='black'>成为" + list.get(i).getGradename() + "</font>";
+                String content = "请缴纳" + StringUtils.formatIntMoney(list.get(i).getEarnestMoney()) + "元保证金，返利" + StringUtils.formatIntMoney(list.get(i).getCashback()) + "，分润万" + list.get(i).getProfitratio() + "，目标任务完成" + list.get(i).getGradedemand() + "个会员或" + list.get(i).getIshot() + "万营业额。";
                 dialog2 = DialogUtils.showDialogDl(mContext, Html.fromHtml(title), "取消", "充值", content, new OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -134,7 +115,6 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
                         startActivity(new Intent(mContext, ActivityFyPay.class).putExtra("amount", list.get(i).getEarnestMoney()));
                     }
                 });
-//
             }
         });
 
@@ -144,7 +124,7 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
 
 
     //初始化广告栏
-    private void initAdvertis(){
+    private void initAdvertis() {
         // 广告栏开始
         ll_advertis = (LinearLayout) findViewById(R.id.advertis);
         // 设置宽度高度一致
@@ -152,7 +132,6 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
         linearParams.height = (int) (ScreenUtils.getScreenWidth(mContext) / 2);// 640-370
         // 750-434
         ll_advertis.setLayoutParams(linearParams);
-
         local();
     }
 
@@ -160,7 +139,7 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
     //系统本地图片加载
     public void local() {
         // 声明一个数组, 指定图片的ID
-        final Integer[] resArray = new Integer[] {R.drawable.shenjidaili
+        final Integer[] resArray = new Integer[]{R.drawable.shenjidaili
         };
         ImageIndicatorView indicate_view = new ImageIndicatorView(mContext);
         // 把数组交给图片展播组件
@@ -182,16 +161,14 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
     }
 
 
-
-
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.id_grade_msg:
-                startActivity( new Intent(mContext, ActivityReadWord.class));
+                startActivity(new Intent(mContext, ActivityReadWord.class));
                 break;
             case R.id.ll_xy_dl://代扣协议
-                startActivity( new Intent(mContext, ActivityReadTxt.class).putExtra("type", 27));
+                startActivity(new Intent(mContext, ActivityReadTxt.class).putExtra("type", 27));
                 break;
             case R.id.btn_commit:
                 final String phone = "0571-8858-6888";
@@ -217,9 +194,9 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
     }
 
 
-    private void ShowAccount(final VipGrade vo){
+    private void ShowAccount(final VipGrade vo) {
 
-        dialog = DialogUtils.showDialog2(mContext, "温馨提示", "取消", "确定", "您将付款"+StringUtils.formatIntMoney(vo.getPurchasePrice())+"元", "信易（杭州）互联网科技有限公司\r\n账号: 19020101040041032\r\n开户行: 中国农业银行杭州市城西支行", new OnClickListener() {
+        dialog = DialogUtils.showDialog2(mContext, "温馨提示", "取消", "确定", "您将付款" + StringUtils.formatIntMoney(vo.getPurchasePrice()) + "元", "信易（杭州）互联网科技有限公司\r\n账号: 19020101040041032\r\n开户行: 中国农业银行杭州市城西支行", new OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
@@ -231,8 +208,6 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
             }
         });
     }
-
-
 
 
     @Override
@@ -255,7 +230,7 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
                 disShowProgress();
                 try {
                     JSONObject result = new JSONObject(response);
-                    if (result.optInt("code") == -2){
+                    if (result.optInt("code") == -2) {
                         UtilPreference.clearNotKeyValues(mContext);
                         // 退出账号 返回到登录页面
                         MyActivityManager.getInstance().logout(mContext);
@@ -271,7 +246,7 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
                     if (!StringUtils.isBlank(grade_list)) {
 
                         Gson gson = new Gson();
-                        List<VipGrade> vipGradeList = gson.fromJson(grade_list, new TypeToken<List<VipGrade> >() {
+                        List<VipGrade> vipGradeList = gson.fromJson(grade_list, new TypeToken<List<VipGrade>>() {
                         }.getType());
 
                         if (vipGradeList.size() > 0) {
@@ -293,7 +268,7 @@ public class ActivityVipGrade3 extends BaseActivity implements OnClickListener {
                                 myListView.setVisibility(View.GONE);
                             }
                         }
-                    }else{
+                    } else {
                         ToastUtils.CustomShow(mContext, "返回数据错误");
                     }
                     adapter.notifyDataSetChanged();

@@ -583,7 +583,7 @@
             android:background="@drawable/btn_yellow_selector"
             android:gravity="center"
             android:padding="@dimen/padding_normal"
-            android:text="购买等级"
+            android:text="升级代理"
             android:textColor="@color/font_red_selector2"
             android:textSize="@dimen/text_size_title" />
     </LinearLayout>

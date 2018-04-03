@@ -1,5 +1,6 @@
 package com.yywf.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -13,10 +14,12 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.loopj.android.http.RequestParams;
+import com.tool.utils.sortlistview.SortModel;
 import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.ToastUtils;
 import com.tool.utils.utils.UtilPreference;
@@ -27,6 +30,7 @@ import com.yywf.adapter.AdapterTeamDetal;
 import com.yywf.config.ConfigXy;
 import com.yywf.http.HttpUtil;
 import com.yywf.model.AgentInfo;
+import com.yywf.model.MyWalletInfo;
 import com.yywf.util.MyActivityManager;
 
 import org.json.JSONException;
@@ -66,6 +70,7 @@ public class ActivityAgentSearch extends BaseActivity {
     private ImageView mSearchBarImg;
 
 
+    private String name;
 
     private List<AgentInfo> agentInfos = new ArrayList<>();
 
@@ -150,7 +155,14 @@ public class ActivityAgentSearch extends BaseActivity {
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ToastUtils.CustomShow(mContext, ""+i);
+                Intent mIntent = new Intent();
+//                mIntent.putExtra("name", agentInfos.get(i).getName());
+//                mIntent.putExtra("twoProfit", agentInfos.get(i).getTwoProfit());
+//                mIntent.putExtra("twoRebate", agentInfos.get(i).getTwoRebate());
+                mIntent.putExtra("agentInfo", agentInfos.get(i));
+                // 设置结果，并进行传送
+                setResult(2, mIntent);
+                finish();
             }
         });
 
@@ -177,6 +189,7 @@ public class ActivityAgentSearch extends BaseActivity {
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
                 refreshView.getLoadingLayoutProxy(true, false).setLastUpdatedLabel("更新于：" + label);
 //                reloadData();
+                loadData(mEditText.getText().toString().trim());
             }
 
             @Override
@@ -206,63 +219,89 @@ public class ActivityAgentSearch extends BaseActivity {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadData("");
+    }
+
+    private void loadData(String name) {
+
+        agentInfos.clear();
+        showProgress("加载中...");
+
+        String url = ConfigXy.XY_AGENT_LIST_INFO;
+        RequestParams params = new RequestParams();
+        params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.add("token", UtilPreference.getStringValue(mContext, "token"));
+        params.add("name", name);
+
+        HttpUtil.get(url, params, new HttpUtil.RequestListener() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public void success(String response) {
+                disShowProgress();
+                try {
+
+                    JSONObject result = new JSONObject(response);
+                    if (result.optInt("code") == -2){
+                        UtilPreference.clearNotKeyValues(mContext);
+                        // 退出账号 返回到登录页面
+                        MyActivityManager.getInstance().logout(mContext);
+                        mPullRefreshScrollView.onRefreshComplete();
+                        return;
+                    }
+                    if (!result.optBoolean("status")) {
+                        showErrorMsg(result.getString("message"));
+                        mPullRefreshScrollView.onRefreshComplete();
+                        return;
+                    }
 
 
-    private void loadData(String orderNum) {
+                    Gson gson = new Gson();
+                    List<AgentInfo> infos = gson.fromJson(result.optString("data"), new TypeToken<List<AgentInfo>>() {
+                    }.getType());
 
-//        String url = ConfigXy.XY_ORDER_INFO_LIST;
-//        RequestParams params = new RequestParams();
-//
-//        params.put("shopId", UtilPreference.getLongValue(mContext, "shopId"));
-//        params.put("userId", UtilPreference.getLongValue(mContext, "userId"));
-//        params.put("orderNo",orderNum);
-//        params.put("page","1");
-//        params.put("orderStatus","2");
-//        params.put("createTimes", StringUtils.getCurrentDate("yyyy-MM-dd"));
-//
-//
-//        HttpUtil.get(url, params, new HttpUtil.RequestListener() {
-//
-//            @Override
-//            public void success(String response) {
-//                disShowProgress();
-//                try {
-//
-//                    JSONObject result = new JSONObject(response);
-//                    if (result.optInt("code") != 200) {
-//                        showErrorMsg(result.getString("message"));
-//                        return;
-//                    }
-//                    JSONObject body = result.getJSONObject("body");
-//
-//                    if(body == null){
-//                        return;
-//                    }
-//
-//                    String dataStr = body.optString("orderInfoList");
-//                    if (!StringUtils.isBlank(dataStr)) {
-//
-//                        orderNoticeNewList.clear();
-//
-//                        Gson gson = new Gson();
-//                        // json数据转换成List
-//                        List<OrderNoticeNew> datas = gson.fromJson(dataStr, new TypeToken<List<OrderNoticeNew>>() {
-//                        }.getType());
-//                        orderNoticeNewList.addAll(datas);
-//
-//                    }
-//                    mAdapter.notifyDataSetChanged();
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void failed(Throwable error) {
-//                showE404();
-//                disShowProgress();
-//            }
-//        });
+
+                    if (infos.size() > 0) {
+                        agentInfos.addAll(infos);
+                        if (agentInfos.size() > 0) {
+                            linearLayout(R.id.id_no_data).setVisibility(View.GONE);
+                            myListView.setVisibility(View.VISIBLE);
+                        } else {
+                            linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
+                            myListView.setVisibility(View.GONE);
+                        }
+
+                    } else {
+                        if (agentInfos.size() > 0) {
+                            linearLayout(R.id.id_no_data).setVisibility(View.GONE);
+                            myListView.setVisibility(View.VISIBLE);
+                        } else {
+                            linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
+                            myListView.setVisibility(View.GONE);
+                        }
+                    }
+
+
+                    mAdapter.notifyDataSetChanged();
+                    mPullRefreshScrollView.onRefreshComplete();
+
+
+                } catch (Exception e) {
+                    e.getMessage();
+
+                }
+            }
+
+            @Override
+            public void failed(Throwable error) {
+                disShowProgress();
+                showE404();
+
+            }
+        });
     }
 
 }

@@ -10,34 +10,42 @@ import java.io.Serializable;
 
 public class AgentInfo implements BaseSearch, Serializable {
 
-    private String icon;
-    private String memberName;
-    private String profitratio;
+//    private String icon;
+//    private String memberName;
+//    private String profitratio;
+//    private String phone;
+//    private int price;
+    private int twoProfit;
+    private long agentId;
+    private int twoRebate;
     private String phone;
-    private int price;
+    private String typeName;
+    private String name;
+    private String picture;
 
-    public String getIcon() {
-        return icon;
+
+    public int getTwoProfit() {
+        return twoProfit;
     }
 
-    public void setIcon(String icon) {
-        this.icon = icon;
+    public void setTwoProfit(int twoProfit) {
+        this.twoProfit = twoProfit;
     }
 
-    public String getMemberName() {
-        return memberName;
+    public long getAgentId() {
+        return agentId;
     }
 
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
+    public void setAgentId(long agentId) {
+        this.agentId = agentId;
     }
 
-    public String getProfitratio() {
-        return profitratio;
+    public int getTwoRebate() {
+        return twoRebate;
     }
 
-    public void setProfitratio(String profitratio) {
-        this.profitratio = profitratio;
+    public void setTwoRebate(int twoRebate) {
+        this.twoRebate = twoRebate;
     }
 
     public String getPhone() {
@@ -48,18 +56,34 @@ public class AgentInfo implements BaseSearch, Serializable {
         this.phone = phone;
     }
 
-    public int getPrice() {
-        return price;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     @Override
     public String getSearchCondition() {
         StringBuilder searchStr = new StringBuilder();
-        searchStr.append(memberName);
+        searchStr.append(name);
         return searchStr.toString();
     }
 }
