@@ -98,7 +98,8 @@ public class AdapterWallet extends BaseAdapter {
         }
         WalletListInfo vo = list.get(position);
 
-        holder.id_tv_amt.setText(StringUtils.formatIntMoney(vo.getAmt()));
+//        holder.id_tv_amt.setText(StringUtils.formatIntMoney(vo.getAmt()));
+        holder.id_tv_amt.setText(vo.getAmount());
         holder.id_tv_name.setText(StringUtils.isBlank(vo.getName()) ? "" : vo.getName());
         holder.id_tv_time.setText(StringUtils.isBlank(vo.getTime()) ? "" : vo.getTime());
 

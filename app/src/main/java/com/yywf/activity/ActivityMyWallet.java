@@ -277,15 +277,16 @@ public class ActivityMyWallet extends BaseActivity implements View.OnClickListen
 				tv_yesterday_trans.setTextColor(mContext.getResources().getColorStateList(R.color.font_red_selector2));
 				tv_yesterday_trans.setBackgroundResource(R.drawable.btn_yellow_selector);
 
-				tv_amount.setText(totalAmt);
-				tv_count.setText(totalRatio);
+				tv_amount.setText(yerterdayTotalAmt);
+				tv_count.setText(yesterdayTotalRatio);
+
 				break;
 			case 2:// 切换到累计分润
 				tv_accumulate_trans.setTextColor(mContext.getResources().getColorStateList(R.color.font_red_selector2));
 				tv_accumulate_trans.setBackgroundResource(R.drawable.btn_yellow_selector);
 
-				tv_amount.setText(yerterdayTotalAmt);
-				tv_count.setText(yesterdayTotalRatio);
+				tv_amount.setText(totalAmt);
+				tv_count.setText(totalRatio);
 				break;
 			default:
 				break;

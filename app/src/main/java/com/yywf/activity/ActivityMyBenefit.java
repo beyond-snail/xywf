@@ -19,6 +19,7 @@ import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.loopj.android.http.RequestParams;
+import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.RoundImageView;
 import com.yywf.R;
@@ -53,7 +54,7 @@ public class ActivityMyBenefit extends BaseActivity implements OnClickListener {
     private TextView tv_yab_amt;
     private TextView tv_hab_amt;
 
-
+    private int sort = 1;
     private int page = 1;
 
 	@Override
@@ -134,7 +135,7 @@ public class ActivityMyBenefit extends BaseActivity implements OnClickListener {
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
                 refreshView.getLoadingLayoutProxy(false, true).setLastUpdatedLabel("更新于：" + label);
 
-                if (walletInfos.size() == 0) {
+//                if (walletInfos.size() == 0) {
                     handler.postDelayed(new Runnable() {
 
                         @Override
@@ -144,12 +145,14 @@ public class ActivityMyBenefit extends BaseActivity implements OnClickListener {
                         }
                     }, 1000);
 
-                } else {
-                    page++;
-                    loadData(false);
-                }
+//                } else {
+//                    page++;
+//                    loadData(false);
+//                }
             }
         });
+
+        setUI(1);
 
 	}
 
@@ -164,13 +167,12 @@ public class ActivityMyBenefit extends BaseActivity implements OnClickListener {
         if (showProgress) {
             showProgress("加载中...");
         }
-        String url = ConfigXy.XY_BANK_INFO_LIST;
+        String url = ConfigXy.XY_RECORD_LIST;
         RequestParams params = new RequestParams();
-//        params.add("memberId", UtilPreference.getStringValue(mContext, "zf_member_id"));
-//        params.add("groupId", UtilPreference.getStringValue(mContext, "zf_group_id"));
-//        params.add("pageNo", page + "");
-//        params.add("pageSize", "10");
-//        params.add("token", UtilPreference.getStringValue(mContext, "token"));
+        params.put("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.put("token", UtilPreference.getStringValue(mContext, "token"));
+        params.put("type", 2);
+        params.put("sort", sort);
 
         HttpUtil.get(url, params, new HttpUtil.RequestListener() {
 
@@ -194,26 +196,53 @@ public class ActivityMyBenefit extends BaseActivity implements OnClickListener {
                         return;
                     }
 
-                    JSONArray obj = result.getJSONArray("data");
-                    if (obj.length() <= 0){
-                        adapterWallet.notifyDataSetChanged();
-                        listview.onRefreshComplete();
-                        return;
+//                    JSONArray obj = result.getJSONArray("data");
+//                    if (obj.length() <= 0){
+//                        adapterWallet.notifyDataSetChanged();
+//                        listview.onRefreshComplete();
+//                        return;
+//                    }
+//
+//                    Gson gson = new Gson();
+//                    WalletInfo walletInfo = gson.fromJson(obj.toString(), new TypeToken<WalletInfo>() {
+//                    }.getType());
+//
+//                    if (walletInfo.getWalletListInfo().size() > 0) {
+//                        linearLayout(R.id.id_no_data).setVisibility(View.GONE);
+//                        walletInfos.addAll(walletInfos.size(), walletInfo.getWalletListInfo());
+//
+//                    } else {
+//                        if (walletInfos.size() > 0){
+//                            linearLayout(R.id.id_no_data).setVisibility(View.GONE);
+//                        }else{
+//                            linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
+//                        }
+//                    }
+
+                    JSONObject obj = result.getJSONObject("data_extend");
+                    if (obj != null) {
+                        String tradeOfflineYesterday = obj.optString("tradeOfflineYesterday");
+                        String tradeOfflineAll = obj.optString("tradeOfflineAll");
+                        tv_yab_amt.setText(StringUtils.isBlank(tradeOfflineYesterday) ? "" : tradeOfflineYesterday);
+                        tv_hab_amt.setText(StringUtils.isBlank(tradeOfflineAll) ? "" : tradeOfflineAll);
                     }
 
+
                     Gson gson = new Gson();
-                    WalletInfo walletInfo = gson.fromJson(obj.toString(), new TypeToken<WalletInfo>() {
+                    List<WalletListInfo> walletListInfo = gson.fromJson(result.optString("data"), new TypeToken< List<WalletListInfo>>() {
                     }.getType());
-
-                    if (walletInfo.getWalletListInfo().size() > 0) {
-                        linearLayout(R.id.id_no_data).setVisibility(View.GONE);
-                        walletInfos.addAll(walletInfos.size(), walletInfo.getWalletListInfo());
-
-                    } else {
-                        if (walletInfos.size() > 0){
+//
+                    if (walletListInfo != null) {
+                        if (walletListInfo.size() > 0) {
                             linearLayout(R.id.id_no_data).setVisibility(View.GONE);
-                        }else{
-                            linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
+                            walletInfos.addAll(walletInfos.size(), walletListInfo);
+
+                        } else {
+                            if (walletInfos.size() > 0) {
+                                linearLayout(R.id.id_no_data).setVisibility(View.GONE);
+                            } else {
+                                linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
+                            }
                         }
                     }
 
@@ -292,6 +321,9 @@ public class ActivityMyBenefit extends BaseActivity implements OnClickListener {
             default:
                 break;
         }
+
+        sort = i;
+        reloadData();
 
     }
 

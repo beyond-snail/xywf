@@ -7,7 +7,7 @@ package com.yywf.model;
 public class WalletListInfo {
     private String name;
     private String time;
-    private int amt;
+    private String amount;
 
 
     public String getName() {
@@ -26,11 +26,11 @@ public class WalletListInfo {
         this.time = time;
     }
 
-    public int getAmt() {
-        return amt;
+    public String getAmount() {
+        return amount;
     }
 
-    public void setAmt(int amt) {
-        this.amt = amt;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 }

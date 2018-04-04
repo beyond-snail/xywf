@@ -204,6 +204,9 @@ public class ConfigXy {
     //提现
     public static final String XY_MY_TX = ZF_SERVER_API + "app/member/withdrawal";
 
+    //我的钱包，首页 奖励-返利-分润昨日和累计
+    public static final String XY_RECORD_LIST = ZF_SERVER_API + "app/member/recordList";
+
 
 
 

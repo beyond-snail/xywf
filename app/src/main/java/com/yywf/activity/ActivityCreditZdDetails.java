@@ -111,21 +111,21 @@ public class ActivityCreditZdDetails extends BaseActivity {
 						DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
 				refreshView.getLoadingLayoutProxy(false, true).setLastUpdatedLabel("更新于：" + label);
 
-//				if (zhangDanList.size() == 0) {
-//					handler.postDelayed(new Runnable() {
-//
-//						@Override
-//						public void run() {
-//							showErrorMsg("没有更多了");
-//							// ListScrollUtil.setGridViewHeightBasedOnChildren(gridView);
-//							mPullRefreshScrollView.onRefreshComplete();
-//						}
-//					}, 1000);
 
-//				} else {
+				if (zhangDanList.size() == 0) {
+					handler.postDelayed(new Runnable() {
+
+						@Override
+						public void run() {
+							showErrorMsg("没有更多了");
+							mPullRefreshScrollView.onRefreshComplete();
+						}
+					}, 1000);
+
+				} else {
 					page++;
 					loadData(false);
-//				}
+				}
 			}
 		});
 	}

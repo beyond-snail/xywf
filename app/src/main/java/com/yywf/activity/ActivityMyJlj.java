@@ -15,6 +15,7 @@ import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.loopj.android.http.RequestParams;
+import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.UtilPreference;
 import com.yywf.R;
 import com.yywf.adapter.AdapterWallet;
@@ -46,6 +47,7 @@ public class ActivityMyJlj extends BaseActivity implements OnClickListener {
     private TextView tv_haj_amt;
 
 
+    private int sort = 1;
     private int page = 1;
 
 	@Override
@@ -62,6 +64,7 @@ public class ActivityMyJlj extends BaseActivity implements OnClickListener {
 		initView();
         //加载储蓄卡的信息
 //        loadDebitCardInfo();
+//        reloadData();
 	}
 
 
@@ -75,8 +78,8 @@ public class ActivityMyJlj extends BaseActivity implements OnClickListener {
         ll_yesterday_jlj = relativeLayout(R.id.ll_yesterday_jlj);
         ll_accumulate_jlj = linearLayout(R.id.ll_accumulate_jlj);
 
-        tv_yaj_amt = textView(R.id.tv_yaf_amt);
-        tv_haj_amt = textView(R.id.tv_haf_amt);
+        tv_yaj_amt = textView(R.id.tv_yaj_amt);
+        tv_haj_amt = textView(R.id.tv_haj_amt);
 
 
 
@@ -126,7 +129,7 @@ public class ActivityMyJlj extends BaseActivity implements OnClickListener {
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
                 refreshView.getLoadingLayoutProxy(false, true).setLastUpdatedLabel("更新于：" + label);
 
-                if (walletInfos.size() == 0) {
+//                if (walletInfos.size() == 0) {
                     handler.postDelayed(new Runnable() {
 
                         @Override
@@ -136,13 +139,14 @@ public class ActivityMyJlj extends BaseActivity implements OnClickListener {
                         }
                     }, 1000);
 
-                } else {
-                    page++;
-                    loadData(false);
-                }
+//                } else {
+//                    page++;
+//                    loadData(false);
+//                }
             }
         });
 
+        setUI(1);
 	}
 
     private void reloadData() {
@@ -156,13 +160,13 @@ public class ActivityMyJlj extends BaseActivity implements OnClickListener {
         if (showProgress) {
             showProgress("加载中...");
         }
-        String url = ConfigXy.XY_BANK_INFO_LIST;
+        String url = ConfigXy.XY_RECORD_LIST;
         RequestParams params = new RequestParams();
-//        params.add("memberId", UtilPreference.getStringValue(mContext, "zf_member_id"));
-//        params.add("groupId", UtilPreference.getStringValue(mContext, "zf_group_id"));
-//        params.add("pageNo", page + "");
-//        params.add("pageSize", "10");
-//        params.add("token", UtilPreference.getStringValue(mContext, "token"));
+        params.put("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+        params.put("token", UtilPreference.getStringValue(mContext, "token"));
+        params.put("type", 1);
+        params.put("sort", sort);
+
 
         HttpUtil.get(url, params, new HttpUtil.RequestListener() {
 
@@ -186,26 +190,37 @@ public class ActivityMyJlj extends BaseActivity implements OnClickListener {
                         return;
                     }
 
-                    JSONArray obj = result.getJSONArray("data");
-                    if (obj.length() <= 0){
-                        adapterWallet.notifyDataSetChanged();
-                        listview.onRefreshComplete();
-                        return;
+//                    JSONArray obj = result.getJSONArray("data");
+//                    if (obj.length() <= 0){
+//                        adapterWallet.notifyDataSetChanged();
+//                        listview.onRefreshComplete();
+//                        return;
+//                    }
+//
+                    JSONObject obj = result.getJSONObject("data_extend");
+                    if (obj != null) {
+                        String tradeOfflineYesterday = obj.optString("tradeOfflineYesterday");
+                        String tradeOfflineAll = obj.optString("tradeOfflineAll");
+                        tv_yaj_amt.setText(StringUtils.isBlank(tradeOfflineYesterday) ? "" : tradeOfflineYesterday);
+                        tv_haj_amt.setText(StringUtils.isBlank(tradeOfflineAll) ? "" : tradeOfflineAll);
                     }
 
+
                     Gson gson = new Gson();
-                    WalletInfo walletInfo = gson.fromJson(obj.toString(), new TypeToken<WalletInfo>() {
+                    List<WalletListInfo> walletListInfo = gson.fromJson(result.optString("data"), new TypeToken< List<WalletListInfo>>() {
                     }.getType());
-
-                    if (walletInfo.getWalletListInfo().size() > 0) {
-                        linearLayout(R.id.id_no_data).setVisibility(View.GONE);
-                        walletInfos.addAll(walletInfos.size(), walletInfo.getWalletListInfo());
-
-                    } else {
-                        if (walletInfos.size() > 0){
+//
+                    if (walletListInfo != null) {
+                        if (walletListInfo.size() > 0) {
                             linearLayout(R.id.id_no_data).setVisibility(View.GONE);
-                        }else{
-                            linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
+                            walletInfos.addAll(walletInfos.size(), walletListInfo);
+
+                        } else {
+                            if (walletInfos.size() > 0) {
+                                linearLayout(R.id.id_no_data).setVisibility(View.GONE);
+                            } else {
+                                linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
+                            }
                         }
                     }
 
@@ -270,6 +285,7 @@ public class ActivityMyJlj extends BaseActivity implements OnClickListener {
         ll_yesterday_jlj.setVisibility(View.GONE);
         ll_accumulate_jlj.setVisibility(View.GONE);
 
+
         switch (i) {
             case 1:// 切换到昨日分润
                 tv_yesterday_jlj.setTextColor(mContext.getResources().getColorStateList(R.color.font_red_selector2));
@@ -284,6 +300,9 @@ public class ActivityMyJlj extends BaseActivity implements OnClickListener {
             default:
                 break;
         }
+
+        sort = i;
+        reloadData();
 
     }
 
