@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:rtv="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -123,17 +124,31 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:orientation="horizontal">
-        <TextView
+
+        <com.tool.utils.view.RTextView
             android:id="@+id/tv_dlxy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:drawableLeft="@drawable/tuoyuan"
             android:drawablePadding="5dp"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:text="@string/dailixieyi"
+            android:textColor="#666666"
             android:textSize="12sp"
-            android:textColor="#666666"/>
+            rtv:icon_src_normal="@drawable/tuoyuan"
+            rtv:icon_direction="left"
+            rtv:icon_height="15dp"
+            rtv:icon_width="15dp"/>
+        <!--<com.tool.utils.view.RTextView-->
+            <!--android:id="@+id/tv_dlxy"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:drawableLeft="@drawable/tuoyuan"-->
+            <!--android:drawablePadding="5dp"-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/dailixieyi"-->
+            <!--android:textSize="12sp"-->
+            <!--android:textColor="#666666"/>-->
     </LinearLayout>
 
     <Button

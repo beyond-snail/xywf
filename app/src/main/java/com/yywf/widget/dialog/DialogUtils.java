@@ -3,6 +3,7 @@ package com.yywf.widget.dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -270,6 +271,47 @@ public class DialogUtils {
         TextView tv_content = view.findViewById(R.id.tv_alert_dialog_message);
         tv_content.setText(content);
 
+
+        TextView btn_left = view.findViewById(R.id.btn_alert_dialog_btn_left);
+        btn_left.setText(leftText);
+        btn_left.setTextColor(mContext.getResources().getColorStateList(R.color.btn_left_selector));
+        btn_left.setOnClickListener(leftClick);
+
+        TextView btn_right = view.findViewById(R.id.btn_alert_dialog_btn_right);
+        btn_right.setText(rightText);
+        btn_right.setTextColor(mContext.getResources().getColorStateList(R.color.btn_right_selector));
+        btn_right.setOnClickListener(rightClick);
+
+        final MyCustomDialog.Builder customBuilder = new MyCustomDialog.Builder(mContext,
+                R.style.MyDialogStyleBottom);
+//        customBuilder.setCancelable(false);
+        customBuilder.setCanceledOnTouchOutside(false);
+        customBuilder.setLine(0);// 分割横线所处位置 在自定义布局上下或隐藏 0隐藏 1线在上方
+        customBuilder.setContentView(view);
+        customBuilder.setDisBottomButton(true);
+        // 2线在下方
+        MyCustomDialog dialog = customBuilder.create();
+        dialog.show();
+        return dialog;
+    }
+
+
+    public static MyCustomDialog showDialogFx(final Context mContext,  String leftText, String rightText, View.OnClickListener leftClick, View.OnClickListener rightClick){
+        LayoutInflater inflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.alert_dialog5, null);
+        TextView tv_title = view.findViewById(R.id.tv_alert_dialog_title);
+        tv_title.setText("温馨提示");
+        tv_title.setBackgroundResource(R.drawable.bar_top_tips);
+        tv_title.setTextColor(mContext.getResources().getColor(com.tool.R.color.white));
+
+        TextView tv_content = view.findViewById(R.id.tv_alert_dialog_message);
+        tv_content.setText("您确认需要退还风险保证金吗");
+
+
+        String msg = "<font>若确认退还, 则系统自动默认您放弃代理商资格, 不再继续享受代理商所有权益" + "</font>" + "<font color='red'>(不再享受平台返利、分润)</font><font color='black'>，只会保留会员资格</font>";
+
+        TextView tv_content2 = view.findViewById(R.id.tv_alert_dialog_message2);
+        tv_content2.setText(Html.fromHtml(msg));
 
         TextView btn_left = view.findViewById(R.id.btn_alert_dialog_btn_left);
         btn_left.setText(leftText);

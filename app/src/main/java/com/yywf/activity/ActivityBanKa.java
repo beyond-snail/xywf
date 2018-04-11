@@ -117,7 +117,7 @@ public class ActivityBanKa extends BaseActivity  {
 						break;
 					case 4: //平安银行
 
-						String url_pa = "https://c.pingan.com/apply/mobile/apply/index.html?showt=1&scc=203100001&ccp=3a2a5a4a1a11a8a10a12a13a9a7a15a20&p=sn%3D%25E8%2582%2596%25E9%259B%2584sc%3DE00010242604ro%3DNcl%3D2&bt8=m_Q0Lp4Y911ouA2Img&isApp=true&bt2=E00010242604&bt5=employmee_edm&bt7=V0182&from=timeline&isappinstalled=0";
+						String url_pa = "https://b.pingan.com.cn/creditcard/huodong/wxzxbkaqy4/index.shtml?outersource=920000002&url=https://c.pingan.com/ca/index?scc=920000002&sign=106491a46eddaef03e8925304159e2a5&versionNo=R10310&onlineSQFlag=N&channel=WXNC";
 						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_pa).putExtra("title",
 								list.get(position).getName()));
 						break;
@@ -142,7 +142,7 @@ public class ActivityBanKa extends BaseActivity  {
 								list.get(position).getName()));
 						break;
 					case 9: //农业银行
-						String url_ny = "http://abccc.vfengche.cn/memu/card/page1.html";
+						String url_ny = "https://abccc.vfengche.cn/memu/card/page1.html";
 						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_ny).putExtra("title",
 								list.get(position).getName()));
 						break;

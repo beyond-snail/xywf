@@ -6,10 +6,84 @@
     android:orientation="vertical" >
 
     <include layout="@layout/layout_header_with_transparent" />
-    <View
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="15dp"-->
+        <!--android:background="#f5f5f5" />-->
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:background="#f5f5f5" />
+        android:layout_height="150dp"
+        android:background="@drawable/mywallet_bg"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="10dp"
+                android:text="可提余额(元)"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/tv_amt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="0.00"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/tv_no_amt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:text=""
+                android:textColor="@color/white_light"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_gz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:textSize="12sp"
+        android:textColor="#666666"/>
 
     <LinearLayout
         android:id="@+id/rl_avatar"
@@ -18,7 +92,7 @@
         android:background="@drawable/setting_list_bg"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingTop="25dp"
+        android:paddingTop="10dp"
         android:paddingBottom="25dp">
 
 
@@ -28,12 +102,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="15dp"
             android:background="@drawable/kuaijieshouk_icon_rmb"/>
 
         <com.tool.utils.view.MoneyEditText
             android:id="@+id/et_amt"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@null"
@@ -42,6 +117,17 @@
             android:maxLength="12"
             android:hint="请输入提现金额"
             android:textColor="@color/gray"
+            android:textSize="@dimen/text_size_normal"/>
+
+        <TextView
+            android:id="@+id/all_tx"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="5dp"
+            android:gravity="center_vertical|right"
+            android:text="全部提现"
+            android:textColor="@color/text_font"
             android:textSize="@dimen/text_size_normal"/>
 
     </LinearLayout>
@@ -56,6 +142,7 @@
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:background="@drawable/setting_list_bg">
 
         <TextView
@@ -66,40 +153,39 @@
             android:layout_gravity="center_vertical"
             android:textColor="#999999"
             android:textSize="14sp"
-            android:ems="5"
             android:text=""/>
 
-        <TextView
-            android:id="@+id/tv_tx_balance_amt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical"
-            android:textColor="#999999"
-            android:textSize="14sp"
-            android:text="0.00"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:textColor="#999999"
-            android:layout_marginLeft="4dp"
-            android:textSize="14sp"
-            android:text="元"/>
+        <!--<TextView-->
+            <!--android:id="@+id/tv_tx_balance_amt"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:textColor="#999999"-->
+            <!--android:textSize="14sp"-->
+            <!--android:text="0.00"/>-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:textColor="#999999"-->
+            <!--android:layout_marginLeft="4dp"-->
+            <!--android:textSize="14sp"-->
+            <!--android:text="元"/>-->
         <View
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"/>
 
-        <TextView
-            android:id="@+id/all_tx"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical|right"
-            android:text="全部提现"
-            android:textColor="@color/text_font"
-            android:textSize="@dimen/text_size_normal"/>
+        <!--<TextView-->
+            <!--android:id="@+id/all_tx"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:gravity="center_vertical|right"-->
+            <!--android:text="全部提现"-->
+            <!--android:textColor="@color/text_font"-->
+            <!--android:textSize="@dimen/text_size_normal"/>-->
     </LinearLayout>
 
 
@@ -108,10 +194,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="10sp"
+        android:textSize="14sp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:visibility="invisible"
+        android:visibility="visible"
         android:textColor="@color/gray"/>
     <TextView
         android:id="@+id/id_tx_detail"
@@ -121,6 +207,7 @@
         android:layout_marginTop="10dp"
         android:text="提现规则"
         android:textSize="10sp"
+        android:visibility="gone"
         android:textColor="@color/text_font"/>
 
 
@@ -135,7 +222,7 @@
         android:background="@drawable/login_bar"
         android:padding="@dimen/padding_normal"
         android:gravity="center"
-        android:text="完成"
+        android:text="申请提现"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_title" />
 

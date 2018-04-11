@@ -9,7 +9,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -62,6 +64,9 @@ public class ActivityHome extends FragmentActivity implements OnClickListener{
 
 
     private FragmentTab mFragmentTab;
+//    private Fragment tab1;
+//    private Fragment tab2;
+//    private Fragment tab3;
 
 
     @Override
@@ -85,6 +90,9 @@ public class ActivityHome extends FragmentActivity implements OnClickListener{
 
 
     }
+
+
+
 
 
 
@@ -179,6 +187,16 @@ public class ActivityHome extends FragmentActivity implements OnClickListener{
 //    }
 
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.remove(tab1);
+//        transaction.remove(tab2);
+//        transaction.remove(tab3);
+//        transaction.remove(tab4);
+//        transaction.commitAllowingStateLoss();
+//        super.onSaveInstanceState(outState);
+    }
 
 
 
@@ -186,6 +204,8 @@ public class ActivityHome extends FragmentActivity implements OnClickListener{
         findViewById(R.id.rl_home_1).setOnClickListener(this);
         findViewById(R.id.rl_home_2).setOnClickListener(this);
         findViewById(R.id.rl_home_3).setOnClickListener(this);
+
+
 
         //
         mFragmentTab = new FragmentTab(getSupportFragmentManager());

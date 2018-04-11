@@ -39,6 +39,7 @@ import com.yywf.activity.ActivityMine;
 import com.yywf.activity.ActivityMyQr;
 import com.yywf.activity.ActivityMyTeam;
 import com.yywf.activity.ActivityMyWallet;
+import com.yywf.activity.ActivityMyWallet1;
 import com.yywf.activity.ActivityNewHelp;
 import com.yywf.activity.ActivitySaoMaShouKuan;
 import com.yywf.activity.ActivitySetting;
@@ -184,7 +185,7 @@ public class FragmentMine extends AbstractFragment implements
                         if (DialogUtils.checkApproveStatus(mContext)){
                             return;
                         }
-                        startActivity(new Intent(mContext, ActivityMyWallet.class));
+                        startActivity(new Intent(mContext, ActivityMyWallet1.class));
                         break;
                     case 2: //我的团队
                         if (DialogUtils.checkApproveStatus(mContext)){

@@ -11,6 +11,7 @@ import com.moxie.client.manager.MoxieContext;
 import com.moxie.client.manager.MoxieSDK;
 import com.moxie.client.model.MxParam;
 import com.myokhttp.util.LogUtils;
+import com.tool.utils.utils.UtilPreference;
 import com.yywf.R;
 import com.yywf.util.MyActivityManager;
 
@@ -23,8 +24,10 @@ public class ActivityEmailImport extends BaseActivity {
     private final String TAG = "ActivityEmailImport";
 
 
-    private String mUserId = "xinyi_test";
-    private String mApiKey = "ac8c5018733142a0a66eff8666df550b";
+//    private String mUserId = "xinyi_test";
+//    private String mApiKey = "ac8c5018733142a0a66eff8666df550b";
+    private String mUserId = "xinyi";
+    private String mApiKey = "cb8fd8ea11094563b0d877c2b8bf719e";
 
     private String mThemeColor = "#ff9500";
     private String mAgreementUrl = "https://api.51datakey.com/h5/agreement.html";
@@ -41,7 +44,7 @@ public class ActivityEmailImport extends BaseActivity {
         }
 
         MxParam mxParam = new MxParam();
-        mxParam.setUserId(mUserId);   //必传
+        mxParam.setUserId(UtilPreference.getStringValue(mContext, "memberId"));   //必传
         mxParam.setApiKey(mApiKey);   //必传
         mxParam.setFunction(MxParam.PARAM_FUNCTION_MAIL);
 

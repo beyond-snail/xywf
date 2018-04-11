@@ -3,63 +3,97 @@
     android:background="@drawable/common_radius_rect_white"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
     android:orientation="vertical" >
-
-    <RadioGroup
-        android:id="@+id/radioGroup1"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tv_alert_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_height="wrap_content" >
+        android:gravity="center"
+        android:padding="10dp"
+        android:background="@drawable/bar_top_tips"
+        android:singleLine="true"
+        android:text="我要提现"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+        <RadioGroup
+            android:id="@+id/radioGroup1"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" >
 
 
 
-        <RadioButton
-            android:id="@+id/button1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:button="@null"
-            android:drawableRight="@drawable/radio_button_style"
-            android:padding="10dp"
-            android:text="奖励金提现"
-            android:textColor="#333333"
-            android:textSize="18sp"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#ebebeb" />
-        <RadioButton
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:button="@null"
+            <RadioButton
+                android:id="@+id/button1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:button="@null"
+                android:drawableRight="@drawable/radio_button_style"
+                android:padding="10dp"
+                android:text="奖励金提现"
+                android:textColor="#333333"
+                android:textSize="18sp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ebebeb" />
+            <RadioButton
+                android:id="@+id/button2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:button="@null"
 
-            android:drawableRight="@drawable/radio_button_style"
-            android:padding="10dp"
-            android:text="返利金提现"
-            android:textSize="18sp"
-            android:textColor="#333333"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#ebebeb" />
+                android:drawableRight="@drawable/radio_button_style"
+                android:padding="10dp"
+                android:text="返利金提现"
+                android:textSize="18sp"
+                android:textColor="#333333"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ebebeb" />
 
-        <RadioButton
-            android:id="@+id/button3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:button="@null"
+            <RadioButton
+                android:id="@+id/button3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:button="@null"
 
-            android:drawableRight="@drawable/radio_button_style"
-            android:padding="10dp"
-            android:text="分润提现"
-            android:textSize="18sp"
-            android:textColor="#333333"/>
+                android:drawableRight="@drawable/radio_button_style"
+                android:padding="10dp"
+                android:text="分润提现"
+                android:textSize="18sp"
+                android:textColor="#333333"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#ebebeb" />
 
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/button4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:button="@null"
+
+                android:drawableRight="@drawable/radio_button_style"
+                android:padding="10dp"
+                android:text="风险保证金"
+                android:textSize="18sp"
+                android:textColor="#333333"/>
+
+        </RadioGroup>
+    </LinearLayout>
+
 
 
 

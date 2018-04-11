@@ -33,6 +33,7 @@ public class ActivityMyTeam extends BaseActivity implements View.OnClickListener
 
 	private final String TAG = "ActivityMyTeam";
 	private TextView tv_t_count_person;
+	private TextView tv_person;
 	private TextView tv_activate_count;
 	private TextView tv_no_activate_count;
 	private RelativeLayout ll_team;
@@ -63,6 +64,7 @@ public class ActivityMyTeam extends BaseActivity implements View.OnClickListener
 	private void initView() {
 
 
+		tv_person = textView(R.id.tv_person);
 		tv_t_count_person = textView(R.id.tv_t_count_person);
 		tv_activate_count = textView(R.id.tv_activate_count);
 		tv_no_activate_count = textView(R.id.tv_no_activate_count);
@@ -154,7 +156,7 @@ public class ActivityMyTeam extends BaseActivity implements View.OnClickListener
 						tv_t_count_person.setText(StringUtils.isBlank(proxyAmount) ? "0" : proxyAmount);
 						tv_activate_count.setText(StringUtils.isBlank(memberAmount) ? "0" : memberAmount);
 						tv_no_activate_count.setText(StringUtils.isBlank(commonAmount) ? "0" : commonAmount);
-						id_team_person_count.setText(StringUtils.isBlank(personCount) ? "0人" : personCount+"人");
+						tv_person.setText(StringUtils.isBlank(personCount) ? "0人" : personCount+"人");
 					}
 
 

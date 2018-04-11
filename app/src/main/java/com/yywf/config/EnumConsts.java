@@ -199,23 +199,10 @@ public class EnumConsts {
 		BANK_NY(8, "农业银行",R.drawable.icon_managecard_bank_ny),
 		BANK_PA(9, "平安银行", R.drawable.icon_managecard_bank_pa),
 		BANK_PF(10, "浦发银行", R.drawable.icon_managecard_bank_pf),
-		BANK_XY(
-				11,
-				"兴业银行",
-				R.drawable.icon_managecard_bank_xy),
-
-		BANK_ZS(
-				12,
-				"招商银行",
-				R.drawable.icon_managecard_bank_zs),
-		BANK_ZG(
-				13,
-				"中国银行",
-				R.drawable.icon_managecard_bank_zg),
-		BANK_ZX(
-				14,
-				"中信银行",
-				R.drawable.icon_managecard_bank_zx),
+		BANK_XY(11, "兴业银行", R.drawable.icon_managecard_bank_xy),
+		BANK_ZS(12, "招商银行", R.drawable.icon_managecard_bank_zs),
+		BANK_ZG(13, "中国银行", R.drawable.icon_managecard_bank_zg),
+		BANK_ZX(14, "中信银行", R.drawable.icon_managecard_bank_zx),
 		BANK_PDFZ(15, "浦东发展银行", R.drawable.icon_managecard_bank_pf),
 		;
 

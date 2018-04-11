@@ -14,6 +14,9 @@ public class MyWalletInfo {
     private String totalAmt;
     private String yesterdayTotalRatio;
     private String yerterdayTotalAmt;
+    private String yesterdayProfitAmt;
+    private String yesterdayRebateAmt;
+    private String yesterdayRewardAmt;
 
     public String getBalance() {
         return balance;
@@ -77,5 +80,29 @@ public class MyWalletInfo {
 
     public void setYerterdayTotalAmt(String yerterdayTotalAmt) {
         this.yerterdayTotalAmt = yerterdayTotalAmt;
+    }
+
+    public String getYesterdayProfitAmt() {
+        return yesterdayProfitAmt;
+    }
+
+    public void setYesterdayProfitAmt(String yesterdayProfitAmt) {
+        this.yesterdayProfitAmt = yesterdayProfitAmt;
+    }
+
+    public String getYesterdayRebateAmt() {
+        return yesterdayRebateAmt;
+    }
+
+    public void setYesterdayRebateAmt(String yesterdayRebateAmt) {
+        this.yesterdayRebateAmt = yesterdayRebateAmt;
+    }
+
+    public String getYesterdayRewardAmt() {
+        return yesterdayRewardAmt;
+    }
+
+    public void setYesterdayRewardAmt(String yesterdayRewardAmt) {
+        this.yesterdayRewardAmt = yesterdayRewardAmt;
     }
 }
