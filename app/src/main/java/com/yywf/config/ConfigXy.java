@@ -211,6 +211,10 @@ public class ConfigXy {
     public static final String XY_RECORD_LIST = ZF_SERVER_API + "app/member/recordList";
 
 
+    //交易明细
+    public static final String XY_TRANS_RECORD_LIST = ZF_SERVER_API + "app/member/transactionRecordList";
+
+
 
 
 
