@@ -67,6 +67,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_src"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="6dp"
@@ -77,14 +78,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text=""
-            android:textSize="14sp"/>
+            android:textSize="12sp"/>
         <TextView
             android:id="@+id/tv_src"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text=""
-            android:textSize="14sp"/>
+            android:textSize="12sp"/>
     </RelativeLayout>
 
 

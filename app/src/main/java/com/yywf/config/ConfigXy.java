@@ -213,6 +213,8 @@ public class ConfigXy {
 
     //交易明细
     public static final String XY_TRANS_RECORD_LIST = ZF_SERVER_API + "app/member/transactionRecordList";
+    //收益明细
+    public static final String XY_INCOME_LIST = ZF_SERVER_API + "app/member/incomeList";
 
 
 

@@ -258,7 +258,7 @@ public class ActivityTransSearch extends BaseActivity {
 
     private void loadData() {
 
-        agentInfos.clear();
+//        agentInfos.clear();
         showProgress("加载中...");
 
         String url = ConfigXy.XY_TRANS_RECORD_LIST;
@@ -299,6 +299,10 @@ public class ActivityTransSearch extends BaseActivity {
 
 
                     if (infos != null){
+
+                        tvSrc.setText("共"+infos.getTransactionPen()+"笔交易、"+StringUtils.formatIntMoney(infos.getTransactionAmount())+"元交易金额");
+
+
                         if (infos.getComsume_list().size() > 0) {
                             agentInfos.addAll(infos.getComsume_list());
                             if (agentInfos.size() > 0) {

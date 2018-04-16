@@ -10,27 +10,39 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
+import com.codbking.widget.DatePickDialog;
+import com.codbking.widget.OnSureLisener;
+import com.codbking.widget.bean.DateType;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.loopj.android.http.RequestParams;
+import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MyListView;
 import com.yywf.R;
-import com.yywf.adapter.AdapterAgent;
+import com.yywf.adapter.AdapterTransRecord;
 import com.yywf.config.ConfigXy;
 import com.yywf.http.HttpUtil;
-import com.yywf.model.AgentInfo;
+import com.yywf.model.TransRecordInfo;
+import com.yywf.model.TransRecordList;
 import com.yywf.util.MyActivityManager;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -39,6 +51,14 @@ import java.util.List;
 
 public class ActivityProfitSearch extends BaseActivity {
 
+    @BindView(R.id.tv_right)
+    TextView tvRight;
+    @BindView(R.id.tv_year)
+    TextView tvYear;
+    @BindView(R.id.tv_src)
+    TextView tvSrc;
+    @BindView(R.id.rl_src)
+    RelativeLayout rlSrc;
     /**
      * 数据展示
      */
@@ -47,7 +67,7 @@ public class ActivityProfitSearch extends BaseActivity {
     /**
      * 适配器
      */
-    private AdapterAgent mAdapter;
+    private AdapterTransRecord mAdapter;
 
     /**
      * 编辑框
@@ -63,22 +83,30 @@ public class ActivityProfitSearch extends BaseActivity {
     private ImageView mSearchBarImg;
 
 
+    private int page = 1;
+
+    private String year;
+
     private String name;
 
-    private List<AgentInfo> agentInfos = new ArrayList<>();
+    private List<TransRecordList> agentInfos = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        setContentView(R.layout.activity_agent_search);
+        setContentView(R.layout.activity_record_search);
+        ButterKnife.bind(this);
         MyActivityManager.getInstance().addActivity(this);
         initTitle("收益明细");
         findViewById(R.id.backBtn).setVisibility(View.VISIBLE);
+        setTvText(R.id.tv_right, "日期");
+        textView(R.id.tv_right).setTextSize(13);
+        showView(R.id.tv_right, true);
+
         initView();
     }
-
 
 
     private Handler handler = new Handler();
@@ -91,7 +119,7 @@ public class ActivityProfitSearch extends BaseActivity {
         @Override
         public void run() {
             //在这里调用服务器的接口，获取数据
-            loadData(mEditText.getText().toString().trim());
+            loadData();
         }
     };
 
@@ -101,6 +129,8 @@ public class ActivityProfitSearch extends BaseActivity {
      */
     private void initView() {
 
+
+        rlSrc.setVisibility(View.GONE);
 
         mEditText = (EditText) findViewById(com.tool.R.id.et_search);
         mClearImg = (ImageView) findViewById(com.tool.R.id.iv_search_clear);
@@ -132,7 +162,7 @@ public class ActivityProfitSearch extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(delayRun!=null){
+                if (delayRun != null) {
                     //每次editText有变化的时候，则移除上次发出的延迟线程
                     handler.removeCallbacks(delayRun);
                 }
@@ -143,7 +173,7 @@ public class ActivityProfitSearch extends BaseActivity {
 
 
         myListView = findViewById(R.id.listview);
-        mAdapter = new AdapterAgent(mContext, agentInfos);
+        mAdapter = new AdapterTransRecord(mContext, agentInfos);
         myListView.setAdapter(mAdapter);
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -160,7 +190,7 @@ public class ActivityProfitSearch extends BaseActivity {
         });
 
 
-        mPullRefreshScrollView =  findViewById(R.id.pull_refresh_scrollview);
+        mPullRefreshScrollView = findViewById(R.id.pull_refresh_scrollview);
         // 下拉刷新、上拉加载更多
         mPullRefreshScrollView.setMode(PullToRefreshBase.Mode.BOTH);
         // TODO:必须先设置Mode后再设置刷新文本
@@ -182,7 +212,7 @@ public class ActivityProfitSearch extends BaseActivity {
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
                 refreshView.getLoadingLayoutProxy(true, false).setLastUpdatedLabel("更新于：" + label);
 //                reloadData();
-                loadData(mEditText.getText().toString().trim());
+                reloadData();
             }
 
             @Override
@@ -192,21 +222,21 @@ public class ActivityProfitSearch extends BaseActivity {
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
                 refreshView.getLoadingLayoutProxy(false, true).setLastUpdatedLabel("更新于：" + label);
 
-//                if (teamInfos.size() == 0) {
-                handler.postDelayed(new Runnable() {
+                if (agentInfos.size() == 0) {
+                    handler.postDelayed(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        showErrorMsg("没有更多了");
-                        // ListScrollUtil.setGridViewHeightBasedOnChildren(gridView);
-                        mPullRefreshScrollView.onRefreshComplete();
-                    }
-                }, 1000);
+                        @Override
+                        public void run() {
+                            showErrorMsg("没有更多了");
+                            // ListScrollUtil.setGridViewHeightBasedOnChildren(gridView);
+                            mPullRefreshScrollView.onRefreshComplete();
+                        }
+                    }, 1000);
 
-//                } else {
-//                    page++;
-//                    loadData(false);
-//                }
+                } else {
+                    page++;
+                    loadData();
+                }
             }
         });
     }
@@ -215,19 +245,33 @@ public class ActivityProfitSearch extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        loadData("");
+        reloadData();
     }
 
-    private void loadData(String name) {
 
+    /**
+     * 重新加载数据
+     */
+    private void reloadData() {
+        page = 1;
         agentInfos.clear();
+        loadData();
+    }
+
+
+    private void loadData() {
+
+//        agentInfos.clear();
         showProgress("加载中...");
 
-        String url = ConfigXy.XY_AGENT_LIST_INFO;
+        String url = ConfigXy.XY_INCOME_LIST;
         RequestParams params = new RequestParams();
         params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
         params.add("token", UtilPreference.getStringValue(mContext, "token"));
-        params.add("name", name);
+        params.add("keywords", mEditText.getText().toString().trim());
+        params.add("years", year);
+        params.put("pageNo", page);
+        params.put("pageSize", "10");
 
         HttpUtil.get(url, params, new HttpUtil.RequestListener() {
 
@@ -238,7 +282,7 @@ public class ActivityProfitSearch extends BaseActivity {
                 try {
 
                     JSONObject result = new JSONObject(response);
-                    if (result.optInt("code") == -2){
+                    if (result.optInt("code") == -2) {
                         UtilPreference.clearNotKeyValues(mContext);
                         // 退出账号 返回到登录页面
                         MyActivityManager.getInstance().logout(mContext);
@@ -253,27 +297,33 @@ public class ActivityProfitSearch extends BaseActivity {
 
 
                     Gson gson = new Gson();
-                    List<AgentInfo> infos = gson.fromJson(result.optString("data"), new TypeToken<List<AgentInfo>>() {
+                    TransRecordInfo infos = gson.fromJson(result.optString("data"), new TypeToken<TransRecordInfo>() {
                     }.getType());
 
 
-                    if (infos.size() > 0) {
-                        agentInfos.addAll(infos);
-                        if (agentInfos.size() > 0) {
-                            linearLayout(R.id.id_no_data).setVisibility(View.GONE);
-                            myListView.setVisibility(View.VISIBLE);
-                        } else {
-                            linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
-                            myListView.setVisibility(View.GONE);
-                        }
+                    if (infos != null) {
 
-                    } else {
-                        if (agentInfos.size() > 0) {
-                            linearLayout(R.id.id_no_data).setVisibility(View.GONE);
-                            myListView.setVisibility(View.VISIBLE);
+//                        tvSrc.setText("共"+infos.getTransactionPen()+"笔交易、"+ StringUtils.formatIntMoney(infos.getTransactionAmount())+"元交易金额");
+
+
+                        if (infos.getComsume_list().size() > 0) {
+                            agentInfos.addAll(infos.getComsume_list());
+                            if (agentInfos.size() > 0) {
+                                linearLayout(R.id.id_no_data).setVisibility(View.GONE);
+                                myListView.setVisibility(View.VISIBLE);
+                            } else {
+                                linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
+                                myListView.setVisibility(View.GONE);
+                            }
+
                         } else {
-                            linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
-                            myListView.setVisibility(View.GONE);
+                            if (agentInfos.size() > 0) {
+                                linearLayout(R.id.id_no_data).setVisibility(View.GONE);
+                                myListView.setVisibility(View.VISIBLE);
+                            } else {
+                                linearLayout(R.id.id_no_data).setVisibility(View.VISIBLE);
+                                myListView.setVisibility(View.GONE);
+                            }
                         }
                     }
 
@@ -284,7 +334,7 @@ public class ActivityProfitSearch extends BaseActivity {
 
                 } catch (Exception e) {
                     e.getMessage();
-
+                    mPullRefreshScrollView.onRefreshComplete();
                 }
             }
 
@@ -292,9 +342,34 @@ public class ActivityProfitSearch extends BaseActivity {
             public void failed(Throwable error) {
                 disShowProgress();
                 showE404();
-
+                mPullRefreshScrollView.onRefreshComplete();
             }
         });
+    }
+
+    @OnClick(R.id.tv_right)
+    public void onViewClicked() {
+        DatePickDialog dialog = new DatePickDialog(this);
+        //设置上下年分限制
+        dialog.setYearLimt(5);
+        //设置标题
+        dialog.setTitle("选择时间");
+        //设置类型
+        dialog.setType(DateType.TYPE_YMD);
+        //设置消息体的显示格式，日期格式
+        dialog.setMessageFormat("yyyy-MM-dd");
+        //设置选择回调
+        dialog.setOnChangeLisener(null);
+        //设置点击确定按钮回调
+        dialog.setOnSureLisener(new OnSureLisener() {
+            @Override
+            public void onSure(Date date) {
+//                tvDateChoose.setText(TimeUtil.getStringFromDate(date, "yyyy-MM-dd"));
+                year = StringUtils.getStringFromDate(date, "yyyyMM");
+                reloadData();
+            }
+        });
+        dialog.show();
     }
 
 }

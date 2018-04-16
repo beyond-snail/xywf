@@ -8,6 +8,25 @@ import java.util.List;
  */
 
 public class TransRecordInfo implements Serializable {
+    private int transactionPen;
+    private int transactionAmount;
+
+    public int getTransactionPen() {
+        return transactionPen;
+    }
+
+    public void setTransactionPen(int transactionPen) {
+        this.transactionPen = transactionPen;
+    }
+
+    public int getTransactionAmount() {
+        return transactionAmount;
+    }
+
+    public void setTransactionAmount(int transactionAmount) {
+        this.transactionAmount = transactionAmount;
+    }
+
     private List<TransRecordList> comsume_list;
 
     public List<TransRecordList> getComsume_list() {
