@@ -364,7 +364,7 @@ public class ActivityTransSearch extends BaseActivity {
             @Override
             public void onSure(Date date) {
 //                tvDateChoose.setText(TimeUtil.getStringFromDate(date, "yyyy-MM-dd"));
-                year = StringUtils.getStringFromDate(date, "yyyyMM");
+                year = StringUtils.getStringFromDate(date, "yyyy-MM");
                 reloadData();
             }
         });
