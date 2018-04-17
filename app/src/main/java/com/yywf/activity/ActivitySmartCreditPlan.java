@@ -103,6 +103,8 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 
 	private boolean isAction = false;
 
+	private String cardId;
+
 	private MyCustomDialog dialog;
 
 	@Override
@@ -539,7 +541,9 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 		}
 
 		if (requestCode == 0 && resultCode == 3) {
-			btn.setText("执行计划");
+//			btn.setText("执行计划");
+			String cardId = data.getStringExtra("cardId");
+			vo.setId(cardId);
 		}else if (requestCode == 1 && resultCode == 4){
 			Bundle bundle = data.getBundleExtra("day");
 			String zdDay =bundle.getString("zdDay");
@@ -583,7 +587,7 @@ public class ActivitySmartCreditPlan extends BaseActivity implements View.OnClic
 				if (!isAction) {
 					if (StringUtils.isBlank(vo.getId())) {
 						//补全信息
-						startActivityForResult(new Intent(mContext, ActivityCreditSupply.class).putExtra("bankbillId", vo.getBankbillId()), 0);
+						startActivityForResult(new Intent(mContext, ActivityCreditSupply.class).putExtra("type", 1).putExtra("bankbillId", vo.getBankbillId()), 0);
 						return;
 					}
 

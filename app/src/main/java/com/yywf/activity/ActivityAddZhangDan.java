@@ -3,19 +3,40 @@ package com.yywf.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import com.moxie.client.manager.MoxieCallBack;
 import com.moxie.client.manager.MoxieCallBackData;
 import com.moxie.client.manager.MoxieContext;
 import com.moxie.client.manager.MoxieSDK;
 import com.moxie.client.model.MxParam;
 import com.myokhttp.util.LogUtils;
+import com.tool.utils.utils.ALog;
+import com.tool.utils.utils.GsonUtil;
+import com.tool.utils.utils.StringUtils;
+import com.tool.utils.utils.ToastUtils;
 import com.tool.utils.utils.UtilPreference;
 import com.yywf.R;
+import com.yywf.config.ConfigXy;
+import com.yywf.model.MxSdkInfo;
+import com.yywf.model.TransRecordInfo;
+import com.yywf.model.ZhangDanListInfo;
 import com.yywf.util.MyActivityManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 
 public class ActivityAddZhangDan extends BaseActivity implements View.OnClickListener {
 
@@ -26,11 +47,11 @@ public class ActivityAddZhangDan extends BaseActivity implements View.OnClickLis
 
 	private String mUserId = "xinyi_test";
 //	private String mApiKey = "ac8c5018733142a0a66eff8666df550b";
-	private String mApiKey = "cb8fd8ea11094563b0d877c2b8bf719e";
+//	private String mApiKey = "cb8fd8ea11094563b0d877c2b8bf719e";
 
 	private String mThemeColor = "#ff9500";
 	private String mAgreementUrl = "https://api.51datakey.com/h5/agreement.html";
-
+	private MxSdkInfo info;
 
 
 
@@ -80,12 +101,39 @@ public class ActivityAddZhangDan extends BaseActivity implements View.OnClickLis
 	public void onClick(View view) {
 		switch (view.getId()){
 			case R.id.ll_email:
+
+				String loginhistory = UtilPreference.getStringValue(mContext, "zhangdan_history");
+				if (!StringUtils.isBlank(loginhistory)){
+					startActivity(new Intent(mContext, ActivityZhangDanList.class));
+					return;
+				}
+
+
 //				startActivity(new Intent(mContext, ActivityHandCredit.class));
 				MxParam mxParam = new MxParam();
 				mxParam.setUserId(UtilPreference.getStringValue(mContext, "memberId"));   //必传
-				mxParam.setApiKey(mApiKey);   //必传
+				mxParam.setApiKey(ConfigXy.mApiKey);   //必传
 				mxParam.setFunction(MxParam.PARAM_FUNCTION_MAIL);
+				mxParam.setCallbackTaskInfo(true);
+//				mxParam.setQuitLoginDone(MxParam.PARAM_COMMON_YES);
+				mxParam.setQuitDisable(true);
 
+//				String emailName = UtilPreference.getStringValue(mContext, "sdkName");
+//				String emailPsw = UtilPreference.getStringValue(mContext, "sdkPsw");
+//				String emailIdpPsw = UtilPreference.getStringValue(mContext, "sdkIdpPsw");
+//				String emailSuffix = emailName.substring(emailName.indexOf("@")+1);
+//				JSONObject loginParams = new JSONObject();
+//				try {
+//					loginParams.put("username", emailName);
+//					loginParams.put("password",emailPsw);
+//					loginParams.put("sepwd", emailIdpPsw);
+//					HashMap<String, String> loginCustom = new HashMap<>();
+//					loginCustom.put(MxParam.PARAM_CUSTOM_LOGIN_PARAMS, loginParams.toString());
+//					loginCustom.put(MxParam.PARAM_CUSTOM_LOGIN_CODE, emailSuffix);
+//					mxParam.setLoginCustom(loginCustom);
+//				} catch (JSONException e) {
+//					e.printStackTrace();
+//				}
 				MoxieSDK.getInstance().start((Activity)mContext, mxParam, new MoxieCallBack() {
 					/**
 					 *
@@ -127,6 +175,28 @@ public class ActivityAddZhangDan extends BaseActivity implements View.OnClickLis
 						 */
 						if (moxieCallBackData != null) {
 							LogUtils.e("BigdataFragment", "MoxieSDK Callback Data : "+ moxieCallBackData.toString());
+							String data = moxieCallBackData.getAppendResult();
+							if (!StringUtils.isBlank(data)) {
+								int index_first = data.indexOf(":");
+								int index_end = data.lastIndexOf("}");
+								String str = data.substring(index_first + 2, index_end - 1);
+								str = str.replace("\\", "");
+								ALog.json("BigdataFragment", str);
+
+								try {
+									JSONObject object = new JSONObject(str);
+									String dataStr = object.getString("param");
+									if (!StringUtils.isBlank(dataStr)) {
+										info = new Gson().fromJson(dataStr, new TypeToken<MxSdkInfo>() {
+										}.getType());
+									}
+
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+							}
+
+
 							switch (moxieCallBackData.getCode()) {
 								/**
 								 * 账单导入中
@@ -178,6 +248,10 @@ public class ActivityAddZhangDan extends BaseActivity implements View.OnClickLis
 									switch (moxieCallBackData.getTaskType()) {
 										case MxParam.PARAM_FUNCTION_EMAIL:
 											Toast.makeText(mContext, "邮箱导入成功", Toast.LENGTH_SHORT).show();
+
+											if (info != null){
+												saveHistory(info.getArguments().getUsername(), info.getArguments().getPassword(), info.getArguments().getIdp_pass());
+											}
 											break;
 										case MxParam.PARAM_FUNCTION_ONLINEBANK:
 											Toast.makeText(mContext, "网银导入成功", Toast.LENGTH_SHORT).show();
@@ -199,4 +273,102 @@ public class ActivityAddZhangDan extends BaseActivity implements View.OnClickLis
 				break;
 		}
 	}
+
+
+
+	/**
+	 * 缓存最近登录过的账号
+	 *
+	 */
+	@SuppressWarnings("unchecked")
+	private void saveHistory(String sdkName, String sdkPsw, String sdkIdpPsw) {
+		String loginhistory = UtilPreference.getStringValue(mContext, "zhangdan_history");
+		Log.i(TAG, "本次登录前已经登录过的账号：" + loginhistory);
+
+//		JsonArray array = new JsonArray();
+		List<ZhangDanListInfo> zhangDanListInfoList = new ArrayList<>();
+		if (StringUtils.isBlank(loginhistory)) {
+//			JsonObject json = new JsonObject();
+//			json.addProperty("username", sdkName);
+//			json.addProperty("password", sdkPsw);
+//			json.addProperty("idp_pass", sdkIdpPsw);
+//			array.add(json);
+			ZhangDanListInfo zhangDanListInfo = new ZhangDanListInfo();
+			zhangDanListInfo.setUsername(sdkName);
+			zhangDanListInfo.setPassword(sdkPsw);
+			zhangDanListInfo.setIdp_pass(sdkIdpPsw);
+			zhangDanListInfoList.add(zhangDanListInfo);
+
+		} else {
+//			String historyArr = getHistoryArr(loginhistory);
+//			if (StringUtils.isBlank(historyArr)) {
+//				return;
+//			}
+//
+//			// json字符串转换成List
+//			List<ZhangDanListInfo> list = (List<ZhangDanListInfo>) GsonUtil.getInstance()
+//					.convertJsonStringToList(historyArr, new TypeToken<List<ZhangDanListInfo>>() {
+//					}.getType());
+
+			List<ZhangDanListInfo> list = new Gson().fromJson(loginhistory, new TypeToken<List<ZhangDanListInfo>>() {
+			}.getType());
+
+			boolean ishas = false;
+			for (ZhangDanListInfo vo : list) {
+				if (vo.getUsername().equals(sdkName)) {//标识已有账号
+					ishas = true;
+				}
+//				JsonObject json = new JsonObject();
+//				json.addProperty("username", vo.getUsername());
+//				json.addProperty("password", vo.getPassword());
+//				json.addProperty("idp_pass", vo.getIdp_pass());
+//				array.add(json);
+				ZhangDanListInfo zhangDanListInfo = new ZhangDanListInfo();
+				zhangDanListInfo.setUsername(sdkName);
+				zhangDanListInfo.setPassword(sdkPsw);
+				zhangDanListInfo.setIdp_pass(sdkIdpPsw);
+				zhangDanListInfoList.add(zhangDanListInfo);
+			}
+			// 当前登录账号在本机上没有历史登录记录
+			if (!ishas) {
+//				JsonObject json = new JsonObject();
+//				json.addProperty("username", sdkName);
+//				json.addProperty("password", sdkPsw);
+//				json.addProperty("idp_pass", sdkIdpPsw);
+//				array.add(json);
+				ZhangDanListInfo zhangDanListInfo = new ZhangDanListInfo();
+				zhangDanListInfo.setUsername(sdkName);
+				zhangDanListInfo.setPassword(sdkPsw);
+				zhangDanListInfo.setIdp_pass(sdkIdpPsw);
+				zhangDanListInfoList.add(zhangDanListInfo);
+			}
+		}
+
+		String historyStr = new Gson().toJson(zhangDanListInfoList);
+
+		// json对象转换成字符串并缓存在本地
+//		UtilPreference.saveString(mContext, "zhangdan_history", GsonUtil.getInstance().convertObjectToJsonString(array));
+		UtilPreference.saveString(mContext, "zhangdan_history", historyStr);
+	}
+
+	/**
+	 * 根据缓存在本地的登录历史记录字符串 获取登录历史记录的数组
+	 *
+	 * @param loginhistory
+	 */
+	private String getHistoryArr(String loginhistory) {
+		String historyArr = "";
+		try {
+			JSONObject json = new JSONObject(loginhistory);
+			if (json.has("elements")) {
+				historyArr = json.getString("elements");
+			}
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return historyArr;
+	}
+
+
 }

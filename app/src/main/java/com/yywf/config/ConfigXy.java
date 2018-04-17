@@ -15,6 +15,8 @@ public class ConfigXy {
      */
 
 
+    public static  final String mApiKey = "cb8fd8ea11094563b0d877c2b8bf719e";
+
 
 //    public static final String SERVER_API = "http://app.yunl7.com";
 //    public static final String SERVER_API_NEW = "http://app.yunl7.com";

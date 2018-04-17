@@ -1,55 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:search="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f5f5f5"
-    android:orientation="vertical" >
+    android:background="@color/grey_100"
+    android:orientation="vertical">
 
     <include layout="@layout/layout_header_with_transparent" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="#f5f5f5" />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/setting_list_bg">
-
-        <TextView
-            android:id="@+id/tv_one"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/btn_yellow_selector"
-            android:gravity="center"
-            android:padding="@dimen/dip_normal"
-            android:text="直接推荐"
-            android:textColor="@color/font_red_selector2"
-            android:textSize="@dimen/text_size_normal" />
-
-
-        <TextView
-            android:id="@+id/tv_second"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/btn_yellow_selector2"
-            android:gravity="center"
-            android:padding="@dimen/dip_normal"
-            android:text="间接推荐"
-            android:textColor="@color/font_red_selector"
-            android:textSize="@dimen/text_size_normal" />
-
-
-    </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="3dp"
+        android:layout_height="5dp"
         android:background="#f5f5f5" />
 
-    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+
+
+    <com.tool.utils.view.MyScrollView
 
         android:id="@+id/pull_refresh_scrollview"
         android:layout_width="fill_parent"
@@ -78,9 +44,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="1dp"
                 android:divider="#f5f5f5"
-                android:dividerHeight="10dp"
+                android:dividerHeight="1dp"
                 android:listSelector="@drawable/setting_list_bg" />
-
 
 
             <LinearLayout
@@ -90,7 +55,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -104,24 +69,8 @@
                     android:text="暂无数据"
                     android:textColor="#999999"
                     android:textSize="16sp" />
-
-
-
-
             </LinearLayout>
         </LinearLayout>
 
-    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
-
-    <TextView
-        android:id="@+id/btn_commit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/btn_yellow_selector"
-        android:gravity="center"
-        android:padding="@dimen/padding_normal"
-        android:text="累计成功推荐0人"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_title" />
-
+    </com.tool.utils.view.MyScrollView>>
 </LinearLayout>
