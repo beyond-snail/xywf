@@ -118,7 +118,7 @@ public class ActivityTransSearch extends BaseActivity {
         @Override
         public void run() {
             //在这里调用服务器的接口，获取数据
-            loadData();
+            reloadData();
         }
     };
 
