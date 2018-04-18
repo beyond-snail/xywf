@@ -106,7 +106,7 @@ public class ActivityBanKa extends BaseActivity  {
 								list.get(position).getName()));
 						break;
 					case 2: //民生银行
-						String url_ms = "https://creditcard.cmbc.com.cn/wsv2/smp_web/mgm/recomAccept.html?rKey=0b4327f4c4af81f4ecf284fdbb594810672f0869e7f3413d42c8f0b523d1287cdf460d5d2c5687fc186308f6875036ae3672a7ff7f0efa456b149b2c37c0c69b&rpKey=0b4327f4c4af81f4ecf284fdbb594810982de6bc7360ff20d31f8eddab88382520405a1cd35d0d9b12ab87c544592eed9e1901b8fb1e3ff443688e51846b240c";
+						String url_ms = "https://creditcard.cmbc.com.cn/wsv2/";
 						startActivity(new Intent(mContext, ActivityPublicWeb.class).putExtra("url", url_ms).putExtra("title",
 								list.get(position).getName()));
 						break;

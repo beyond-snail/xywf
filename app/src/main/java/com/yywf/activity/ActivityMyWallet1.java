@@ -232,8 +232,8 @@ public class ActivityMyWallet1 extends BaseActivity{
 //                        tvFlAmt.setText(walletInfo.getYesterdayRebateAmt());
 //                        tvFrAmt.setText(walletInfo.getYesterdayProfitAmt());
                         tvJljAmt.setText(walletInfo.getRewardAmt());
-                        tvFlAmt.setText(walletInfo.getProfitAmt());
-                        tvFrAmt.setText(walletInfo.getRebateAmt());
+                        tvFlAmt.setText(walletInfo.getRebateAmt());
+                        tvFrAmt.setText(walletInfo.getProfitAmt());
 
 //                        tvAmt2.setText(walletInfo.getYerterdayTotalAmt());
 //                        tvCount.setText(walletInfo.getYesterdayTotalRatio());
@@ -340,8 +340,8 @@ public class ActivityMyWallet1 extends BaseActivity{
                 break;
             case R.id.total_sy:
                 tvJljAmt.setText(walletInfo.getRewardAmt());
-                tvFlAmt.setText(walletInfo.getProfitAmt());
-                tvFrAmt.setText(walletInfo.getRebateAmt());
+                tvFlAmt.setText(walletInfo.getRebateAmt());
+                tvFrAmt.setText(walletInfo.getProfitAmt());
                 break;
             case R.id.btn_symx:
                 startActivity(new Intent(mContext, ActivityProfitSearch.class));

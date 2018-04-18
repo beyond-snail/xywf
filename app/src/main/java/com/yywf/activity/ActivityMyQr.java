@@ -216,8 +216,8 @@ public class ActivityMyQr extends BaseActivity implements OnClickListener {
 	 */
 	private void twoCode(String strconteString) {
 
-		twoImg.setImageBitmap(CreateCodeUtil.createQRImage(strconteString,ScreenUtils.dp2px(168, mContext),
-				ScreenUtils.dp2px(168, mContext), BitmapFactory.decodeResource(getResources(), R.drawable.mapage_head), false));
+		twoImg.setImageBitmap(CreateCodeUtil.createQRImage(strconteString,ScreenUtils.dp2px(188, mContext),
+				ScreenUtils.dp2px(188, mContext), BitmapFactory.decodeResource(getResources(), R.drawable.mapage_head), false));
 
 	}
 
