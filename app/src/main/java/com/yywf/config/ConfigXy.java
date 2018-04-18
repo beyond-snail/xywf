@@ -146,6 +146,9 @@ public class ConfigXy {
     //还款计划列表
     public static final String PLAN_LIST = "";
 
+    //待办事项
+    public static final String DB_PLAN_LIST = ZF_SERVER_API+"app/member/upcomingList";
+
     //补全信息
     public static final String CREDIT_SUPPLY = ZF_SERVER_API+"app/member/bindCardPerfect";
     //信用卡查询

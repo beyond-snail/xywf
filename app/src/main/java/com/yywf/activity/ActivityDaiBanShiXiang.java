@@ -1,20 +1,12 @@
 package com.yywf.activity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.text.format.DateUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,21 +14,14 @@ import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.loopj.android.http.RequestParams;
-import com.tool.utils.passwordView.KeyBoardDialog;
-import com.tool.utils.passwordView.PayPasswordView;
-import com.tool.utils.utils.ToastUtils;
 import com.tool.utils.utils.UtilPreference;
-import com.tool.utils.view.MoneyEditText;
 import com.tool.utils.view.MyListView;
 import com.yywf.R;
-import com.yywf.adapter.AdapterMessageNoticeNew;
-import com.yywf.adapter.AdapterPlanList;
+import com.yywf.adapter.AdapterDbPlan;
 import com.yywf.config.ConfigXy;
 import com.yywf.http.HttpUtil;
-import com.yywf.model.Message;
-import com.yywf.model.PlanList;
+import com.yywf.model.DbPlan;
 import com.yywf.util.MyActivityManager;
-import com.yywf.widget.dialog.MyCustomDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,8 +39,8 @@ public class ActivityDaiBanShiXiang extends BaseActivity {
 
 
 	private PullToRefreshScrollView mPullRefreshScrollView;
-	private List<Message> messageList = new ArrayList<Message>();// 信息通知
-	private AdapterMessageNoticeNew adapter;
+	private List<DbPlan> messageList = new ArrayList<DbPlan>();// 信息通知
+	private AdapterDbPlan adapter;
 	private MyListView myListView;
 	private int page = 1;
 
@@ -98,12 +83,12 @@ public class ActivityDaiBanShiXiang extends BaseActivity {
 
 
 		myListView = findViewById(R.id.listview);
-		adapter = new AdapterMessageNoticeNew(mContext, messageList);
+		adapter = new AdapterDbPlan(mContext, messageList);
 		myListView.setAdapter(adapter);
 		myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+				startActivity(new Intent(mContext, ActivityDbSmartCreditPlan.class).putExtra("planId", messageList.get(i).getPlanId()));
 			}
 		});
 
@@ -152,7 +137,7 @@ public class ActivityDaiBanShiXiang extends BaseActivity {
 
 				} else {
 					page++;
-					loadData(false);
+					loadData();
 				}
 			}
 		});
@@ -169,30 +154,22 @@ public class ActivityDaiBanShiXiang extends BaseActivity {
 		Log.d(TAG, "reloadData()");
 		page = 1;
 		messageList.clear();
-		loadData(true);
+		loadData();
 	}
 
 
-	private void loadData(boolean showProgress) {
+	private void loadData() {
 
 
 
 		// String url = ConfigApp.HC_GET_STORE_GOODS;
-		String url = ConfigXy.PLAN_LIST;
+		String url = ConfigXy.DB_PLAN_LIST;
 		RequestParams params = new RequestParams();
 
-//		String id = UtilPreference.getStringValue(mContext, "zf_member_id");
-//		params.add("memberId", id);
-//		params.add("token", UtilPreference.getStringValue(mContext, "token"));
-//		params.add("page", page + "");// 当前页
-//		params.add("key", editText(R.id.query).getText().toString());
-//		params.add("sortType", sort_qb + "");
-//		if (cId != 0) {
-//			params.add("categroyId", cId + "");
-//		}
-//		if (showProgress) {
-//			showProgress("加载中...");
-//		}
+		params.add("memberId", UtilPreference.getStringValue(mContext, "memberId"));
+		params.add("token", UtilPreference.getStringValue(mContext, "token"));
+		params.put("pageNo",page);
+		params.put("pageSize","10");
 
 		HttpUtil.get(url, params, new HttpUtil.RequestListener() {
 
@@ -213,12 +190,15 @@ public class ActivityDaiBanShiXiang extends BaseActivity {
 						mPullRefreshScrollView.onRefreshComplete();
 						return;
 					}
-					if (result.getString("data") != null) {
-						String str = result.getString("data");
+
+					JSONObject obj = result.getJSONObject("data");
+
+					if (obj.getString("plan_list") != null) {
+						String str = result.getString("plan_list");
 
 						Gson gson = new Gson();
 						// json数据转换成List
-						List<Message> datas = gson.fromJson(str, new TypeToken<List<Message>>() {
+						List<DbPlan> datas = gson.fromJson(str, new TypeToken<List<DbPlan>>() {
 						}.getType());
 						messageList.addAll(datas);
 						adapter.notifyDataSetChanged();
@@ -257,7 +237,7 @@ public class ActivityDaiBanShiXiang extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-//		reloadData();
+		reloadData();
 	}
 
 	@Override
