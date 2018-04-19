@@ -337,11 +337,13 @@ public class ActivityMyWallet1 extends BaseActivity{
                 tvJljAmt.setText(walletInfo.getYesterdayRewardAmt());
                 tvFlAmt.setText(walletInfo.getYesterdayRebateAmt());
                 tvFrAmt.setText(walletInfo.getYesterdayProfitAmt());
+                tvAmt1.setText(walletInfo.getYesterdayBalance());
                 break;
             case R.id.total_sy:
                 tvJljAmt.setText(walletInfo.getRewardAmt());
                 tvFlAmt.setText(walletInfo.getRebateAmt());
                 tvFrAmt.setText(walletInfo.getProfitAmt());
+                tvAmt1.setText(walletInfo.getBalance());
                 break;
             case R.id.btn_symx:
                 startActivity(new Intent(mContext, ActivityProfitSearch.class));

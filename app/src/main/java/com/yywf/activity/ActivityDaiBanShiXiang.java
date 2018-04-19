@@ -14,6 +14,7 @@ import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.loopj.android.http.RequestParams;
+import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MyListView;
 import com.yywf.R;
@@ -88,7 +89,7 @@ public class ActivityDaiBanShiXiang extends BaseActivity {
 		myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-				startActivity(new Intent(mContext, ActivityDbSmartCreditPlan.class).putExtra("planId", messageList.get(i).getPlanId()));
+				startActivity(new Intent(mContext, ActivityDbSmartCreditPlan.class).putExtra("planId", messageList.get(i).getPlanId()).putExtra("amount", messageList.get(i).getAmount()));
 			}
 		});
 
@@ -193,8 +194,8 @@ public class ActivityDaiBanShiXiang extends BaseActivity {
 
 					JSONObject obj = result.getJSONObject("data");
 
-					if (obj.getString("plan_list") != null) {
-						String str = result.getString("plan_list");
+					if (!StringUtils.isBlank(obj.getString("plan_list"))) {
+						String str = obj.getString("plan_list");
 
 						Gson gson = new Gson();
 						// json数据转换成List

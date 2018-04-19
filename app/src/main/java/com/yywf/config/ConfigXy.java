@@ -199,6 +199,8 @@ public class ConfigXy {
 
     //预览计划
     public static final String XY_PREVIEW_PLAN = ZF_SERVER_API + "app/pay/previewPlan";
+    //任务详情
+    public static final String XY_DB_PLAN_LIST = ZF_SERVER_API + "app/member/upcomingInfo";
     public static final String XY_DO_PLAN = ZF_SERVER_API + "app/pay/yiShengBankCardBind";
     //我的团队
     public static final String XY_MY_TEAM = ZF_SERVER_API + "app/member/myTeam";

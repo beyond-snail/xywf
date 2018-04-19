@@ -4,8 +4,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/setting_list_bg"
-    android:paddingBottom="5dp"
-    android:paddingTop="15dp"
+    android:padding="10dp"
+
     android:orientation="vertical">
 
 
@@ -16,6 +16,7 @@
         android:layout_weight="1">
 
         <TextView
+            android:id="@+id/id_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -29,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/id_tv_total_fee"
+            android:layout_toRightOf="@id/id_card"
             android:gravity="center_vertical"
             android:text=""
             android:textColor="#333333"
@@ -60,7 +61,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:ems="3"
             android:gravity="center_vertical"
             android:text=""
             android:textColor="#999999"

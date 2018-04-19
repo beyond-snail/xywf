@@ -9,6 +9,10 @@ public class PlanList {
     private String time1;
     private String time2;
     private String feeAmt;
+    private String repayStatus;
+    private String reExecStatus;
+    private String consumeStatus;
+    private String conExecStatus;
 
     public String getAmt() {
         return amt;
@@ -40,5 +44,37 @@ public class PlanList {
 
     public void setFeeAmt(String feeAmt) {
         this.feeAmt = feeAmt;
+    }
+
+    public String getRepayStatus() {
+        return repayStatus;
+    }
+
+    public void setRepayStatus(String repayStatus) {
+        this.repayStatus = repayStatus;
+    }
+
+    public String getReExecStatus() {
+        return reExecStatus;
+    }
+
+    public void setReExecStatus(String reExecStatus) {
+        this.reExecStatus = reExecStatus;
+    }
+
+    public String getConsumeStatus() {
+        return consumeStatus;
+    }
+
+    public void setConsumeStatus(String consumeStatus) {
+        this.consumeStatus = consumeStatus;
+    }
+
+    public String getConExecStatus() {
+        return conExecStatus;
+    }
+
+    public void setConExecStatus(String conExecStatus) {
+        this.conExecStatus = conExecStatus;
     }
 }

@@ -182,10 +182,10 @@ public class ActivityProfitSearch extends BaseActivity {
 //                mIntent.putExtra("name", agentInfos.get(i).getName());
 //                mIntent.putExtra("twoProfit", agentInfos.get(i).getTwoProfit());
 //                mIntent.putExtra("twoRebate", agentInfos.get(i).getTwoRebate());
-                mIntent.putExtra("agentInfo", agentInfos.get(i));
-                // 设置结果，并进行传送
-                setResult(2, mIntent);
-                finish();
+//                mIntent.putExtra("agentInfo", agentInfos.get(i));
+//                // 设置结果，并进行传送
+//                setResult(2, mIntent);
+//                finish();
             }
         });
 

@@ -15,6 +15,7 @@ import com.tool.utils.utils.StringUtils;
 import com.tool.utils.utils.UtilPreference;
 import com.tool.utils.view.MyListView;
 import com.yywf.R;
+import com.yywf.adapter.AdapterDbPlanList;
 import com.yywf.adapter.AdapterPlanList;
 import com.yywf.config.ConfigXy;
 import com.yywf.http.HttpUtil;
@@ -43,7 +44,7 @@ public class ActivityDbSmartCreditPlan extends BaseActivity{
 
 
 	private List<PlanList> list = new ArrayList<PlanList>();
-	private AdapterPlanList adapter;
+	private AdapterDbPlanList adapter;
 	private MyListView myListView;
 	private int page = 1;
 
@@ -55,6 +56,7 @@ public class ActivityDbSmartCreditPlan extends BaseActivity{
 
 
 	private long planId;
+	private int amount;
 
 
 	@Override
@@ -71,7 +73,7 @@ public class ActivityDbSmartCreditPlan extends BaseActivity{
 
 
 		planId = getIntent().getLongExtra("planId", 0);
-
+		amount = getIntent().getIntExtra("amount", 0);
 
 		initView();
 
@@ -97,7 +99,7 @@ public class ActivityDbSmartCreditPlan extends BaseActivity{
 
 
 		myListView = findViewById(R.id.listview);
-		adapter = new AdapterPlanList(mContext, list);
+		adapter = new AdapterDbPlanList(mContext, list);
 		myListView.setAdapter(adapter);
 		myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -140,7 +142,7 @@ public class ActivityDbSmartCreditPlan extends BaseActivity{
 
 
 		showProgress("加载中...");
-		String url = ConfigXy.XY_PREVIEW_PLAN;
+		String url = ConfigXy.XY_DB_PLAN_LIST;
 		RequestParams params = new RequestParams();
 		params.put("memberId", UtilPreference.getStringValue(mContext, "memberId"));
 		params.put("token", UtilPreference.getStringValue(mContext, "token"));
@@ -199,6 +201,11 @@ public class ActivityDbSmartCreditPlan extends BaseActivity{
 							planList.setTime2(info.getPlan().get(i).getConsume().getConsume_at());
 							planList.setAmt(info.getPlan().get(i).getRepay().getReal_payment());
 							planList.setTime1(info.getPlan().get(i).getRepay().getRepay_at());
+							planList.setReExecStatus(info.getPlan().get(i).getRepay().getExec_status());
+							planList.setRepayStatus(info.getPlan().get(i).getRepay().getRepay_status());
+							planList.setConExecStatus(info.getPlan().get(i).getConsume().getExec_status());
+							planList.setConsumeStatus(info.getPlan().get(i).getConsume().getConsume_status());
+
 							list.add(planList);
 						}
 
@@ -208,8 +215,8 @@ public class ActivityDbSmartCreditPlan extends BaseActivity{
 							linearLayout(R.id.ll_plan_amt).setVisibility(View.VISIBLE);
 
 							//总金额
-//							tv_total_amt.setText(MoneyUtil.formatMoney(et_amt.getMoneyText()));
-//							tv_total_fee.setText("万85+1*10");
+							tv_total_amt.setText(StringUtils.formatIntMoney(amount));
+							tv_total_fee.setText(info.getCharge().getTotal());
 							//卡内最低余额（还款总额*10% + 手续费）
 							// tv_sigle_amt.setText("计划执行需要"+MoneyUtil.formatMoney(minBalanceAmt)+"元");
 						} else {
