@@ -42,6 +42,8 @@ public class ActivityNewHelp extends BaseActivity implements View.OnClickListene
 		rl_self_hk = relativeLayout(R.id.rl_self_hk);
 		rl_self_hk.setOnClickListener(this);
 
+		relativeLayout(R.id.rl_smart_hk).setOnClickListener(this);
+
 	}
 
 
@@ -69,6 +71,9 @@ public class ActivityNewHelp extends BaseActivity implements View.OnClickListene
 				break;
 			case R.id.rl_self_hk:
 				startActivity(new Intent(mContext, ActivityZy.class).putExtra("type", 3));
+				break;
+			case R.id.rl_smart_hk:
+				startActivity(new Intent(mContext, ActivityZy.class).putExtra("type", 4));
 				break;
 		}
 	}

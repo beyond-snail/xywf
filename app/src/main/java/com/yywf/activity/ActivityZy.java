@@ -44,6 +44,9 @@ public class ActivityZy extends BaseActivity implements View.OnClickListener {
 		} else if (type == 3){
 			initTitle("自助还款");
 			imageView(R.id.img).setImageDrawable(getResources().getDrawable(R.drawable.repay));
+		} else if (type == 4){
+			initTitle("智能还款");
+			imageView(R.id.img).setImageDrawable(getResources().getDrawable(R.drawable.smart_hk));
 		}
 
 	}
