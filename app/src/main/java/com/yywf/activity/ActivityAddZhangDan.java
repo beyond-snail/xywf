@@ -71,6 +71,8 @@ public class ActivityAddZhangDan extends BaseActivity implements View.OnClickLis
 	}
 
 
+
+
 	private void initView() {
 		ll_email = relativeLayout(R.id.ll_email);
 		ll_email.setOnClickListener(this);
